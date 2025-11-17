@@ -903,8 +903,25 @@ html {
    ======================================== */
 .fabrication-section {
     padding: var(--spacing-xl) 0;
-    background: var(--gradient-dark);
+    background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #0f3460 100%);
     color: white;
+    position: relative;
+}
+
+.fabrication-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+}
+
+.fabrication-section > .container {
+    position: relative;
+    z-index: 1;
 }
 
 .fabrication-wrapper {
@@ -917,8 +934,10 @@ html {
 .fabrication-description {
     font-size: 18px;
     line-height: 1.8;
-    color: rgba(255,255,255,0.85);
+    color: rgba(255,255,255,0.98);
     margin-bottom: 2.5rem;
+    font-weight: 500;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .fabrication-features {
@@ -930,16 +949,19 @@ html {
     gap: 1.5rem;
     margin-bottom: 2rem;
     padding: 1.5rem;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.12);
     border-radius: 15px;
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
     transition: all var(--transition-normal);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .fab-feature:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.18);
     transform: translateX(10px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    border-color: rgba(255,255,255,0.3);
 }
 
 .fab-icon {
@@ -962,12 +984,15 @@ html {
     font-size: 18px;
     margin-bottom: 0.5rem;
     font-weight: 700;
+    color: rgba(255,255,255,1);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .fab-content p {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.92);
     font-size: 14px;
     line-height: 1.6;
+    font-weight: 400;
 }
 
 .fabrication-cta {
@@ -995,22 +1020,26 @@ html {
 
 .contact-label {
     font-size: 13px;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255,255,255,0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .contact-number {
     font-size: 20px;
     font-weight: 700;
     color: white;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
 .visual-card {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.12);
     padding: 2.5rem;
     border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
     backdrop-filter: blur(10px);
     margin-bottom: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .visual-icon {
@@ -1033,6 +1062,8 @@ html {
     font-size: 22px;
     margin-bottom: 1.5rem;
     font-weight: 700;
+    color: rgba(255,255,255,1);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .process-steps {
@@ -1046,14 +1077,16 @@ html {
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.1);
     border-radius: 10px;
     transition: all var(--transition-normal);
+    border: 1px solid rgba(255,255,255,0.15);
 }
 
 .step:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.16);
     transform: translateX(10px);
+    border-color: rgba(255,255,255,0.25);
 }
 
 .step-number {
@@ -1066,10 +1099,12 @@ html {
     justify-content: center;
     font-weight: 700;
     flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(255,107,53,0.4);
 }
 
 .step-text {
     font-weight: 600;
+    color: rgba(255,255,255,0.95);
 }
 
 .stats-grid {
@@ -1079,17 +1114,20 @@ html {
 }
 
 .stat-box {
-    background: rgba(255,255,255,0.05);
+    background: rgba(255,255,255,0.12);
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.25);
     transition: all var(--transition-normal);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .stat-box:hover {
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.18);
     transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+    border-color: rgba(255,255,255,0.35);
 }
 
 .stat-number {
@@ -1105,7 +1143,8 @@ html {
 
 .stat-label {
     font-size: 14px;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.95);
+    font-weight: 500;
 }
 
 /* ========================================

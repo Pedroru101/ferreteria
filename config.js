@@ -87,6 +87,38 @@ const CONFIG = {
         enableEmailNotifications: false, // Cambiar a true cuando se configure el backend
         emailEndpoint: '/api/contact', // Endpoint del backend para enviar emails
         requiredFields: ['nombre', 'email', 'mensaje']
+    },
+
+    // Configuración de productos desde Google Sheets
+    products: {
+        // Habilitar carga desde Google Sheets
+        enableGoogleSheets: false, // Cambiar a true para cargar productos desde Google Sheets
+
+        // ID de la hoja de cálculo (obtenerlo de la URL de Google Sheets)
+        spreadsheetId: '', // Ejemplo: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms'
+
+        // API Key de Google (obtenerla desde Google Cloud Console)
+        apiKey: '', // Ejemplo: 'AIzaSyB...'
+
+        // Nombre de las hojas
+        sheets: {
+            productos: 'Productos',
+            servicios: 'Servicios',
+            fabricacion: 'Fabricacion'
+        },
+
+        // Duración del cache en minutos
+        cacheDuration: 60,
+
+        // Estructura esperada de las columnas en Google Sheets
+        // Para la hoja "Productos": Nombre | Descripción | Categoría | Precio | Stock | Imagen
+        // Para la hoja "Servicios": Nombre | Descripción | Icono | Orden
+        // Para la hoja "Fabricacion": Título | Descripción | Icono | Características
+        columnMapping: {
+            productos: ['nombre', 'descripcion', 'categoria', 'precio', 'stock', 'imagen'],
+            servicios: ['nombre', 'descripcion', 'icono', 'orden'],
+            fabricacion: ['titulo', 'descripcion', 'icono', 'caracteristicas']
+        }
     }
 };
 
