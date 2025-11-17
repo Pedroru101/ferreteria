@@ -16,7 +16,7 @@ const CONFIG = {
             number: '(0223) 512-3456',
             href: 'tel:+542235123456'
         },
-        email: 'info@metalesmdp.com.ar',
+        email: 'materialesencontruccion@gmail.com',
         address: {
             street: 'Av. Luro 1234',
             city: 'Mar del Plata',
@@ -42,10 +42,8 @@ const CONFIG = {
 
     // Redes sociales
     social: {
-        facebook: 'https://facebook.com/metalesmdp',
-        instagram: 'https://instagram.com/metalesmdp',
-        linkedin: 'https://linkedin.com/company/metalesmdp',
-        youtube: 'https://youtube.com/@metalesmdp'
+        facebook: 'https://www.facebook.com/profile.php?id=61584020816125',
+        instagram: 'https://www.instagram.com/materialesencontruccion/'
     },
 
     // Configuración del sitio
