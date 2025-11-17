@@ -1,0 +1,99 @@
+/**
+ * Configuración centralizada del sitio
+ * Este archivo contiene todas las variables de configuración que se pueden modificar
+ * sin necesidad de editar el código principal
+ */
+
+const CONFIG = {
+    // Información de contacto
+    contact: {
+        whatsapp: {
+            number: '5492235123456', // Formato: código país + área + número (sin espacios ni guiones)
+            displayNumber: '+54 223 512-3456',
+            defaultMessage: '¡Hola! Me interesa conocer más sobre sus productos.'
+        },
+        phone: {
+            number: '(0223) 512-3456',
+            href: 'tel:+542235123456'
+        },
+        email: 'info@metalesmdp.com.ar',
+        address: {
+            street: 'Av. Luro 1234',
+            city: 'Mar del Plata',
+            province: 'Buenos Aires',
+            country: 'Argentina',
+            postalCode: '7600',
+            full: 'Av. Luro 1234, Mar del Plata, Buenos Aires, Argentina'
+        }
+    },
+
+    // Información de la empresa
+    business: {
+        name: 'Metales & Hierros Mar del Plata',
+        shortName: 'Metales MDP',
+        description: 'Distribuidora líder en materiales de construcción y herrería en Mar del Plata',
+        founded: '2010',
+        hours: {
+            weekdays: 'Lunes a Viernes: 8:00 - 18:00',
+            saturday: 'Sábados: 8:00 - 13:00',
+            sunday: 'Domingos: Cerrado'
+        }
+    },
+
+    // Redes sociales
+    social: {
+        facebook: 'https://facebook.com/metalesmdp',
+        instagram: 'https://instagram.com/metalesmdp',
+        linkedin: 'https://linkedin.com/company/metalesmdp',
+        youtube: 'https://youtube.com/@metalesmdp'
+    },
+
+    // Configuración del sitio
+    site: {
+        url: 'https://www.metalesmdp.com.ar',
+        title: 'Metales & Hierros Mar del Plata - Materiales de Construcción',
+        description: 'Distribuidora líder en Mar del Plata. Hierros, chapas, caños, tubos y más. Asesoramiento técnico, corte a medida y entrega a domicilio.',
+        keywords: 'metales, hierros, construcción, herrería, Mar del Plata, chapas, caños, tubos, ferretería',
+        language: 'es',
+        locale: 'es_AR'
+    },
+
+    // Configuración de análisis
+    analytics: {
+        googleAnalyticsId: '', // Agregar ID de Google Analytics: G-XXXXXXXXXX
+        googleTagManagerId: '', // Agregar ID de GTM: GTM-XXXXXXX
+        facebookPixelId: '' // Agregar ID de Facebook Pixel
+    },
+
+    // Configuración de animaciones
+    animations: {
+        aos: {
+            duration: 800,
+            offset: 100,
+            easing: 'ease-in-out',
+            once: false
+        },
+        preloaderDelay: 1000
+    },
+
+    // Configuración de la galería
+    gallery: {
+        itemsPerPage: 6,
+        enableLightbox: true
+    },
+
+    // Configuración del formulario
+    form: {
+        enableEmailNotifications: false, // Cambiar a true cuando se configure el backend
+        emailEndpoint: '/api/contact', // Endpoint del backend para enviar emails
+        requiredFields: ['nombre', 'email', 'mensaje']
+    }
+};
+
+// Exportar la configuración (compatible con módulos ES6)
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = CONFIG;
+}
+
+// Hacer la configuración disponible globalmente
+window.CONFIG = CONFIG;

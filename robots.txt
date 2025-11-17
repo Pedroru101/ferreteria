@@ -1,0 +1,44 @@
+# robots.txt para Metales & Hierros Mar del Plata
+# Última actualización: 2025-11-17
+
+# Permitir a todos los robots el acceso completo
+User-agent: *
+Allow: /
+
+# Disallow archivos de configuración y desarrollo
+Disallow: /config.js
+Disallow: /*.json
+
+# Disallow directorios privados (si existen en el futuro)
+Disallow: /private/
+Disallow: /admin/
+Disallow: /.git/
+
+# Configuración específica para motores de búsqueda principales
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
+
+# Yahoo
+User-agent: Slurp
+Allow: /
+
+# Yandex
+User-agent: Yandex
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+
+# Sitemap
+Sitemap: https://www.metalesmdp.com.ar/sitemap.xml
+
+# Crawl-delay (opcional, ajustar si hay problemas de carga del servidor)
+# User-agent: *
+# Crawl-delay: 10
