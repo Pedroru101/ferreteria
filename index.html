@@ -4,11 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Ferretería especializada en metales, hierros y estructuras en Mar del Plata. Fabricación a medida de tejidos, postes y colocación profesional. Venta masiva y minorista.">
-    <meta name="keywords" content="ferretería, metales, hierros, Mar del Plata, tejidos, postes, fabricación a medida, estructuras metálicas, herrería">
+    <meta name="keywords" content="ferretería, metales, hierros, Mar del Plata, tejidos, postes, fabricación a medida, estructuras metálicas, herrería, chapas, caños, bulonería">
     <meta name="author" content="Ferretería Metales Mar del Plata">
-    <meta property="og:title" content="Metales & Hierros Mar del Plata - Ferretería Especializada">
-    <meta property="og:description" content="Fabricación a medida de tejidos, postes y estructuras metálicas. Venta masiva y colocación profesional.">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Spanish">
+    <meta name="revisit-after" content="7 days">
+    <meta name="theme-color" content="#ff6b35">
+
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.metalesmdp.com.ar/">
+    <meta property="og:title" content="Metales & Hierros Mar del Plata - Ferretería Especializada">
+    <meta property="og:description" content="Fabricación a medida de tejidos, postes y estructuras metálicas. Venta masiva y colocación profesional. +20 años de experiencia.">
+    <meta property="og:image" content="https://www.metalesmdp.com.ar/og-image.jpg">
+    <meta property="og:locale" content="es_AR">
+    <meta property="og:site_name" content="Metales & Hierros Mar del Plata">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://www.metalesmdp.com.ar/">
+    <meta name="twitter:title" content="Metales & Hierros Mar del Plata">
+    <meta name="twitter:description" content="Fabricación a medida de tejidos, postes y estructuras metálicas. +20 años de experiencia en Mar del Plata.">
+    <meta name="twitter:image" content="https://www.metalesmdp.com.ar/twitter-image.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.metalesmdp.com.ar/">
 
     <title>Metales & Hierros Mar del Plata | Ferretería Especializada | Fabricación a Medida</title>
 
@@ -28,6 +48,173 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- Google Analytics (se activa cuando se configura en config.js) -->
+    <script>
+        // Cargar Google Analytics si está configurado
+        if (typeof CONFIG !== 'undefined' && CONFIG.analytics && CONFIG.analytics.googleAnalyticsId) {
+            const gaScript = document.createElement('script');
+            gaScript.async = true;
+            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${CONFIG.analytics.googleAnalyticsId}`;
+            document.head.appendChild(gaScript);
+
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', CONFIG.analytics.googleAnalyticsId);
+        }
+
+        // Cargar Google Tag Manager si está configurado
+        if (typeof CONFIG !== 'undefined' && CONFIG.analytics && CONFIG.analytics.googleTagManagerId) {
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer',CONFIG.analytics.googleTagManagerId);
+        }
+
+        // Cargar Facebook Pixel si está configurado
+        if (typeof CONFIG !== 'undefined' && CONFIG.analytics && CONFIG.analytics.facebookPixelId) {
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+            n.queue=[];t=b.createElement(e);t.async=!0;
+            t.src=v;s=b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t,s)}(window, document,'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', CONFIG.analytics.facebookPixelId);
+            fbq('track', 'PageView');
+        }
+    </script>
+
+    <!-- Structured Data (JSON-LD) para SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "HardwareStore",
+        "name": "Metales & Hierros Mar del Plata",
+        "image": "https://www.metalesmdp.com.ar/logo.png",
+        "logo": "https://www.metalesmdp.com.ar/logo.png",
+        "@id": "https://www.metalesmdp.com.ar",
+        "url": "https://www.metalesmdp.com.ar",
+        "telephone": "+54-223-512-3456",
+        "email": "info@metalesmdp.com.ar",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Av. Luro 1234",
+            "addressLocality": "Mar del Plata",
+            "addressRegion": "Buenos Aires",
+            "postalCode": "7600",
+            "addressCountry": "AR"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": -38.0055,
+            "longitude": -57.5426
+        },
+        "openingHoursSpecification": [
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday"
+                ],
+                "opens": "08:00",
+                "closes": "18:00"
+            },
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "Saturday",
+                "opens": "08:00",
+                "closes": "13:00"
+            }
+        ],
+        "sameAs": [
+            "https://facebook.com/metalesmdp",
+            "https://instagram.com/metalesmdp",
+            "https://linkedin.com/company/metalesmdp"
+        ],
+        "priceRange": "$$",
+        "description": "Distribuidora líder en Mar del Plata. Hierros, chapas, caños, tubos y más. Asesoramiento técnico, corte a medida y entrega a domicilio.",
+        "areaServed": {
+            "@type": "City",
+            "name": "Mar del Plata",
+            "containedIn": {
+                "@type": "State",
+                "name": "Buenos Aires",
+                "containedIn": {
+                    "@type": "Country",
+                    "name": "Argentina"
+                }
+            }
+        },
+        "paymentAccepted": "Cash, Credit Card, Debit Card, Bank Transfer",
+        "currenciesAccepted": "ARS",
+        "foundingDate": "2010",
+        "slogan": "Metales & Hierros de Primera Calidad"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Metales & Hierros Mar del Plata",
+        "description": "Fabricación a medida de tejidos, postes y estructuras metálicas. Venta masiva y colocación profesional.",
+        "url": "https://www.metalesmdp.com.ar",
+        "telephone": "+54-223-512-3456",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Av. Luro 1234",
+            "addressLocality": "Mar del Plata",
+            "postalCode": "7600",
+            "addressCountry": "AR"
+        },
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.8",
+            "reviewCount": "127"
+        },
+        "hasOfferCatalog": {
+            "@type": "OfferCatalog",
+            "name": "Productos de Metales",
+            "itemListElement": [
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Product",
+                        "name": "Hierros y Perfiles"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Product",
+                        "name": "Tejidos y Alambrados"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Product",
+                        "name": "Chapas y Planchuelas"
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "itemOffered": {
+                        "@type": "Product",
+                        "name": "Caños y Tubos"
+                    }
+                }
+            ]
+        }
+    }
+    </script>
 </head>
 <body>
     <!-- Preloader -->
@@ -47,6 +234,11 @@
         <i class="fab fa-whatsapp"></i>
         <span class="whatsapp-text">¡Consultanos!</span>
     </a>
+
+    <!-- Dark Mode Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
@@ -692,6 +884,20 @@
 
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="config.js"></script>
     <script src="script.js"></script>
+
+    <!-- Script para actualizar WhatsApp dinámicamente -->
+    <script>
+        // Actualizar el botón flotante de WhatsApp con la configuración
+        if (typeof CONFIG !== 'undefined' && CONFIG.contact && CONFIG.contact.whatsapp) {
+            const whatsappFloat = document.querySelector('.whatsapp-float');
+            if (whatsappFloat) {
+                const whatsappNumber = CONFIG.contact.whatsapp.number;
+                const whatsappMessage = CONFIG.contact.whatsapp.defaultMessage;
+                whatsappFloat.href = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(whatsappMessage)}`;
+            }
+        }
+    </script>
 </body>
 </html>

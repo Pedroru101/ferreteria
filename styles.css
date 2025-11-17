@@ -46,14 +46,36 @@
     --shadow-lg: 0 10px 20px rgba(0,0,0,0.15);
     --shadow-xl: 0 20px 40px rgba(0,0,0,0.2);
     --shadow-neon: 0 0 20px rgba(255,107,53,0.5);
+
+    /* Theme colors - adaptables para dark mode */
+    --bg-primary: #f8f9fa;
+    --bg-secondary: #ffffff;
+    --text-primary: #1a1a2e;
+    --text-secondary: #6c757d;
+    --border-color: rgba(0,0,0,0.1);
+}
+
+/* Dark Mode Variables */
+[data-theme="dark"] {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #1a1a2e;
+    --text-primary: #f8f9fa;
+    --text-secondary: #a8a8b3;
+    --border-color: rgba(255,255,255,0.1);
+    --light: #1a1a2e;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.3);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.3);
+    --shadow-lg: 0 10px 20px rgba(0,0,0,0.4);
+    --shadow-xl: 0 20px 40px rgba(0,0,0,0.5);
 }
 
 body {
     font-family: var(--font-main);
-    color: var(--secondary);
+    color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
-    background: var(--light);
+    background: var(--bg-primary);
+    transition: background-color var(--transition-normal), color var(--transition-normal);
 }
 
 html {
@@ -1665,4 +1687,86 @@ html {
 
 .visible {
     display: block !important;
+}
+
+/* ========================================
+   DARK MODE TOGGLE
+   ======================================== */
+.theme-toggle {
+    position: fixed;
+    top: 100px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 998;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-md);
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-lg);
+}
+
+.theme-toggle i {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    transition: transform var(--transition-normal);
+}
+
+.theme-toggle:hover i {
+    transform: rotate(20deg);
+}
+
+/* Ajustes para elementos específicos en dark mode */
+[data-theme="dark"] .product-card,
+[data-theme="dark"] .service-card,
+[data-theme="dark"] .process-step {
+    background: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .navbar {
+    background: rgba(26, 26, 46, 0.95);
+}
+
+[data-theme="dark"] .navbar.scrolled {
+    background: rgba(26, 26, 46, 0.98);
+}
+
+[data-theme="dark"] .footer {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border-color);
+}
+
+[data-theme="dark"] .stat-card {
+    background: rgba(26, 26, 46, 0.5);
+}
+
+@media (max-width: 768px) {
+    .theme-toggle {
+        top: auto;
+        bottom: 180px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+    }
+
+    .theme-toggle i {
+        font-size: 1rem;
+    }
 }

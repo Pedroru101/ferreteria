@@ -4,14 +4,31 @@ Sitio web ultra moderno para ferretería especializada en metales, hierros y est
 
 ## 🎯 Características Principales
 
-- ✨ **Diseño Ultra Moderno**: Interfaz con gradientes, animaciones y efectos visuales de última generación
-- 📱 **Totalmente Responsive**: Optimizado para todos los dispositivos (mobile, tablet, desktop)
-- 🚀 **SEO Optimizado**: Metadatos, estructura semántica y optimización para buscadores
-- 💬 **Botón Flotante WhatsApp**: Contacto directo con animaciones llamativas
-- 📊 **Orientado a Conversión**: Múltiples CTAs y formularios optimizados
-- ⚡ **Carga Rápida**: Optimización de rendimiento y lazy loading
-- 🎨 **Animaciones AOS**: Efectos al hacer scroll para mejor experiencia
-- 📧 **Formulario Inteligente**: Validación en tiempo real y múltiples métodos de contacto
+### ✨ Diseño y UX
+- **Diseño Ultra Moderno**: Interfaz con gradientes, animaciones y efectos visuales de última generación
+- **Totalmente Responsive**: Optimizado para todos los dispositivos (mobile, tablet, desktop)
+- **Modo Oscuro/Claro**: Toggle entre temas con persistencia en localStorage
+- **Animaciones AOS**: Efectos al hacer scroll para mejor experiencia
+- **Galería con Lightbox**: Visor de imágenes interactivo con navegación por teclado
+
+### 🚀 SEO y Performance
+- **SEO Avanzado**: Metadatos completos, Open Graph, Twitter Cards
+- **Structured Data (JSON-LD)**: Schema.org para mejor indexación
+- **Sitemap.xml y robots.txt**: Optimizado para crawlers
+- **Carga Rápida**: Optimización de rendimiento y lazy loading
+- **Google Analytics Ready**: Fácil integración con GA4, GTM y Facebook Pixel
+
+### 💬 Conversión y Contacto
+- **Botón Flotante WhatsApp**: Contacto directo con animaciones llamativas
+- **Formulario Inteligente**: Validación en tiempo real y múltiples métodos de contacto
+- **Configuración Centralizada**: Archivo config.js para fácil personalización
+- **Orientado a Conversión**: Múltiples CTAs y formularios optimizados
+
+### 🔧 Desarrollo
+- **Manejo de Errores**: Try-catch en funciones críticas
+- **Código Modular**: Fácil mantenimiento y escalabilidad
+- **Accesibilidad WCAG**: ARIA labels, navegación por teclado
+- **Sin Dependencias**: Vanilla JavaScript, sin frameworks pesados
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -71,14 +88,54 @@ npx http-server
 
 ## ⚙️ Personalización
 
+### 🔧 Configuración Centralizada (NUEVO)
+
+Ahora toda la configuración está centralizada en `config.js`. **Edita este archivo primero antes de usar el sitio.**
+
+```javascript
+// config.js
+const CONFIG = {
+    contact: {
+        whatsapp: {
+            number: '5492235123456',  // ⚠️ CAMBIAR por tu número real
+            displayNumber: '+54 223 512-3456',
+            defaultMessage: '¡Hola! Me interesa conocer más sobre sus productos.'
+        },
+        phone: {
+            number: '(0223) 512-3456',
+            href: 'tel:+542235123456'
+        },
+        email: 'info@metalesmdp.com.ar',  // ⚠️ CAMBIAR
+        address: {
+            street: 'Av. Luro 1234',       // ⚠️ CAMBIAR
+            city: 'Mar del Plata',
+            // ... más campos
+        }
+    },
+    business: {
+        name: 'Metales & Hierros Mar del Plata',
+        // ... más campos
+    },
+    social: {
+        facebook: 'https://facebook.com/metalesmdp',  // ⚠️ CAMBIAR
+        instagram: 'https://instagram.com/metalesmdp',
+        // ... más redes
+    },
+    analytics: {
+        googleAnalyticsId: '',  // Agregar tu ID de GA4: G-XXXXXXXXXX
+        // ... más opciones
+    }
+};
+```
+
 ### 1. Cambiar Número de WhatsApp
 
-Busca y reemplaza `5492235000000` con tu número real en:
-- `index.html` (líneas 33, 441, 579)
-- `script.js` (línea 117)
+**Ahora solo necesitas cambiar el número en `config.js`:**
+- Edita `config.contact.whatsapp.number`
+- **Formato correcto**: `549` + código de área + número (sin 0 ni 15)
+- **Ejemplo**: Para (0223) 456-7890 → `5492234567890`
 
-**Formato correcto**: `549` + código de área + número (sin 0 ni 15)
-**Ejemplo**: Para (0223) 456-7890 → `5492234567890`
+El sitio se actualizará automáticamente en todos los lugares.
 
 ### 2. Cambiar Colores
 
@@ -155,6 +212,8 @@ En `index.html` (líneas 5-10), actualiza:
 - Notificaciones toast
 - Lazy loading de imágenes
 - Performance monitoring
+- **Modo oscuro/claro** con persistencia
+- **Galería lightbox** con navegación por teclado
 
 ## 🎨 Paleta de Colores
 
@@ -173,18 +232,29 @@ En `index.html` (líneas 5-10), actualiza:
 - **Tablet**: 768px - 1199px
 - **Mobile**: 320px - 767px
 
+## 🔧 Mejoras Recientes (Versión 2.0)
+
+- [x] ✅ Integrar Google Analytics (GA4, GTM, Facebook Pixel)
+- [x] ✅ Implementar galería lightbox con navegación
+- [x] ✅ Modo oscuro/claro con toggle
+- [x] ✅ Configuración centralizada (config.js)
+- [x] ✅ Structured Data (JSON-LD) para SEO
+- [x] ✅ Sitemap.xml y robots.txt
+- [x] ✅ Meta tags mejorados (Open Graph, Twitter Cards)
+- [x] ✅ Mejor manejo de errores
+- [x] ✅ Documentación de deployment
+
 ## 🔧 Próximas Mejoras Sugeridas
 
-- [ ] Integrar Google Analytics
 - [ ] Agregar sistema de carrito de compras
-- [ ] Implementar galería lightbox
 - [ ] Conectar con sistema de inventario
-- [ ] Agregar chat en vivo
+- [ ] Agregar chat en vivo (Tawk.to, Tidio)
 - [ ] Implementar sistema de cotización automática
-- [ ] Agregar mapa de Google Maps
+- [ ] Agregar mapa de Google Maps con ubicación
 - [ ] Integrar pasarela de pago (Mercado Pago)
 - [ ] Sistema de reviews/testimonios
 - [ ] Blog de noticias y novedades
+- [ ] PWA (Progressive Web App)
 
 ## 📞 Canales de Contacto Configurados
 
@@ -196,37 +266,45 @@ En `index.html` (líneas 5-10), actualiza:
 
 ## 🎯 Optimizaciones SEO Incluidas
 
-- Meta tags optimizados
-- Open Graph para redes sociales
-- Estructura semántica HTML5
-- URLs amigables con anclas
-- Alt text en imágenes
-- Schema markup ready
-- Sitemap.xml compatible
-- Robots.txt compatible
-- Performance optimizado
-- Mobile-first approach
+- ✅ Meta tags optimizados (description, keywords, robots)
+- ✅ Open Graph completo (Facebook, Twitter Cards)
+- ✅ Estructura semántica HTML5
+- ✅ URLs amigables con anclas
+- ✅ Alt text en imágenes
+- ✅ **Structured Data (JSON-LD)**: HardwareStore + LocalBusiness
+- ✅ **Sitemap.xml** generado y listo para usar
+- ✅ **Robots.txt** configurado para crawlers
+- ✅ Performance optimizado (lazy loading, async scripts)
+- ✅ Mobile-first approach
+- ✅ Canonical URLs
+- ✅ Theme-color para navegadores móviles
 
 ## 📄 Estructura de Archivos
 
 ```
 ferreteria/
-├── index.html          # Página principal
-├── styles.css          # Estilos CSS
-├── script.js           # JavaScript
-└── README.md          # Este archivo
+├── index.html          # Página principal (HTML5 semántico)
+├── styles.css          # Estilos CSS (con variables y dark mode)
+├── script.js           # JavaScript (ES6+, modular)
+├── config.js           # 🆕 Configuración centralizada
+├── sitemap.xml         # 🆕 Sitemap para SEO
+├── robots.txt          # 🆕 Configuración de crawlers
+├── README.md           # Documentación principal
+└── DEPLOYMENT.md       # 🆕 Guía completa de deployment
 ```
 
 ## 💡 Tips de Uso
 
-1. **Actualiza el número de WhatsApp** antes de publicar
-2. **Agrega imágenes reales** de tus productos para mejor impacto
-3. **Configura Google Analytics** para medir tráfico
-4. **Personaliza los colores** según tu marca
-5. **Completa todos los datos** de contacto reales
+1. **⚠️ PRIMERO: Edita `config.js`** con tu información real (WhatsApp, contacto, redes)
+2. **Configura Google Analytics** agregando tu ID en `config.js`
+3. **Actualiza `sitemap.xml`** con tu dominio real
+4. **Agrega imágenes reales** de tus productos para mejor impacto
+5. **Personaliza los colores** según tu marca en `styles.css`
 6. **Prueba en móviles** antes de lanzar
-7. **Optimiza imágenes** (usa WebP, comprime JPG/PNG)
+7. **Optimiza imágenes** (usa WebP, comprime JPG/PNG con TinyPNG)
 8. **Configura un dominio propio** para mejor profesionalismo
+9. **Lee `DEPLOYMENT.md`** antes de desplegar
+10. **Prueba el modo oscuro** para asegurar que todo se vea bien
 
 ## 🚀 Despliegue
 

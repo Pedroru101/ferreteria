@@ -1,11 +1,62 @@
 // ========================================
+// CONFIGURATION CHECK
+// ========================================
+if (typeof CONFIG === 'undefined') {
+    console.error('⚠️ CONFIG no está definido. Asegúrate de incluir config.js antes de script.js');
+}
+
+// ========================================
+// DARK MODE TOGGLE
+// ========================================
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = themeToggle.querySelector('i');
+
+// Check for saved theme preference or default to 'light'
+const currentTheme = localStorage.getItem('theme') || 'light';
+document.documentElement.setAttribute('data-theme', currentTheme);
+updateThemeIcon(currentTheme);
+
+function updateThemeIcon(theme) {
+    if (theme === 'dark') {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+    } else {
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+    }
+}
+
+themeToggle.addEventListener('click', () => {
+    // Get current theme
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+
+    // Switch theme
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+    // Update document
+    document.documentElement.setAttribute('data-theme', newTheme);
+
+    // Save to localStorage
+    localStorage.setItem('theme', newTheme);
+
+    // Update icon
+    updateThemeIcon(newTheme);
+
+    // Show notification
+    const message = newTheme === 'dark'
+        ? '🌙 Modo oscuro activado'
+        : '☀️ Modo claro activado';
+    showNotification(message, 'success');
+});
+
+// ========================================
 // PRELOADER
 // ========================================
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     setTimeout(() => {
         preloader.classList.add('hidden');
-    }, 1000);
+    }, CONFIG?.animations?.preloaderDelay || 1000);
 });
 
 // ========================================
@@ -90,13 +141,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // ========================================
 // AOS (Animate On Scroll) INITIALIZATION
 // ========================================
-AOS.init({
-    duration: 800,
-    easing: 'ease-in-out',
-    once: true,
-    offset: 100,
-    delay: 100,
-});
+try {
+    const aosConfig = CONFIG?.animations?.aos || {};
+    AOS.init({
+        duration: aosConfig.duration || 800,
+        easing: aosConfig.easing || 'ease-in-out',
+        once: aosConfig.once !== undefined ? aosConfig.once : true,
+        offset: aosConfig.offset || 100,
+        delay: 100,
+    });
+} catch (error) {
+    console.error('Error inicializando AOS:', error);
+}
 
 // ========================================
 // CONTACT FORM HANDLING
@@ -106,33 +162,51 @@ const contactForm = document.getElementById('contactForm');
 contactForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    // Get form values
-    const nombre = document.getElementById('nombre').value;
-    const telefono = document.getElementById('telefono').value;
-    const email = document.getElementById('email').value;
-    const servicio = document.getElementById('servicio').value;
-    const mensaje = document.getElementById('mensaje').value;
+    try {
+        // Get form values
+        const nombre = document.getElementById('nombre').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const servicio = document.getElementById('servicio').value;
+        const mensaje = document.getElementById('mensaje').value.trim();
 
-    // Create WhatsApp message
-    const whatsappMessage = `*Nueva Consulta - Metales Mar del Plata*%0A%0A` +
-        `*Nombre:* ${encodeURIComponent(nombre)}%0A` +
-        `*Teléfono:* ${encodeURIComponent(telefono)}%0A` +
-        `*Email:* ${encodeURIComponent(email)}%0A` +
-        `*Servicio:* ${encodeURIComponent(servicio)}%0A` +
-        `*Mensaje:* ${encodeURIComponent(mensaje)}`;
+        // Validate required fields
+        const requiredFields = CONFIG?.form?.requiredFields || ['nombre', 'email', 'mensaje'];
+        const missingFields = requiredFields.filter(field => {
+            const element = document.getElementById(field);
+            return !element || !element.value.trim();
+        });
 
-    // WhatsApp number (change to your real number)
-    const whatsappNumber = '5492235000000';
-    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+        if (missingFields.length > 0) {
+            showNotification('Por favor completa todos los campos requeridos', 'error');
+            return;
+        }
 
-    // Show success message
-    showNotification('¡Gracias por tu consulta! Te estamos redirigiendo a WhatsApp...', 'success');
+        // Create WhatsApp message
+        const businessName = CONFIG?.business?.name || 'Metales Mar del Plata';
+        const whatsappMessage = `*Nueva Consulta - ${businessName}*%0A%0A` +
+            `*Nombre:* ${encodeURIComponent(nombre)}%0A` +
+            `*Teléfono:* ${encodeURIComponent(telefono)}%0A` +
+            `*Email:* ${encodeURIComponent(email)}%0A` +
+            `*Servicio:* ${encodeURIComponent(servicio)}%0A` +
+            `*Mensaje:* ${encodeURIComponent(mensaje)}`;
 
-    // Redirect to WhatsApp after a short delay
-    setTimeout(() => {
-        window.open(whatsappURL, '_blank');
-        contactForm.reset();
-    }, 1500);
+        // Get WhatsApp number from config
+        const whatsappNumber = CONFIG?.contact?.whatsapp?.number || '5492235123456';
+        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+        // Show success message
+        showNotification('¡Gracias por tu consulta! Te estamos redirigiendo a WhatsApp...', 'success');
+
+        // Redirect to WhatsApp after a short delay
+        setTimeout(() => {
+            window.open(whatsappURL, '_blank');
+            contactForm.reset();
+        }, 1500);
+    } catch (error) {
+        console.error('Error en formulario de contacto:', error);
+        showNotification('Ocurrió un error al enviar el formulario. Por favor intenta nuevamente.', 'error');
+    }
 });
 
 // ========================================
@@ -245,10 +319,190 @@ document.head.appendChild(style);
 // ========================================
 const galleryItems = document.querySelectorAll('.gallery-item');
 
-galleryItems.forEach(item => {
+// Create lightbox element
+function createLightbox() {
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    lightbox.className = 'lightbox';
+    lightbox.style.cssText = `
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 10001;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    `;
+
+    lightbox.innerHTML = `
+        <button class="lightbox-close" aria-label="Cerrar lightbox" style="
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 10002;
+            transition: transform 0.2s;
+        ">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content" style="
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        ">
+            <img src="" alt="" style="
+                max-width: 100%;
+                max-height: 80vh;
+                object-fit: contain;
+                border-radius: 8px;
+            ">
+            <p class="lightbox-caption" style="
+                color: white;
+                font-size: 1.2rem;
+                text-align: center;
+                max-width: 600px;
+            "></p>
+        </div>
+        <button class="lightbox-prev" aria-label="Anterior" style="
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 30px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        ">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="lightbox-next" aria-label="Siguiente" style="
+            position: absolute;
+            right: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 30px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.2s;
+        ">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    `;
+
+    document.body.appendChild(lightbox);
+    return lightbox;
+}
+
+const lightbox = createLightbox();
+const lightboxImg = lightbox.querySelector('img');
+const lightboxCaption = lightbox.querySelector('.lightbox-caption');
+const lightboxClose = lightbox.querySelector('.lightbox-close');
+const lightboxPrev = lightbox.querySelector('.lightbox-prev');
+const lightboxNext = lightbox.querySelector('.lightbox-next');
+
+let currentImageIndex = 0;
+const galleryItemsArray = Array.from(galleryItems);
+
+function openLightbox(index) {
+    currentImageIndex = index;
+    const item = galleryItemsArray[index];
+    const placeholderText = item.querySelector('span').textContent;
+
+    // Si hay una imagen real, la mostramos; si no, mostramos un placeholder
+    const imgSrc = item.dataset.src || 'https://via.placeholder.com/800x600/1a1a2e/ff6b35?text=' + encodeURIComponent(placeholderText);
+
+    lightboxImg.src = imgSrc;
+    lightboxCaption.textContent = placeholderText;
+
+    lightbox.style.display = 'flex';
+    setTimeout(() => {
+        lightbox.style.opacity = '1';
+    }, 10);
+
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    lightbox.style.opacity = '0';
+    setTimeout(() => {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = '';
+    }, 300);
+}
+
+function nextImage() {
+    currentImageIndex = (currentImageIndex + 1) % galleryItemsArray.length;
+    openLightbox(currentImageIndex);
+}
+
+function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + galleryItemsArray.length) % galleryItemsArray.length;
+    openLightbox(currentImageIndex);
+}
+
+// Event listeners para la galería
+galleryItems.forEach((item, index) => {
     item.addEventListener('click', () => {
-        const placeholderText = item.querySelector('span').textContent;
-        showNotification(`Función de galería para "${placeholderText}" - Agrega tus imágenes aquí`, 'success');
+        if (CONFIG?.gallery?.enableLightbox !== false) {
+            openLightbox(index);
+        } else {
+            const placeholderText = item.querySelector('span').textContent;
+            showNotification(`Función de galería para "${placeholderText}" - Agrega tus imágenes aquí`, 'success');
+        }
+    });
+});
+
+lightboxClose.addEventListener('click', closeLightbox);
+lightboxPrev.addEventListener('click', prevImage);
+lightboxNext.addEventListener('click', nextImage);
+
+// Cerrar con click fuera de la imagen
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+        closeLightbox();
+    }
+});
+
+// Navegación con teclado
+document.addEventListener('keydown', (e) => {
+    if (lightbox.style.display === 'flex') {
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
+    }
+});
+
+// Hover effects para botones del lightbox
+[lightboxClose, lightboxPrev, lightboxNext].forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        btn.style.background = 'rgba(255,255,255,0.2)';
+        btn.style.transform = btn === lightboxClose ? 'scale(1.1)' :
+                             btn === lightboxPrev ? 'translateY(-50%) scale(1.1)' :
+                             'translateY(-50%) scale(1.1)';
+    });
+    btn.addEventListener('mouseleave', () => {
+        btn.style.background = btn === lightboxClose ? 'none' : 'rgba(255,255,255,0.1)';
+        btn.style.transform = btn === lightboxClose ? 'scale(1)' : 'translateY(-50%) scale(1)';
     });
 });
 
