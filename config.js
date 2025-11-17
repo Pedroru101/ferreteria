@@ -8,8 +8,8 @@ const CONFIG = {
     // Información de contacto
     contact: {
         whatsapp: {
-            number: '5492235123456', // Formato: código país + área + número (sin espacios ni guiones)
-            displayNumber: '+54 223 512-3456',
+            number: '5491171416157', // Formato: código país + área + número (sin espacios ni guiones)
+            displayNumber: '+54 9 11 7141-6157',
             defaultMessage: '¡Hola! Me interesa conocer más sobre sus productos.'
         },
         phone: {
