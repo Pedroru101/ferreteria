@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Pantalla de Confirmación de Pedido</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/orders.css">
+    
+    <style>
+        body {
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .test-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .test-header p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .test-controls {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .test-controls h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .test-btn {
+            padding: 12px 20px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(45, 122, 62, 0.3);
+        }
+
+        .test-btn.secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border);
+        }
+
+        .test-btn.secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            box-shadow: none;
+        }
+
+        .test-info {
+            background: rgba(45, 122, 62, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .test-info h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .test-info ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .test-section {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .test-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .test-section h3 i {
+            color: var(--primary);
+        }
+
+        .order-preview {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 16px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-family: 'Courier New', monospace;
+        }
+
+        .order-preview pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        #consulta-pedido {
+            background: var(--bg-secondary);
+            padding: 40px 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+
+        #consulta-pedido h2 {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+        }
+
+        .tracking-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 12px;
+        }
+
+        .tracking-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-primary);
+            background: var(--bg-card);
+        }
+
+        .tracking-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .tracking-form button {
+            padding: 12px 24px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tracking-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(45, 122, 62, 0.3);
+        }
+
+        #orderStatus {
+            max-width: 600px;
+            margin: 20px auto 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>
+                <i class="fas fa-check-circle"></i>
+                Test - Pantalla de Confirmación de Pedido
+            </h1>
+            <p>Prueba la pantalla de confirmación después de crear un pedido</p>
+        </div>
+
+        <div class="test-controls">
+            <h2>Controles de Prueba</h2>
+            <div class="test-buttons">
+                <button class="test-btn" onclick="testSimpleOrder()">
+                    <i class="fas fa-shopping-cart"></i>
+                    Pedido Simple
+                </button>
+                <button class="test-btn" onclick="testOrderWithInstallation()">
+                    <i class="fas fa-tools"></i>
+                    Pedido con Instalación
+                </button>
+                <button class="test-btn" onclick="testLargeOrder()">
+                    <i class="fas fa-boxes"></i>
+                    Pedido Grande
+                </button>
+                <button class="test-btn secondary" onclick="clearOrders()">
+                    <i class="fas fa-trash"></i>
+                    Limpiar Pedidos
+                </button>
+            </div>
+
+            <div class="test-info">
+                <h3>Funcionalidades a Probar:</h3>
+                <ul>
+                    <li>Animación del checkmark de éxito</li>
+                    <li>Visualización del número de orden generado</li>
+                    <li>Resumen completo del pedido con productos y totales</li>
+                    <li>Botón "Consultar Estado" que navega a la sección de tracking</li>
+                    <li>Botón "Volver al Inicio" que cierra el modal y hace scroll arriba</li>
+                    <li>Información sobre el envío por WhatsApp</li>
+                    <li>Diseño responsive en diferentes tamaños de pantalla</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h3>
+                <i class="fas fa-list"></i>
+                Pedidos Guardados
+            </h3>
+            <div id="ordersList" class="order-preview">
+                <pre>No hay pedidos guardados</pre>
+            </div>
+        </div>
+
+        <section id="consulta-pedido">
+            <h2>Consultar Estado de Pedido</h2>
+            <div class="tracking-form">
+                <input type="text" id="orderIdInput" placeholder="Ingresa tu número de orden (ej: ORD-20240115-0001)">
+                <button onclick="trackOrder()">
+                    <i class="fas fa-search"></i>
+                    Consultar
+                </button>
+            </div>
+            <div id="orderStatus"></div>
+        </section>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/quotation.js"></script>
+    <script src="js/orders.js"></script>
+
+    <script>
+        function testSimpleOrder() {
+            const quotation = {
+                id: 'COT-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+                items: [
+                    {
+                        id: 'prod_001',
+                        name: 'Poste de Hormigón 2.5m',
+                        quantity: 10,
+                        unitPrice: 3500
+                    },
+                    {
+                        id: 'prod_002',
+                        name: 'Tejido Romboidal 1.50m x 10m',
+                        quantity: 5,
+                        unitPrice: 8500
+                    }
+                ],
+                installation: null,
+                subtotal: 77500,
+                total: 77500
+            };
+
+            const customerData = {
+                name: 'Juan Pérez',
+                phone: '+54 9 223 555-1234',
+                email: 'juan.perez@example.com',
+                paymentMethod: 'cash'
+            };
+
+            createAndShowOrder(quotation, customerData);
+        }
+
+        function testOrderWithInstallation() {
+            const quotation = {
+                id: 'COT-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+                items: [
+                    {
+                        id: 'prod_001',
+                        name: 'Poste de Quebracho 2.5m',
+                        quantity: 15,
+                        unitPrice: 4200
+                    },
+                    {
+                        id: 'prod_003',
+                        name: 'Alambre Galvanizado Cal. 14',
+                        quantity: 50,
+                        unitPrice: 450
+                    }
+                ],
+                installation: {
+                    linearMeters: 100,
+                    pricePerMeter: 500,
+                    subtotal: 50000
+                },
+                subtotal: 135500,
+                total: 135500
+            };
+
+            const customerData = {
+                name: 'María González',
+                phone: '+54 9 223 555-5678',
+                email: 'maria.gonzalez@example.com',
+                address: 'Av. Libertad 1234, Mar del Plata, Buenos Aires',
+                installationDate: '2024-02-15',
+                paymentMethod: 'transfer'
+            };
+
+            createAndShowOrder(quotation, customerData);
+        }
+
+        function testLargeOrder() {
+            const quotation = {
+                id: 'COT-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+                items: [
+                    {
+                        id: 'prod_001',
+                        name: 'Poste Olimpo 2.5m',
+                        quantity: 20,
+                        unitPrice: 4000
+                    },
+                    {
+                        id: 'prod_002',
+                        name: 'Tejido Romboidal 2.00m x 10m',
+                        quantity: 10,
+                        unitPrice: 12000
+                    },
+                    {
+                        id: 'prod_003',
+                        name: 'Alambre de Púa',
+                        quantity: 100,
+                        unitPrice: 380
+                    },
+                    {
+                        id: 'prod_004',
+                        name: 'Grampas para Poste',
+                        quantity: 200,
+                        unitPrice: 25
+                    },
+                    {
+                        id: 'prod_005',
+                        name: 'Tensores',
+                        quantity: 50,
+                        unitPrice: 150
+                    }
+                ],
+                installation: {
+                    linearMeters: 200,
+                    pricePerMeter: 500,
+                    subtotal: 100000
+                },
+                subtotal: 345500,
+                total: 345500
+            };
+
+            const customerData = {
+                name: 'Carlos Rodríguez',
+                phone: '+54 9 223 555-9012',
+                email: 'carlos.rodriguez@example.com',
+                address: 'Ruta 11 Km 45, General Pueyrredón, Buenos Aires',
+                installationDate: '2024-03-01',
+                paymentMethod: 'card'
+            };
+
+            createAndShowOrder(quotation, customerData);
+        }
+
+        function createAndShowOrder(quotation, customerData) {
+            try {
+                const orderManager = new OrderManager();
+                const order = orderManager.createOrder(quotation, customerData);
+
+                const confirmationUI = new OrderConfirmationUI();
+                confirmationUI.show(order);
+
+                updateOrdersList();
+
+                console.log('Pedido creado:', order);
+            } catch (error) {
+                console.error('Error al crear pedido:', error);
+                alert('Error: ' + error.message);
+            }
+        }
+
+        function updateOrdersList() {
+            const orderManager = new OrderManager();
+            const orders = orderManager.orders;
+
+            const ordersListEl = document.getElementById('ordersList');
+            
+            if (orders.length === 0) {
+                ordersListEl.innerHTML = '<pre>No hay pedidos guardados</pre>';
+                return;
+            }
+
+            let html = '<pre>';
+            orders.forEach((order, index) => {
+                html += `${index + 1}. ${order.id}\n`;
+                html += `   Cliente: ${order.customer.name}\n`;
+                html += `   Total: $${order.total.toLocaleString('es-AR')}\n`;
+                html += `   Estado: ${order.status}\n`;
+                html += `   Fecha: ${order.formatDate(order.date)}\n\n`;
+            });
+            html += '</pre>';
+
+            ordersListEl.innerHTML = html;
+        }
+
+        function clearOrders() {
+            if (confirm('¿Estás seguro de que quieres eliminar todos los pedidos de prueba?')) {
+                localStorage.removeItem('ferreteria_orders');
+                updateOrdersList();
+                alert('Pedidos eliminados');
+            }
+        }
+
+        function trackOrder() {
+            const orderIdInput = document.getElementById('orderIdInput');
+            const orderId = orderIdInput.value.trim();
+
+            if (!orderId) {
+                alert('Por favor ingresa un número de orden');
+                return;
+            }
+
+            const orderManager = new OrderManager();
+            const order = orderManager.getOrderById(orderId);
+
+            const statusContainer = document.getElementById('orderStatus');
+
+            if (!order) {
+                statusContainer.innerHTML = `
+                    <div style="background: rgba(211, 47, 47, 0.1); border-left: 4px solid #d32f2f; padding: 16px; border-radius: 8px; margin-top: 20px; text-align: center;">
+                        <i class="fas fa-exclamation-circle" style="font-size: 24px; color: #d32f2f; margin-bottom: 8px;"></i>
+                        <p style="margin: 0; color: var(--text-primary); font-weight: 600;">Pedido no encontrado</p>
+                        <p style="margin: 8px 0 0 0; font-size: 13px; color: var(--text-secondary);">
+                            Verifica que el número de orden sea correcto
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            const priceManager = new PriceManager();
+            const statusInfo = order.getStatusInfo();
+
+            let html = `
+                <div style="background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; padding: 24px; margin-top: 20px;">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">Número de Orden</div>
+                        <div style="font-size: 24px; font-weight: 700; color: var(--primary); font-family: 'Orbitron', monospace;">${order.id}</div>
+                    </div>
+
+                    <div style="background: var(--bg-secondary); border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span style="color: var(--text-secondary);">Estado Actual</span>
+                            <span style="padding: 6px 12px; border-radius: 6px; background-color: ${statusInfo.color}; color: white; font-size: 12px; font-weight: 600;">
+                                ${statusInfo.label}
+                            </span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="color: var(--text-secondary);">Cliente</span>
+                            <span style="color: var(--text-primary); font-weight: 500;">${order.customer.name}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="color: var(--text-secondary);">Fecha</span>
+                            <span style="color: var(--text-primary); font-weight: 500;">${order.formatDate(order.date)}</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span style="color: var(--text-secondary);">Total</span>
+                            <span style="color: var(--primary); font-weight: 700;">${priceManager.formatCurrency(order.total)}</span>
+                        </div>
+                    </div>
+
+                    <div style="font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px;">Productos</div>
+            `;
+
+            order.items.forEach(item => {
+                const subtotal = item.quantity * item.unitPrice;
+                html += `
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; border-bottom: 1px solid var(--border);">
+                        <span style="color: var(--text-secondary);">${item.name}</span>
+                        <span style="color: var(--text-primary); font-weight: 500;">x${item.quantity} - ${priceManager.formatCurrency(subtotal)}</span>
+                    </div>
+                `;
+            });
+
+            if (order.installation) {
+                html += `
+                    <div style="display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; border-bottom: 1px solid var(--border);">
+                        <span style="color: var(--text-secondary);">Instalación (${order.installation.linearMeters}m)</span>
+                        <span style="color: var(--text-primary); font-weight: 500;">${priceManager.formatCurrency(order.installation.subtotal)}</span>
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+
+            statusContainer.innerHTML = html;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateOrdersList();
+        });
+    </script>
+</body>
+</html>

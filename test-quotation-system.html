@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Sistema de Cotizaciones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="config.js"></script>
+    <style>
+        body {
+            background: var(--bg-primary);
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .test-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(45, 122, 62, 0.2);
+        }
+
+        .test-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+
+        .test-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .test-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .test-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 122, 62, 0.3);
+        }
+
+        .test-button:active {
+            transform: translateY(0);
+        }
+
+        .test-button.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--primary);
+        }
+
+        .test-button.secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .test-results {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .test-results h2 {
+            margin-top: 0;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .test-item {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--border);
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .test-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .test-item.pass {
+            border-left-color: #4caf50;
+            background: rgba(76, 175, 80, 0.08);
+        }
+
+        .test-item.fail {
+            border-left-color: #d32f2f;
+            background: rgba(211, 47, 47, 0.08);
+        }
+
+        .test-item-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .test-item-icon {
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+
+        .test-item.pass .test-item-icon {
+            color: #4caf50;
+        }
+
+        .test-item.fail .test-item-icon {
+            color: #d32f2f;
+        }
+
+        .test-item-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .test-item-status {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .test-item.pass .test-item-status {
+            background: rgba(76, 175, 80, 0.2);
+            color: #2d7a3e;
+        }
+
+        .test-item.fail .test-item-status {
+            background: rgba(211, 47, 47, 0.2);
+            color: #d32f2f;
+        }
+
+        .test-item-message {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-left: 34px;
+        }
+
+        .test-summary {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .test-summary h2 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .summary-item {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .summary-item-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .summary-item-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .success-rate {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(45, 122, 62, 0.1));
+            border: 1px solid #4caf50;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .success-rate-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: #4caf50;
+            margin-bottom: 5px;
+        }
+
+        .success-rate-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .console-output {
+            background: #1a1a1a;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+            border: 1px solid #333;
+        }
+
+        .console-line {
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+
+        .console-line.error {
+            color: #ff6b6b;
+        }
+
+        .console-line.success {
+            color: #51cf66;
+        }
+
+        .console-line.info {
+            color: #74c0fc;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(45, 122, 62, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+            .test-header {
+                padding: 20px;
+            }
+
+            .test-header h1 {
+                font-size: 22px;
+            }
+
+            .test-controls {
+                flex-direction: column;
+            }
+
+            .test-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1><i class="fas fa-flask"></i> Test - Sistema de Cotizaciones</h1>
+            <p>Suite de pruebas automatizadas para verificar la funcionalidad del módulo de cotizaciones</p>
+        </div>
+
+        <div class="test-controls">
+            <button class="test-button" onclick="runAllTests()">
+                <i class="fas fa-play"></i> Ejecutar Todos los Tests
+            </button>
+            <button class="test-button secondary" onclick="clearResults()">
+                <i class="fas fa-trash"></i> Limpiar Resultados
+            </button>
+            <button class="test-button secondary" onclick="clearLocalStorage()">
+                <i class="fas fa-database"></i> Limpiar localStorage
+            </button>
+        </div>
+
+        <div id="testSummary" class="test-summary" style="display: none;">
+            <h2><i class="fas fa-chart-bar"></i> Resumen de Ejecución</h2>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-item-value" id="totalTests">0</div>
+                    <div class="summary-item-label">Total de Tests</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-item-value" id="passedTests" style="color: #4caf50;">0</div>
+                    <div class="summary-item-label">Pasados</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-item-value" id="failedTests" style="color: #d32f2f;">0</div>
+                    <div class="summary-item-label">Fallidos</div>
+                </div>
+            </div>
+            <div class="success-rate">
+                <div class="success-rate-value" id="successRate">0%</div>
+                <div class="success-rate-label">Tasa de Éxito</div>
+            </div>
+        </div>
+
+        <div id="testResults" class="test-results" style="display: none;">
+            <h2><i class="fas fa-list-check"></i> Resultados de Tests</h2>
+            <div id="resultsList"></div>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            <i class="fas fa-flask"></i>
+            <p>Haz clic en "Ejecutar Todos los Tests" para comenzar</p>
+        </div>
+
+        <div id="consoleOutput" class="console-output" style="display: none;"></div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/quotation.js"></script>
+    <script src="test-quotation-system.js"></script>
+
+    <script>
+        let originalLog = console.log;
+        let originalError = console.error;
+        let consoleLines = [];
+
+        function captureConsole() {
+            console.log = function(...args) {
+                originalLog.apply(console, args);
+                const message = args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                ).join(' ');
+                addConsoleLine(message, 'info');
+            };
+
+            console.error = function(...args) {
+                originalError.apply(console, args);
+                const message = args.map(arg => 
+                    typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+                ).join(' ');
+                addConsoleLine(message, 'error');
+            };
+        }
+
+        function addConsoleLine(message, type = 'info') {
+            const consoleOutput = document.getElementById('consoleOutput');
+            const line = document.createElement('div');
+            line.className = `console-line ${type}`;
+            line.textContent = message;
+            consoleOutput.appendChild(line);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function runAllTests() {
+            consoleLines = [];
+            document.getElementById('emptyState').style.display = 'none';
+            document.getElementById('consoleOutput').style.display = 'block';
+            document.getElementById('consoleOutput').innerHTML = '';
+
+            captureConsole();
+
+            const results = window.quotationSystemTests.runAll();
+
+            displayResults(results);
+        }
+
+        function displayResults(results) {
+            const summary = document.getElementById('testSummary');
+            const resultsDiv = document.getElementById('testResults');
+            const resultsList = document.getElementById('resultsList');
+
+            summary.style.display = 'block';
+            resultsDiv.style.display = 'block';
+
+            document.getElementById('totalTests').textContent = results.total;
+            document.getElementById('passedTests').textContent = results.passed;
+            document.getElementById('failedTests').textContent = results.failed;
+
+            const successRate = results.total > 0 
+                ? ((results.passed / results.total) * 100).toFixed(2)
+                : 0;
+            document.getElementById('successRate').textContent = successRate + '%';
+
+            resultsList.innerHTML = results.results.map(result => `
+                <div class="test-item ${result.status.toLowerCase()}">
+                    <div class="test-item-header">
+                        <div class="test-item-icon">
+                            <i class="fas ${result.status === 'PASS' ? 'fa-check-circle' : 'fa-times-circle'}"></i>
+                        </div>
+                        <div class="test-item-name">${result.name}</div>
+                        <div class="test-item-status">${result.status}</div>
+                    </div>
+                    <div class="test-item-message">${result.message}</div>
+                </div>
+            `).join('');
+        }
+
+        function clearResults() {
+            document.getElementById('testSummary').style.display = 'none';
+            document.getElementById('testResults').style.display = 'none';
+            document.getElementById('consoleOutput').style.display = 'none';
+            document.getElementById('emptyState').style.display = 'block';
+            document.getElementById('resultsList').innerHTML = '';
+            document.getElementById('consoleOutput').innerHTML = '';
+        }
+
+        function clearLocalStorage() {
+            localStorage.clear();
+            alert('localStorage ha sido limpiado');
+        }
+
+        // Restaurar console al descargar
+        window.addEventListener('beforeunload', () => {
+            console.log = originalLog;
+            console.error = originalError;
+        });
+    </script>
+</body>
+</html>

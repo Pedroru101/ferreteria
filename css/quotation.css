@@ -1,0 +1,1161 @@
+/* ========================================
+   QUOTATION MODAL STYLES
+   ======================================== */
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: none;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.modal.active {
+    opacity: 1;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+}
+
+.modal-container {
+    position: relative;
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    margin: 5vh auto;
+    background: var(--bg-card);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+}
+
+.modal-title i {
+    color: var(--primary);
+    font-size: 28px;
+}
+
+.modal-close {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+.modal-close:hover {
+    background: #d32f2f;
+    color: white;
+    transform: rotate(90deg);
+}
+
+.modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+.modal-body::-webkit-scrollbar {
+    width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-hover);
+}
+
+.modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.modal-footer .btn-outline {
+    padding: 12px 24px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--primary);
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.modal-footer .btn-outline:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(45, 122, 62, 0.3);
+}
+
+.modal-footer .btn-outline:active {
+    transform: translateY(0);
+}
+
+.modal-footer .btn-outline i {
+    font-size: 16px;
+}
+
+/* ========================================
+   QUOTATION CONTENT
+   ======================================== */
+.quotation-summary {
+    margin-bottom: 2rem;
+}
+
+.quotation-summary h4,
+.quotation-items h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+.project-info {
+    background: var(--bg-secondary);
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.info-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.info-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.quotation-items {
+    margin-bottom: 2rem;
+}
+
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.quotation-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    transition: all var(--transition-fast);
+}
+
+.quotation-item:hover {
+    background: rgba(45, 122, 62, 0.1);
+    transform: translateX(5px);
+}
+
+.item-icon {
+    width: 50px;
+    height: 50px;
+    background: var(--gradient-primary);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.item-icon i {
+    font-size: 24px;
+    color: white;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.25rem 0;
+}
+
+.item-description {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.item-quantity {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+}
+
+.quantity-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+}
+
+.quantity-unit {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.item-pricing {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    min-width: 140px;
+}
+
+.item-unit-price {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.item-subtotal {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary);
+    line-height: 1;
+}
+
+/* ========================================
+   INSTALLATION OPTION
+   ======================================== */
+.installation-option {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 2px solid var(--border);
+}
+
+.installation-header {
+    margin-bottom: 1rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.checkbox-container input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: relative;
+    height: 24px;
+    width: 24px;
+    background-color: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.checkbox-container:hover .checkmark {
+    border-color: var(--primary);
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 11px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.installation-details {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.installation-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.info-row:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+}
+
+.info-row.total-row {
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    border-top: 2px solid var(--border);
+}
+
+.info-row .info-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.info-row .info-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.info-row.total-row .info-label {
+    font-size: 16px;
+    color: var(--text-primary);
+}
+
+.info-row.total-row .info-value {
+    font-size: 20px;
+    color: var(--primary);
+}
+
+.quotation-totals {
+    margin: 2rem 0 1.5rem 0;
+    padding: 1.5rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+    border: 2px solid var(--border);
+}
+
+.totals-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+}
+
+.totals-row:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+}
+
+.totals-label {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.totals-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.total-row {
+    padding-top: 1rem;
+}
+
+.total-row .totals-label {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.total-row .totals-value {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.quotation-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 1.25rem;
+    background: rgba(76, 175, 80, 0.1);
+    border-left: 4px solid var(--primary);
+    border-radius: 8px;
+}
+
+.quotation-note i {
+    color: var(--primary);
+    font-size: 20px;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.quotation-note p {
+    font-size: 14px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.empty-message {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 15px;
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE
+   ======================================== */
+@media (max-width: 767px) {
+    .modal-container {
+        width: 95%;
+        margin: 2.5vh auto;
+        max-height: 95vh;
+    }
+
+    .modal-header {
+        padding: 1.5rem;
+    }
+
+    .modal-title {
+        font-size: 20px;
+    }
+
+    .modal-title i {
+        font-size: 24px;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+
+    .modal-footer {
+        padding: 1rem 1.5rem;
+        flex-direction: column;
+    }
+
+    .modal-footer .btn-secondary,
+    .modal-footer .btn-outline,
+    .modal-footer .btn-primary {
+        width: 100%;
+    }
+
+    .checkbox-label {
+        font-size: 14px;
+    }
+
+    .installation-option {
+        padding: 1rem;
+    }
+
+    .info-row .info-label {
+        font-size: 13px;
+    }
+
+    .info-row .info-value {
+        font-size: 14px;
+    }
+
+    .info-row.total-row .info-label {
+        font-size: 14px;
+    }
+
+    .info-row.total-row .info-value {
+        font-size: 18px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quotation-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .item-quantity {
+        align-items: flex-start;
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    .quantity-value {
+        font-size: 20px;
+    }
+
+    .item-pricing {
+        width: 100%;
+        align-items: flex-start;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--border);
+    }
+
+    .item-unit-price {
+        font-size: 12px;
+    }
+
+    .item-subtotal {
+        font-size: 18px;
+    }
+
+    .totals-label {
+        font-size: 14px;
+    }
+
+    .totals-value {
+        font-size: 18px;
+    }
+
+    .total-row .totals-label {
+        font-size: 16px;
+    }
+
+    .total-row .totals-value {
+        font-size: 24px;
+    }
+}
+
+/* ========================================
+   DARK MODE
+   ======================================== */
+[data-theme="dark"] .modal-overlay {
+    background: rgba(0, 0, 0, 0.85);
+}
+
+[data-theme="dark"] .modal-container {
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .quotation-item:hover {
+    background: rgba(76, 175, 80, 0.15);
+}
+
+/* ========================================
+   WHATSAPP BUTTON
+   ======================================== */
+.btn-success {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-success:active {
+    transform: translateY(0);
+}
+
+.btn-success i {
+    font-size: 18px;
+}
+
+/* ========================================
+   QUOTATION DISPLAY CARD (Saved Quotations)
+   ======================================== */
+.quotation-display-card {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 20px var(--shadow);
+    border: 2px solid var(--border);
+    margin-bottom: 2rem;
+    transition: all var(--transition-fast);
+}
+
+.quotation-display-card:hover {
+    box-shadow: 0 8px 30px var(--shadow);
+    transform: translateY(-2px);
+}
+
+.quotation-display-card.expired {
+    border-color: #d32f2f;
+    opacity: 0.85;
+}
+
+.quotation-display-card.valid {
+    border-color: var(--primary);
+}
+
+.quotation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.quotation-id-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.quotation-id-section > i {
+    font-size: 32px;
+    color: var(--primary);
+}
+
+.quotation-id {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0 0 0.25rem 0;
+}
+
+.quotation-date {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.quotation-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.quotation-status.valid {
+    background: rgba(76, 175, 80, 0.1);
+    color: var(--primary);
+}
+
+.quotation-status.expired {
+    background: rgba(211, 47, 47, 0.1);
+    color: #d32f2f;
+}
+
+.quotation-status i {
+    font-size: 16px;
+}
+
+.quotation-validity {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    font-size: 14px;
+    color: var(--text-secondary);
+}
+
+.quotation-validity i {
+    color: var(--primary);
+    font-size: 16px;
+}
+
+.quotation-project-info,
+.quotation-items-section,
+.quotation-installation-section {
+    margin-bottom: 2rem;
+}
+
+.quotation-project-info h4,
+.quotation-items-section h4,
+.quotation-installation-section h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.quotation-project-info h4 i,
+.quotation-items-section h4 i,
+.quotation-installation-section h4 i {
+    color: var(--primary);
+}
+
+.project-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.detail-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.detail-value {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.installation-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+}
+
+.installation-details .detail-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+}
+
+.installation-details .detail-item:not(:last-child) {
+    border-bottom: 1px solid var(--border);
+}
+
+.quotation-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+}
+
+.quotation-actions .btn-outline,
+.quotation-actions .btn-success {
+    flex: 1;
+    justify-content: center;
+}
+
+/* ========================================
+   RESPONSIVE - QUOTATION DISPLAY
+   ======================================== */
+@media (max-width: 767px) {
+    .quotation-display-card {
+        padding: 1.5rem;
+    }
+
+    .quotation-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .quotation-id-section {
+        width: 100%;
+    }
+
+    .quotation-status {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .project-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quotation-actions {
+        flex-direction: column;
+    }
+
+    .quotation-actions .btn-outline,
+    .quotation-actions .btn-success {
+        width: 100%;
+    }
+}
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+.modal-close:focus-visible,
+.modal-footer .btn-secondary:focus-visible,
+.modal-footer .btn-outline:focus-visible,
+.modal-footer .btn-primary:focus-visible,
+.modal-footer .btn-success:focus-visible,
+.quotation-actions .btn-outline:focus-visible,
+.quotation-actions .btn-success:focus-visible {
+    outline: 3px solid var(--primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .modal,
+    .modal-container,
+    .quotation-item,
+    .quotation-display-card {
+        animation: none;
+        transition: none;
+    }
+}
+
+
+/* ========================================
+   QUOTATION LOOKUP SECTION
+   ======================================== */
+.quotation-lookup-section {
+    padding: 80px 0;
+    background: var(--bg-primary);
+}
+
+.quotation-lookup-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.lookup-form-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.lookup-form-card .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.lookup-form-card label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.lookup-form-card label i {
+    color: var(--primary);
+}
+
+.lookup-form-card .form-input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+    transition: all var(--transition-fast);
+}
+
+.lookup-form-card .form-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(45, 122, 62, 0.1);
+}
+
+.lookup-form-card .btn-primary {
+    width: 100%;
+    padding: 1rem 2rem;
+    font-size: 16px;
+    justify-content: center;
+}
+
+.quotation-display-container {
+    min-height: 100px;
+}
+
+.quotation-not-found {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 2px dashed var(--border);
+}
+
+.quotation-not-found i {
+    font-size: 48px;
+    color: #f57c00;
+    margin-bottom: 1rem;
+}
+
+.quotation-not-found h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.quotation-not-found p {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.recent-quotations {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--bg-card);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px var(--shadow);
+}
+
+.recent-quotations h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.recent-quotations h3 i {
+    color: var(--primary);
+}
+
+.recent-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.recent-quotation-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 10px;
+    border: 2px solid var(--border);
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.recent-quotation-item:hover {
+    border-color: var(--primary);
+    transform: translateX(5px);
+}
+
+.recent-quotation-info {
+    flex: 1;
+}
+
+.recent-quotation-id {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.25rem;
+}
+
+.recent-quotation-date {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.recent-quotation-total {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.recent-quotation-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 1rem;
+}
+
+.recent-quotation-status.valid {
+    background: rgba(76, 175, 80, 0.1);
+    color: var(--primary);
+}
+
+.recent-quotation-status.expired {
+    background: rgba(211, 47, 47, 0.1);
+    color: #d32f2f;
+}
+
+.empty-recent-quotations {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+}
+
+.empty-recent-quotations i {
+    font-size: 48px;
+    color: var(--text-muted);
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-recent-quotations p {
+    font-size: 14px;
+    margin: 0;
+}
+
+/* ========================================
+   RESPONSIVE - QUOTATION LOOKUP
+   ======================================== */
+@media (max-width: 767px) {
+    .quotation-lookup-section {
+        padding: 60px 0;
+    }
+
+    .lookup-form-card {
+        padding: 1.5rem;
+    }
+
+    .recent-quotation-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .recent-quotation-total {
+        font-size: 16px;
+    }
+
+    .recent-quotation-status {
+        margin-left: 0;
+    }
+}

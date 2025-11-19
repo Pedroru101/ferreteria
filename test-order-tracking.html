@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Consulta de Estado de Pedido</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/orders.css">
+    
+    <style>
+        body {
+            padding: 40px 20px;
+            background: var(--bg-primary);
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-header {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .test-header h1 {
+            margin: 0 0 10px 0;
+            color: var(--text-primary);
+        }
+        
+        .test-header p {
+            margin: 0;
+            color: var(--text-secondary);
+        }
+        
+        .test-actions {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .test-actions h2 {
+            margin: 0 0 20px 0;
+            color: var(--text-primary);
+            font-size: 20px;
+        }
+        
+        .test-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(45, 122, 62, 0.3);
+        }
+        
+        .test-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .test-info {
+            background: var(--accent-light);
+            padding: 16px;
+            border-radius: 12px;
+            margin-top: 20px;
+            color: var(--text-primary);
+        }
+        
+        .test-info strong {
+            color: var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>Test - Consulta de Estado de Pedido</h1>
+            <p>Prueba la funcionalidad de consulta y visualización de estado de pedidos</p>
+        </div>
+        
+        <div class="test-actions">
+            <h2>Acciones de Prueba</h2>
+            <div class="test-buttons">
+                <button class="test-btn" onclick="createTestOrder()">
+                    <i class="fas fa-plus"></i> Crear Pedido de Prueba
+                </button>
+                <button class="test-btn" onclick="createMultipleTestOrders()">
+                    <i class="fas fa-layer-group"></i> Crear 3 Pedidos de Prueba
+                </button>
+                <button class="test-btn secondary" onclick="listAllOrders()">
+                    <i class="fas fa-list"></i> Listar Todos los Pedidos
+                </button>
+                <button class="test-btn secondary" onclick="clearAllOrders()">
+                    <i class="fas fa-trash"></i> Limpiar Todos los Pedidos
+                </button>
+            </div>
+            <div class="test-info" id="testInfo" style="display: none;"></div>
+        </div>
+        
+        <section class="order-tracking-section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-subtitle">Seguimiento</span>
+                    <h2 class="section-title">Consultar Estado de <span class="text-gradient">Pedido</span></h2>
+                    <p class="section-description">Ingresa tu número de orden para ver el estado actual de tu pedido</p>
+                </div>
+
+                <div class="tracking-wrapper">
+                    <div class="tracking-form-container">
+                        <div class="tracking-form">
+                            <div class="form-group">
+                                <label for="orderIdInput" class="form-label">
+                                    <i class="fas fa-hashtag"></i>
+                                    Número de Orden
+                                </label>
+                                <div class="input-with-button">
+                                    <input 
+                                        type="text" 
+                                        id="orderIdInput" 
+                                        class="form-input" 
+                                        placeholder="Ej: ORD-20240115-0001"
+                                        aria-label="Número de orden"
+                                    >
+                                    <button class="btn-track" onclick="trackOrder()" aria-label="Consultar pedido">
+                                        <i class="fas fa-search"></i>
+                                        Consultar
+                                    </button>
+                                </div>
+                                <div class="form-hint">
+                                    <i class="fas fa-info-circle"></i>
+                                    El número de orden fue enviado por WhatsApp al confirmar tu pedido
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="orderStatusDisplay" class="order-status-display" style="display: none;">
+                    </div>
+
+                    <div id="orderNotFound" class="order-not-found" style="display: none;">
+                        <div class="not-found-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>Pedido no encontrado</h3>
+                        <p>No se encontró ningún pedido con ese número de orden.</p>
+                        <p class="not-found-hint">Verifica que el número sea correcto o contactanos por WhatsApp.</p>
+                        <a href="https://wa.me/5491171416157?text=Hola!%20Necesito%20ayuda%20con%20mi%20pedido" 
+                           target="_blank" 
+                           class="btn-secondary">
+                            <i class="fab fa-whatsapp"></i>
+                            Contactar por WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script src="config.js"></script>
+    <script src="js/quotation.js"></script>
+    <script src="js/orders.js"></script>
+    
+    <script>
+        function showTestInfo(message, type = 'info') {
+            const infoDiv = document.getElementById('testInfo');
+            infoDiv.style.display = 'block';
+            infoDiv.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i> ${message}`;
+            
+            setTimeout(() => {
+                infoDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function createTestOrder() {
+            const orderManager = new OrderManager();
+            
+            const testQuotation = {
+                id: 'COT-' + Date.now(),
+                items: [
+                    {
+                        id: 'poste_hormigon_2_5m',
+                        name: 'Poste de Hormigón 2.5m',
+                        quantity: 10,
+                        unitPrice: 3500,
+                        subtotal: 35000
+                    },
+                    {
+                        id: 'tejido_romboidal_1_5m',
+                        name: 'Tejido Romboidal 1.5m x 10m',
+                        quantity: 5,
+                        unitPrice: 8500,
+                        subtotal: 42500
+                    }
+                ],
+                installation: {
+                    linearMeters: 50,
+                    pricePerMeter: 500,
+                    subtotal: 25000
+                },
+                subtotal: 102500,
+                total: 102500
+            };
+            
+            const testCustomer = {
+                name: 'Juan Pérez',
+                phone: '+54 9 11 1234-5678',
+                email: 'juan.perez@example.com',
+                address: 'Calle Falsa 123, Mar del Plata',
+                installationDate: '2024-02-01',
+                paymentMethod: 'transfer'
+            };
+            
+            try {
+                const order = orderManager.createOrder(testQuotation, testCustomer);
+                showTestInfo(`Pedido creado exitosamente: <strong>${order.id}</strong>`, 'success');
+                
+                document.getElementById('orderIdInput').value = order.id;
+            } catch (error) {
+                showTestInfo(`Error al crear pedido: ${error.message}`, 'error');
+            }
+        }
+        
+        function createMultipleTestOrders() {
+            const orderManager = new OrderManager();
+            const statuses = ['pending', 'confirmed', 'in_progress'];
+            const createdOrders = [];
+            
+            for (let i = 0; i < 3; i++) {
+                const testQuotation = {
+                    id: 'COT-' + (Date.now() + i),
+                    items: [
+                        {
+                            id: 'poste_hormigon_2_5m',
+                            name: 'Poste de Hormigón 2.5m',
+                            quantity: 5 + i * 2,
+                            unitPrice: 3500,
+                            subtotal: (5 + i * 2) * 3500
+                        }
+                    ],
+                    subtotal: (5 + i * 2) * 3500,
+                    total: (5 + i * 2) * 3500
+                };
+                
+                const testCustomer = {
+                    name: `Cliente ${i + 1}`,
+                    phone: `+54 9 11 1234-567${i}`,
+                    email: `cliente${i + 1}@example.com`,
+                    paymentMethod: 'cash'
+                };
+                
+                try {
+                    const order = orderManager.createOrder(testQuotation, testCustomer);
+                    
+                    if (i > 0) {
+                        order.updateStatus(statuses[i], `Pedido actualizado a ${statuses[i]}`);
+                        orderManager.saveOrders();
+                    }
+                    
+                    createdOrders.push(order.id);
+                } catch (error) {
+                    console.error('Error al crear pedido:', error);
+                }
+            }
+            
+            showTestInfo(`Se crearon ${createdOrders.length} pedidos de prueba`, 'success');
+        }
+        
+        function listAllOrders() {
+            const orderManager = new OrderManager();
+            const orders = orderManager.orders;
+            
+            if (orders.length === 0) {
+                showTestInfo('No hay pedidos guardados', 'info');
+                return;
+            }
+            
+            let message = `<strong>Pedidos guardados (${orders.length}):</strong><br>`;
+            orders.forEach(order => {
+                message += `${order.id} - ${order.customer.name} - ${order.status}<br>`;
+            });
+            
+            showTestInfo(message, 'info');
+        }
+        
+        function clearAllOrders() {
+            if (confirm('¿Estás seguro de que quieres eliminar todos los pedidos de prueba?')) {
+                localStorage.removeItem('ferreteria_orders');
+                showTestInfo('Todos los pedidos han sido eliminados', 'success');
+            }
+        }
+    </script>
+</body>
+</html>

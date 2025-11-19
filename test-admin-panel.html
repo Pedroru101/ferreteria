@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Panel de Administración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="config.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: var(--bg-primary);
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .test-section:last-child {
+            border-bottom: none;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        .test-button {
+            background: var(--primary);
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .test-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        .test-button.secondary {
+            background: var(--secondary);
+        }
+        .test-button.secondary:hover {
+            background: #0d3a1a;
+        }
+        .test-output {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--text-primary);
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+        }
+        .test-success {
+            color: #4caf50;
+        }
+        .test-error {
+            color: #d32f2f;
+        }
+        .test-info {
+            color: #0288d1;
+        }
+        .test-warning {
+            color: #f57c00;
+        }
+        .summary {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+            border-left: 4px solid var(--primary);
+        }
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            font-weight: 600;
+        }
+        .summary-passed {
+            color: #4caf50;
+        }
+        .summary-failed {
+            color: #d32f2f;
+        }
+        .summary-total {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1><i class="fas fa-shield-alt"></i> Test - Panel de Administración</h1>
+        <p style="color: var(--text-secondary); margin-bottom: 20px;">
+            Suite de pruebas automatizadas para verificar todas las funcionalidades del panel de administración
+        </p>
+        
+        <div class="test-section">
+            <div class="test-title">Ejecución de Tests</div>
+            <button class="test-button" onclick="runAllTests()">
+                <i class="fas fa-play"></i> Ejecutar Todos los Tests
+            </button>
+            <button class="test-button secondary" onclick="clearOutput()">
+                <i class="fas fa-trash"></i> Limpiar Salida
+            </button>
+            <button class="test-button secondary" onclick="openAdminPanel()">
+                <i class="fas fa-external-link-alt"></i> Abrir Panel Admin
+            </button>
+            <div id="testOutput" class="test-output"></div>
+            <div id="testSummary" class="summary" style="display: none;">
+                <div class="summary-item">
+                    <span>Tests Pasados:</span>
+                    <span class="summary-passed" id="passedCount">0</span>
+                </div>
+                <div class="summary-item">
+                    <span>Tests Fallidos:</span>
+                    <span class="summary-failed" id="failedCount">0</span>
+                </div>
+                <div class="summary-item">
+                    <span>Total de Tests:</span>
+                    <span class="summary-total" id="totalCount">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">Pruebas Individuales</div>
+            <button class="test-button" onclick="testAuthenticationOnly()">
+                <i class="fas fa-lock"></i> Test Autenticación
+            </button>
+            <button class="test-button" onclick="testStatisticsOnly()">
+                <i class="fas fa-chart-bar"></i> Test Estadísticas
+            </button>
+            <button class="test-button" onclick="testFiltersOnly()">
+                <i class="fas fa-filter"></i> Test Filtros
+            </button>
+            <button class="test-button" onclick="testStatusUpdateOnly()">
+                <i class="fas fa-edit"></i> Test Actualización de Estado
+            </button>
+            <button class="test-button" onclick="testCSVExportOnly()">
+                <i class="fas fa-download"></i> Test Exportación CSV
+            </button>
+            <button class="test-button" onclick="testProductsOnly()">
+                <i class="fas fa-box"></i> Test Gestión de Productos
+            </button>
+            <button class="test-button" onclick="testPricesOnly()">
+                <i class="fas fa-tag"></i> Test Gestión de Precios
+            </button>
+            <button class="test-button" onclick="testConfigOnly()">
+                <i class="fas fa-cog"></i> Test Configuración
+            </button>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">Gestión de Datos</div>
+            <button class="test-button" onclick="setupTestData()">
+                <i class="fas fa-plus"></i> Crear Datos de Prueba
+            </button>
+            <button class="test-button secondary" onclick="clearAllData()">
+                <i class="fas fa-trash"></i> Limpiar Todos los Datos
+            </button>
+            <button class="test-button secondary" onclick="exportTestData()">
+                <i class="fas fa-download"></i> Exportar Datos
+            </button>
+        </div>
+    </div>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="test-admin-panel-automated.js"></script>
+
+    <script>
+        function log(message, type = 'info') {
+            const output = document.getElementById('testOutput');
+            const timestamp = new Date().toLocaleTimeString('es-AR');
+            const className = `test-${type}`;
+            const line = document.createElement('div');
+            line.className = className;
+            line.textContent = `[${timestamp}] ${message}`;
+            output.appendChild(line);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearOutput() {
+            document.getElementById('testOutput').innerHTML = '';
+            document.getElementById('testSummary').style.display = 'none';
+        }
+
+        function displaySummary(results) {
+            document.getElementById('passedCount').textContent = results.passed;
+            document.getElementById('failedCount').textContent = results.failed;
+            document.getElementById('totalCount').textContent = results.total;
+            document.getElementById('testSummary').style.display = 'block';
+        }
+
+        function runAllTests() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            const results = suite.runAllTests();
+            displaySummary(results);
+        }
+
+        function testAuthenticationOnly() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            suite.testAuthentication();
+            displaySummary({
+                passed: suite.testsPassed,
+                failed: suite.testsFailed,
+                total: suite.testsPassed + suite.testsFailed
+            });
+        }
+
+        function testStatisticsOnly() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            suite.testStatisticsCalculation();
+            displaySummary({
+                passed: suite.testsPassed,
+                failed: suite.testsFailed,
+                total: suite.testsPassed + suite.testsFailed
+            });
+        }
+
+        function testFiltersOnly() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            suite.testOrderFilters();
+            suite.testQuotationFilters();
+            displaySummary({
+                passed: suite.testsPassed,
+                failed: suite.testsFailed,
+                total: suite.testsPassed + suite.testsFailed
+            });
+        }
+
+        function testStatusUpdateOnly() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            suite.testOrderStatusUpdate();
+            displaySummary({
+                passed: suite.testsPassed,
+                failed: suite.testsFailed,
+                total: suite.testsPassed + suite.testsFailed
+            });
+        }
+
+        function testCSVExportOnly() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            suite.testCSVExport();
+            displaySummary({
+                passed: suite.testsPassed,
+                failed: suite.testsFailed,
+                total: suite.testsPassed + suite.testsFailed
+            });
+        }
+
+        function testProductsOnly() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            suite.testProductManagement();
+            displaySummary({
+                passed: suite.testsPassed,
+                failed: suite.testsFailed,
+                total: suite.testsPassed + suite.testsFailed
+            });
+        }
+
+        function testPricesOnly() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            suite.testPriceManagement();
+            displaySummary({
+                passed: suite.testsPassed,
+                failed: suite.testsFailed,
+                total: suite.testsPassed + suite.testsFailed
+            });
+        }
+
+        function testConfigOnly() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            suite.testConfigurationManagement();
+            displaySummary({
+                passed: suite.testsPassed,
+                failed: suite.testsFailed,
+                total: suite.testsPassed + suite.testsFailed
+            });
+        }
+
+        function setupTestData() {
+            clearOutput();
+            const suite = new AdminPanelTestSuite();
+            suite.setupTestData();
+            log('Datos de prueba configurados correctamente', 'success');
+            displaySummary({
+                passed: 1,
+                failed: 0,
+                total: 1
+            });
+        }
+
+        function clearAllData() {
+            localStorage.removeItem('ferreteria_orders');
+            localStorage.removeItem('ferreteria_quotations');
+            localStorage.removeItem('ferreteria_products');
+            localStorage.removeItem('ferreteria_config');
+            clearOutput();
+            log('Todos los datos han sido eliminados', 'success');
+        }
+
+        function exportTestData() {
+            const data = {
+                orders: JSON.parse(localStorage.getItem('ferreteria_orders') || '[]'),
+                quotations: JSON.parse(localStorage.getItem('ferreteria_quotations') || '[]'),
+                products: JSON.parse(localStorage.getItem('ferreteria_products') || '[]'),
+                config: JSON.parse(localStorage.getItem('ferreteria_config') || '{}')
+            };
+
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `admin-test-data-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+
+            clearOutput();
+            log('Datos exportados correctamente', 'success');
+        }
+
+        function openAdminPanel() {
+            window.open('admin.html', '_blank');
+        }
+
+        log('Sistema de prueba listo', 'info');
+    </script>
+</body>
+</html>

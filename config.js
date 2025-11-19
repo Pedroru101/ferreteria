@@ -117,6 +117,94 @@ const CONFIG = {
             servicios: ['nombre', 'descripcion', 'icono', 'orden'],
             fabricacion: ['titulo', 'descripcion', 'icono', 'caracteristicas']
         }
+    },
+
+    // Configuración de la calculadora de materiales
+    calculator: {
+        defaultPostSpacing: 2.5,
+        cornerPosts: 4,
+        meshRollLength: 10,
+        wireTypes: {
+            standard: { strands: 5, name: 'Alambre estándar (5 hilos)' },
+            reinforced: { strands: 7, name: 'Alambre reforzado (7 hilos)' },
+            olimpo: { strands: 3, name: 'Alambre de púa (3 hilos)', isPua: true }
+        },
+        meshHeights: [1.00, 1.20, 1.50, 1.80, 2.00]
+    },
+
+    // Configuración de precios y moneda
+    pricing: {
+        installationPricePerMeter: 500,
+        marginPercentage: 20,
+        currency: 'ARS',
+        currencySymbol: '$',
+        currencyFormat: {
+            locale: 'es-AR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 2
+        },
+        taxRate: 0
+    },
+
+    // Configuración de cotizaciones
+    quotation: {
+        validityDays: 30,
+        pdfEnabled: true,
+        whatsappEnabled: true,
+        autoSave: true,
+        prefix: 'COT',
+        includeTermsAndConditions: true,
+        termsText: 'Cotización válida por {days} días. Precios sujetos a cambios sin previo aviso. No incluye IVA.'
+    },
+
+    // Configuración de pedidos
+    orders: {
+        prefix: 'ORD',
+        statusOptions: [
+            { value: 'pending', label: 'Pendiente', color: '#f57c00', icon: 'clock' },
+            { value: 'confirmed', label: 'Confirmado', color: '#4caf50', icon: 'check-circle' },
+            { value: 'in_progress', label: 'En Proceso', color: '#0288d1', icon: 'cog' },
+            { value: 'completed', label: 'Completado', color: '#2d7a3e', icon: 'check-double' },
+            { value: 'cancelled', label: 'Cancelado', color: '#d32f2f', icon: 'times-circle' }
+        ],
+        requireCustomerData: ['name', 'phone'],
+        optionalCustomerData: ['email', 'address', 'installationDate'],
+        enableTracking: true,
+        autoNotifyCustomer: true
+    },
+
+    // Configuración de administración
+    admin: {
+        defaultPassword: 'admin123',
+        sessionTimeout: 3600000,
+        enablePasswordChange: true,
+        dashboardRefreshInterval: 300000,
+        maxLoginAttempts: 5,
+        lockoutDuration: 900000,
+        features: {
+            productManagement: true,
+            priceManagement: true,
+            orderManagement: true,
+            quotationManagement: true,
+            configManagement: true,
+            exportData: true,
+            statistics: true
+        }
+    },
+
+    // Configuración de limpieza automática de datos
+    dataCleanup: {
+        enabled: true,
+        checkInterval: 3600000,
+        quotationExpiryDays: 30,
+        errorLogRetentionDays: 7,
+        maxStorageMB: 5,
+        autoCleanupOnInit: true,
+        cleanupTasks: {
+            expiredQuotations: true,
+            oldErrorLogs: true,
+            storageQuotaCheck: true
+        }
     }
 };
 

@@ -1,0 +1,585 @@
+/**
+ * Accessibility Styles - Estilos para mejorar accesibilidad WCAG 2.1 AA
+ * Incluye focus visible, contraste de colores, tamaños de toque mínimos
+ */
+
+:root {
+    --focus-color: #2d7a3e;
+    --focus-width: 3px;
+    --focus-offset: 2px;
+    --min-touch-target: 44px;
+}
+
+[data-theme="dark"] {
+    --focus-color: #4caf50;
+}
+
+/* Focus Visible - Indicador de foco visible */
+:focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+    border-radius: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+}
+
+/* Remover outline por defecto para navegadores que no soportan focus-visible */
+:focus {
+    outline: none;
+}
+
+/* Skip Links - Enlaces para saltar contenido */
+.skip-links {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary, #2d7a3e);
+    color: white;
+    padding: 8px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.skip-link {
+    display: block;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.skip-link:focus {
+    position: relative;
+    top: 40px;
+    outline: var(--focus-width) solid white;
+    outline-offset: var(--focus-offset);
+}
+
+/* Screen Reader Only Content */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Minimum Touch Target Size - 44x44px */
+button,
+a,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="checkbox"],
+input[type="radio"],
+select,
+textarea {
+    min-height: var(--min-touch-target);
+    min-width: var(--min-touch-target);
+}
+
+button,
+a[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+    padding: 12px 16px;
+    min-height: var(--min-touch-target);
+}
+
+/* Form Elements Accessibility */
+input,
+select,
+textarea {
+    font-size: 16px;
+    padding: 12px;
+    border: 2px solid var(--border, #c8e6c9);
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    border-color: var(--focus-color);
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"],
+select[aria-invalid="true"] {
+    border-color: #d32f2f;
+    background-color: rgba(211, 47, 47, 0.05);
+}
+
+input[aria-invalid="true"]:focus-visible,
+textarea[aria-invalid="true"]:focus-visible,
+select[aria-invalid="true"]:focus-visible {
+    outline-color: #d32f2f;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-primary, #1a1a1a);
+}
+
+label[aria-required="true"]::after {
+    content: " *";
+    color: #d32f2f;
+}
+
+/* Links */
+a {
+    color: var(--primary, #2d7a3e);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+}
+
+a:hover {
+    color: var(--primary-hover, #236030);
+}
+
+a:focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+    border-radius: 2px;
+}
+
+/* Buttons */
+button {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 16px;
+    border-radius: 4px;
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+}
+
+button[aria-disabled="true"],
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Modal Accessibility */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal[aria-modal="true"] {
+    display: flex;
+}
+
+.modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    aria-hidden: true;
+}
+
+.modal-container {
+    position: relative;
+    background: var(--bg-card, white);
+    border-radius: 8px;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    margin: auto;
+    z-index: 1001;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border, #c8e6c9);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--text-primary, #1a1a1a);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary, #1a1a1a);
+}
+
+.modal-close:focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+    border-radius: 4px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border, #c8e6c9);
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th {
+    background-color: var(--bg-secondary, #e8f5e9);
+    color: var(--text-primary, #1a1a1a);
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border, #c8e6c9);
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid var(--border, #c8e6c9);
+}
+
+tr:hover {
+    background-color: var(--bg-secondary, #e8f5e9);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1.2;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    color: var(--text-primary, #1a1a1a);
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+h4 {
+    font-size: 1.25rem;
+}
+
+h5 {
+    font-size: 1.1rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+/* Paragraphs and Text */
+p, li, label, span {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary, #1a1a1a);
+}
+
+/* Lists */
+ul, ol {
+    margin: 1em 0;
+    padding-left: 2em;
+}
+
+li {
+    margin-bottom: 0.5em;
+}
+
+/* Code */
+code, pre {
+    font-family: 'Courier New', monospace;
+    background-color: var(--bg-secondary, #e8f5e9);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+pre {
+    padding: 12px;
+    overflow-x: auto;
+}
+
+/* Alerts and Messages */
+.alert, .notification {
+    padding: 16px;
+    margin: 16px 0;
+    border-radius: 4px;
+    border-left: 4px solid;
+}
+
+.alert-success, .notification-success {
+    background-color: rgba(76, 175, 80, 0.1);
+    border-left-color: #4caf50;
+    color: #2d7a3e;
+}
+
+.alert-error, .notification-error {
+    background-color: rgba(211, 47, 47, 0.1);
+    border-left-color: #d32f2f;
+    color: #b71c1c;
+}
+
+.alert-warning, .notification-warning {
+    background-color: rgba(245, 124, 0, 0.1);
+    border-left-color: #f57c00;
+    color: #e65100;
+}
+
+.alert-info, .notification-info {
+    background-color: rgba(2, 136, 209, 0.1);
+    border-left-color: #0288d1;
+    color: #01579b;
+}
+
+/* Responsive Text Scaling */
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.25rem;
+    }
+
+    .modal-container {
+        max-width: 95%;
+        max-height: 95vh;
+    }
+
+    .modal-footer {
+        flex-direction: column;
+    }
+
+    .modal-footer button {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: more) {
+    :root {
+        --focus-width: 4px;
+    }
+
+    button, input, select, textarea {
+        border-width: 2px;
+    }
+
+    a {
+        text-decoration-thickness: 3px;
+    }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    button:hover {
+        transform: none;
+    }
+
+    button:active {
+        transform: none;
+    }
+}
+
+/* Dark Mode Adjustments */
+[data-theme="dark"] {
+    --text-primary: #e8f5e9;
+    --text-secondary: #a5d6a7;
+    --bg-primary: #0d1f0d;
+    --bg-secondary: #1a2e1a;
+    --bg-card: #243324;
+    --border: #2d4a2d;
+}
+
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+
+[data-theme="dark"] button {
+    background-color: var(--primary, #4caf50);
+    color: #000;
+}
+
+[data-theme="dark"] .modal-container {
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .modal-header {
+    border-bottom-color: var(--border);
+}
+
+[data-theme="dark"] .modal-footer {
+    border-top-color: var(--border);
+}
+
+[data-theme="dark"] th {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] tr:hover {
+    background-color: var(--bg-secondary);
+}
+
+/* Keyboard Navigation Indicators */
+.keyboard-nav :focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+}
+
+/* Visible Focus for All Interactive Elements */
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible,
+.btn-success:focus-visible,
+.btn-outline:focus-visible {
+    outline: var(--focus-width) solid var(--focus-color);
+    outline-offset: var(--focus-offset);
+}
+
+/* Ensure sufficient spacing for touch targets */
+.calculator-form input,
+.calculator-form select,
+.quotation-form input,
+.quotation-form select,
+.order-form input,
+.order-form select {
+    margin-bottom: 16px;
+}
+
+/* Ensure form labels are properly associated */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    max-width: 100%;
+}
+
+/* Ensure buttons have sufficient size and spacing */
+.button-group {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.button-group button {
+    flex: 1;
+    min-width: 120px;
+}
+
+@media (max-width: 768px) {
+    .button-group {
+        flex-direction: column;
+    }
+
+    .button-group button {
+        width: 100%;
+    }
+}

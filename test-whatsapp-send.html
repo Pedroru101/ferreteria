@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Envío de Pedido por WhatsApp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/orders.css">
+    <style>
+        body {
+            padding: 20px;
+            background: var(--bg-primary);
+        }
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+        }
+        .test-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+        }
+        .test-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        .test-result {
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+        }
+        .message-preview {
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+            border: 1px solid var(--border);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1><i class="fab fa-whatsapp"></i> Test - Envío de Pedido por WhatsApp</h1>
+        <p>Prueba la funcionalidad de envío de pedidos por WhatsApp</p>
+
+        <div class="test-section">
+            <h2>1. Crear Pedido de Prueba</h2>
+            <button class="test-button" onclick="createTestOrder()">
+                <i class="fas fa-plus"></i> Crear Pedido de Prueba
+            </button>
+            <div id="orderResult" class="test-result" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. Vista Previa del Mensaje</h2>
+            <button class="test-button" onclick="showMessagePreview()">
+                <i class="fas fa-eye"></i> Ver Mensaje
+            </button>
+            <div id="messagePreview" class="message-preview" style="display: none;"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. Enviar por WhatsApp</h2>
+            <button class="test-button" onclick="sendTestOrder()">
+                <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            </button>
+            <p style="margin-top: 10px; color: var(--text-secondary); font-size: 14px;">
+                <i class="fas fa-info-circle"></i> Se abrirá WhatsApp en una nueva pestaña
+            </p>
+        </div>
+
+        <div class="test-section">
+            <h2>4. Probar con Formulario Completo</h2>
+            <button class="test-button" onclick="openOrderForm()">
+                <i class="fas fa-file-alt"></i> Abrir Formulario de Pedido
+            </button>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/products-data.js"></script>
+    <script src="js/quotation.js"></script>
+    <script src="js/orders.js"></script>
+
+    <script>
+        let testOrder = null;
+        const orderManager = new OrderManager();
+
+        function createTestOrder() {
+            const testQuotation = {
+                id: 'COT-TEST-001',
+                items: [
+                    {
+                        id: 'prod_001',
+                        name: 'Poste de Hormigón 2.5m',
+                        quantity: 10,
+                        unitPrice: 3500,
+                        subtotal: 35000
+                    },
+                    {
+                        id: 'prod_002',
+                        name: 'Tejido Romboidal 1.50m x 10m',
+                        quantity: 5,
+                        unitPrice: 8500,
+                        subtotal: 42500
+                    },
+                    {
+                        id: 'prod_003',
+                        name: 'Alambre Galvanizado Cal. 14',
+                        quantity: 20,
+                        unitPrice: 450,
+                        subtotal: 9000
+                    }
+                ],
+                installation: {
+                    linearMeters: 100,
+                    pricePerMeter: 500,
+                    subtotal: 50000
+                },
+                subtotal: 136500,
+                total: 136500
+            };
+
+            const testCustomer = {
+                name: 'Juan Pérez',
+                phone: '+54 9 11 1234-5678',
+                email: 'juan.perez@example.com',
+                address: 'Av. Libertador 1234, Mar del Plata, Buenos Aires',
+                installationDate: '2024-02-15',
+                paymentMethod: 'transfer'
+            };
+
+            try {
+                testOrder = orderManager.createOrder(testQuotation, testCustomer);
+                
+                const resultDiv = document.getElementById('orderResult');
+                resultDiv.style.display = 'block';
+                resultDiv.innerHTML = `
+                    <h3><i class="fas fa-check-circle" style="color: var(--accent);"></i> Pedido Creado</h3>
+                    <p><strong>ID:</strong> ${testOrder.id}</p>
+                    <p><strong>Cliente:</strong> ${testOrder.customer.name}</p>
+                    <p><strong>Total:</strong> ${testOrder.formatCurrency(testOrder.total)}</p>
+                    <p><strong>Estado:</strong> ${testOrder.status}</p>
+                `;
+
+                showNotification('Pedido de prueba creado exitosamente', 'success');
+            } catch (error) {
+                console.error('Error:', error);
+                showNotification('Error al crear pedido: ' + error.message, 'error');
+            }
+        }
+
+        function showMessagePreview() {
+            if (!testOrder) {
+                showNotification('Primero crea un pedido de prueba', 'warning');
+                return;
+            }
+
+            const message = decodeURIComponent(testOrder.toWhatsAppMessage());
+            const previewDiv = document.getElementById('messagePreview');
+            previewDiv.style.display = 'block';
+            previewDiv.textContent = message;
+        }
+
+        function sendTestOrder() {
+            if (!testOrder) {
+                showNotification('Primero crea un pedido de prueba', 'warning');
+                return;
+            }
+
+            const whatsappNumber = CONFIG.contact?.whatsapp?.number || '';
+            
+            if (!whatsappNumber) {
+                showNotification('Número de WhatsApp no configurado en config.js', 'error');
+                return;
+            }
+
+            const message = testOrder.toWhatsAppMessage();
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+            console.log('URL de WhatsApp:', whatsappUrl);
+            console.log('Mensaje decodificado:', decodeURIComponent(message));
+
+            window.open(whatsappUrl, '_blank');
+            showNotification('Abriendo WhatsApp...', 'success');
+        }
+
+        function openOrderForm() {
+            const testQuotation = {
+                quotationId: 'COT-TEST-002',
+                items: [
+                    {
+                        id: 'prod_001',
+                        name: 'Poste de Hormigón 2.5m',
+                        quantity: 10,
+                        unitPrice: 3500,
+                        subtotal: 35000
+                    }
+                ],
+                installation: {
+                    linearMeters: 50,
+                    pricePerMeter: 500,
+                    subtotal: 25000
+                }
+            };
+
+            if (window.orderFormUI) {
+                window.orderFormUI.open(testQuotation);
+            } else {
+                showNotification('OrderFormUI no está disponible', 'error');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: ${type === 'success' ? 'var(--accent)' : type === 'error' ? '#d32f2f' : 'var(--primary)'};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        console.log('Test de envío por WhatsApp cargado');
+        console.log('Número de WhatsApp configurado:', CONFIG.contact?.whatsapp?.number);
+    </script>
+</body>
+</html>

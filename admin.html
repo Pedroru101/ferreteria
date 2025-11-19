@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Panel de Administración - Metales & Hierros Mar del Plata</title>
+
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+
+    <script src="config.js"></script>
+</head>
+<body>
+
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Panel de Administración</h1>
+                <p>Metales & Hierros Mar del Plata</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="adminPassword">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="adminPassword" 
+                        class="form-control" 
+                        placeholder="Ingresa tu contraseña"
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+                <button type="submit" class="btn-primary btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                </button>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="adminDashboard" class="admin-dashboard" style="display: none;">
+        <header class="admin-header">
+            <div class="admin-header-content">
+                <div class="admin-logo">
+                    <i class="fas fa-tools"></i>
+                    <span>Admin Panel</span>
+                </div>
+                <div class="admin-actions">
+                    <button class="btn-secondary" onclick="location.href='index.html'">
+                        <i class="fas fa-home"></i> Ir al Sitio
+                    </button>
+                    <button class="btn-secondary" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="admin-container">
+            <div class="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-invoice"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalQuotations">0</div>
+                        <div class="stat-label">Cotizaciones</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalOrders">0</div>
+                        <div class="stat-label">Pedidos</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalRevenue">$0</div>
+                        <div class="stat-label">Ingresos Estimados</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="conversionRate">0%</div>
+                        <div class="stat-label">Conversión</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="dashboard-tabs">
+                <button class="tab-btn active" data-tab="orders">
+                    <i class="fas fa-shopping-cart"></i> Pedidos
+                </button>
+                <button class="tab-btn" data-tab="quotations">
+                    <i class="fas fa-file-invoice"></i> Cotizaciones
+                </button>
+                <button class="tab-btn" data-tab="products">
+                    <i class="fas fa-box"></i> Productos
+                </button>
+                <button class="tab-btn" data-tab="prices">
+                    <i class="fas fa-tag"></i> Precios
+                </button>
+                <button class="tab-btn" data-tab="config">
+                    <i class="fas fa-cog"></i> Configuración
+                </button>
+            </div>
+
+            <div class="dashboard-content">
+                <div id="ordersTab" class="tab-content active">
+                    <div class="content-header">
+                        <h2>Gestión de Pedidos</h2>
+                        <div class="content-actions">
+                            <select id="orderStatusFilter" class="form-control">
+                                <option value="">Todos los estados</option>
+                                <option value="pending">Pendiente</option>
+                                <option value="confirmed">Confirmado</option>
+                                <option value="in_progress">En Proceso</option>
+                                <option value="completed">Completado</option>
+                                <option value="cancelled">Cancelado</option>
+                            </select>
+                            <input type="date" id="orderDateFromFilter" class="form-control" placeholder="Desde">
+                            <input type="date" id="orderDateToFilter" class="form-control" placeholder="Hasta">
+                            <input type="text" id="orderClientFilter" class="form-control" placeholder="Buscar cliente...">
+                            <button class="btn-secondary" id="clearOrderFilters">
+                                <i class="fas fa-times"></i> Limpiar
+                            </button>
+                            <button class="btn-secondary" id="exportOrdersBtn">
+                                <i class="fas fa-download"></i> Exportar CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div id="ordersTableContainer">
+                        <p class="empty-state">No hay pedidos registrados</p>
+                    </div>
+                </div>
+
+                <div id="quotationsTab" class="tab-content">
+                    <div class="content-header">
+                        <h2>Gestión de Cotizaciones</h2>
+                        <div class="content-actions">
+                            <select id="quotationStatusFilter" class="form-control">
+                                <option value="">Todos los estados</option>
+                                <option value="draft">Borrador</option>
+                                <option value="sent">Enviada</option>
+                                <option value="accepted">Aceptada</option>
+                                <option value="expired">Expirada</option>
+                            </select>
+                            <input type="date" id="quotationDateFromFilter" class="form-control" placeholder="Desde">
+                            <input type="date" id="quotationDateToFilter" class="form-control" placeholder="Hasta">
+                            <input type="number" id="quotationMinAmountFilter" class="form-control" placeholder="Monto mínimo">
+                            <input type="number" id="quotationMaxAmountFilter" class="form-control" placeholder="Monto máximo">
+                            <button class="btn-secondary" id="clearQuotationFilters">
+                                <i class="fas fa-times"></i> Limpiar
+                            </button>
+                            <button class="btn-secondary" id="exportQuotationsBtn">
+                                <i class="fas fa-download"></i> Exportar CSV
+                            </button>
+                        </div>
+                    </div>
+                    <div id="quotationsTableContainer">
+                        <p class="empty-state">No hay cotizaciones registradas</p>
+                    </div>
+                </div>
+
+
+                <div id="productsTab" class="tab-content">
+                    <div class="content-header">
+                        <h2>Gestión de Productos</h2>
+                        <div class="content-actions">
+                            <button class="btn-primary" id="addProductBtn">
+                                <i class="fas fa-plus"></i> Agregar Producto
+                            </button>
+                            <button class="btn-secondary" id="exportProductsBtn">
+                                <i class="fas fa-download"></i> Exportar
+                            </button>
+                            <button class="btn-secondary" id="importProductsBtn">
+                                <i class="fas fa-upload"></i> Importar
+                            </button>
+                            <input type="file" id="importProductsFile" accept=".json" style="display: none;">
+                        </div>
+                    </div>
+                    <div id="productsTableContainer">
+                        <p class="empty-state">Cargando productos...</p>
+                    </div>
+                </div>
+
+                <div id="configTab" class="tab-content">
+                    <div class="content-header">
+                        <h2>Configuración del Sistema</h2>
+                    </div>
+                    <div class="config-sections">
+                        <div class="config-section">
+                            <h3>Calculadora</h3>
+                            <div class="form-group">
+                                <label>Separación entre postes (metros)</label>
+                                <input type="number" id="configPostSpacing" class="form-control" step="0.1" value="2.5">
+                            </div>
+                            <div class="form-group">
+                                <label>Postes esquineros</label>
+                                <input type="number" id="configCornerPosts" class="form-control" value="4">
+                            </div>
+                        </div>
+
+                        <div class="config-section">
+                            <h3>Precios</h3>
+                            <div class="form-group">
+                                <label>Costo de instalación por metro</label>
+                                <input type="number" id="configInstallationPrice" class="form-control" value="500">
+                            </div>
+                            <div class="form-group">
+                                <label>Margen de ganancia (%)</label>
+                                <input type="number" id="configMargin" class="form-control" value="20">
+                            </div>
+                        </div>
+
+                        <div class="config-section">
+                            <h3>Cotizaciones</h3>
+                            <div class="form-group">
+                                <label>Validez de cotizaciones (días)</label>
+                                <input type="number" id="configValidityDays" class="form-control" value="30">
+                            </div>
+                        </div>
+
+                        <button class="btn-primary" id="saveConfigBtn">
+                            <i class="fas fa-save"></i> Guardar Configuración
+                        </button>
+                    </div>
+                </div>
+
+                <div id="pricesTab" class="tab-content">
+                    <div class="content-header">
+                        <h2>Gestión de Precios</h2>
+                        <div class="content-actions">
+                            <button class="btn-primary" id="bulkPriceAdjustBtn">
+                                <i class="fas fa-percentage"></i> Ajuste Masivo
+                            </button>
+                            <select id="pricesCategoryFilter" class="form-control">
+                                <option value="">Todas las categorías</option>
+                            </select>
+                            <button class="btn-secondary" id="clearPricesFilters">
+                                <i class="fas fa-times"></i> Limpiar
+                            </button>
+                        </div>
+                    </div>
+                    <div id="pricesTableContainer">
+                        <p class="empty-state">Cargando precios...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/data-cleanup.js"></script>
+    <script src="js/admin.js"></script>
+
+</body>
+</html>

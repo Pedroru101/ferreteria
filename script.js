@@ -94,13 +94,14 @@ navLinks.forEach(link => {
 
 // Active Navigation Link on Scroll
 const sections = document.querySelectorAll('section[id]');
+const navOffset = 100;
 
 function updateActiveNav() {
     const scrollY = window.pageYOffset;
 
     sections.forEach(section => {
         const sectionHeight = section.offsetHeight;
-        const sectionTop = section.offsetTop - 100;
+        const sectionTop = section.offsetTop - navOffset;
         const sectionId = section.getAttribute('id');
         const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
 
@@ -116,9 +117,14 @@ function updateActiveNav() {
 
 window.addEventListener('scroll', updateActiveNav);
 
+// Trigger updateActiveNav on page load to set initial active link
+document.addEventListener('DOMContentLoaded', updateActiveNav);
+
 // ========================================
 // SMOOTH SCROLLING
 // ========================================
+const scrollOffset = 80;
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -128,11 +134,14 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             const target = document.querySelector(href);
 
             if (target) {
-                const offsetTop = target.offsetTop - 80;
+                const offsetTop = target.offsetTop - scrollOffset;
                 window.scrollTo({
                     top: offsetTop,
                     behavior: 'smooth'
                 });
+                
+                // Update active nav link after scroll
+                setTimeout(updateActiveNav, 100);
             }
         }
     });
@@ -813,3 +822,28 @@ if ('performance' in window) {
         }, 0);
     });
 }
+
+// ========================================
+// LAZY LOADING INITIALIZATION
+// ========================================
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof lazyLoader !== 'undefined') {
+        console.log('✅ Lazy Loader inicializado - Módulos se cargarán bajo demanda');
+    } else {
+        console.warn('⚠️ Lazy Loader no disponible');
+    }
+});
+
+// ========================================
+// DATA CLEANUP INITIALIZATION
+// ========================================
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof initDataCleanup === 'function') {
+        const cleanupManager = initDataCleanup();
+        if (cleanupManager) {
+            console.log('✅ Sistema de limpieza automática de datos inicializado');
+        }
+    } else {
+        console.warn('⚠️ DataCleanupManager no disponible');
+    }
+});

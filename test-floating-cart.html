@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Carrito Flotante</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    
+    <style>
+        body {
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-section h2 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .test-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .test-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        .test-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        
+        .test-info {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .test-info code {
+            background: var(--bg-card);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-section">
+            <h2>Test del Carrito Flotante de Cotización</h2>
+            <p>Este archivo prueba la funcionalidad del carrito flotante.</p>
+            
+            <div class="test-info">
+                <strong>Instrucciones:</strong>
+                <ul>
+                    <li>Usa los botones para agregar productos de prueba al carrito</li>
+                    <li>Haz clic en el botón flotante del carrito (esquina inferior derecha)</li>
+                    <li>Verifica que se muestre el dropdown con los productos</li>
+                    <li>Prueba aumentar/disminuir cantidades</li>
+                    <li>Prueba eliminar productos</li>
+                    <li>Verifica que el contador se actualice correctamente</li>
+                    <li>Haz clic fuera del dropdown para cerrarlo</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Agregar Productos de Prueba</h2>
+            <div class="test-buttons">
+                <button class="test-btn" onclick="addTestProduct('poste_hormigon')">
+                    <i class="fas fa-plus"></i> Poste de Hormigón
+                </button>
+                <button class="test-btn" onclick="addTestProduct('tejido_romboidal')">
+                    <i class="fas fa-plus"></i> Tejido Romboidal
+                </button>
+                <button class="test-btn" onclick="addTestProduct('alambre_puas')">
+                    <i class="fas fa-plus"></i> Alambre de Púas
+                </button>
+                <button class="test-btn" onclick="addTestProduct('grampa')">
+                    <i class="fas fa-plus"></i> Grampas
+                </button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Acciones del Carrito</h2>
+            <div class="test-buttons">
+                <button class="test-btn secondary" onclick="openCartDropdown()">
+                    <i class="fas fa-eye"></i> Abrir Carrito
+                </button>
+                <button class="test-btn secondary" onclick="closeCartDropdown()">
+                    <i class="fas fa-eye-slash"></i> Cerrar Carrito
+                </button>
+                <button class="test-btn secondary" onclick="toggleCartDropdown()">
+                    <i class="fas fa-exchange-alt"></i> Toggle Carrito
+                </button>
+                <button class="test-btn secondary" onclick="clearTestCart()">
+                    <i class="fas fa-trash"></i> Limpiar Carrito
+                </button>
+            </div>
+            
+            <div class="test-info">
+                <strong>Estado del carrito:</strong><br>
+                Productos: <code id="cartItemCount">0</code><br>
+                Total: <code id="cartTotalAmount">$0</code>
+            </div>
+        </div>
+    </div>
+
+    <div id="quoteCart" class="quote-cart">
+        <button class="cart-toggle" id="cartToggle" aria-label="Ver carrito de cotización">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <div class="cart-dropdown" id="cartDropdown">
+            <div class="cart-header">
+                <h3>Carrito de Cotización</h3>
+                <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <p class="cart-empty">No hay productos en el carrito</p>
+            </div>
+            <div class="cart-footer">
+                <button class="btn-primary generate-quote-btn" id="generateQuoteBtn" onclick="testGenerateQuote()">
+                    <i class="fas fa-file-invoice"></i>
+                    Generar Cotización
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/products-data.js"></script>
+    <script src="js/catalog.js"></script>
+    
+    <script>
+        const testProducts = {
+            poste_hormigon: {
+                id: 'poste_hormigon',
+                name: 'Poste de Hormigón 2.5m',
+                category: 'postes',
+                price: 3500,
+                priceUnit: 'unidad',
+                image: ''
+            },
+            tejido_romboidal: {
+                id: 'tejido_romboidal',
+                name: 'Tejido Romboidal 1.50m x 10m',
+                category: 'tejidos',
+                price: 8500,
+                priceUnit: 'rollo',
+                image: ''
+            },
+            alambre_puas: {
+                id: 'alambre_puas',
+                name: 'Alambre de Púas Galvanizado',
+                category: 'alambres',
+                price: 1200,
+                priceUnit: 'kg',
+                image: ''
+            },
+            grampa: {
+                id: 'grampa',
+                name: 'Grampas para Tejido (x100)',
+                category: 'accesorios',
+                price: 450,
+                priceUnit: 'paquete',
+                image: ''
+            }
+        };
+
+        catalogManager.products = Object.values(testProducts);
+
+        function addTestProduct(productId) {
+            const product = testProducts[productId];
+            if (product) {
+                catalogManager.addToCart(productId, 1);
+                updateTestInfo();
+                showNotification(`${product.name} agregado al carrito`, 'success');
+            }
+        }
+
+        function clearTestCart() {
+            catalogManager.clearCart();
+            updateTestInfo();
+            showNotification('Carrito limpiado', 'info');
+        }
+
+        function updateTestInfo() {
+            document.getElementById('cartItemCount').textContent = catalogManager.getCartCount();
+            document.getElementById('cartTotalAmount').textContent = catalogManager.formatPrice(catalogManager.getCartTotal());
+        }
+
+        function testGenerateQuote() {
+            const cartData = catalogManager.exportCartForQuotation();
+            console.log('Datos del carrito para cotización:', cartData);
+            alert(`Cotización generada con ${cartData.itemCount} productos.\nTotal: ${catalogManager.formatPrice(cartData.subtotal)}\n\nRevisa la consola para ver los detalles.`);
+        }
+
+        function showNotification(message, type = 'info') {
+            console.log(`[${type.toUpperCase()}] ${message}`);
+            
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#4caf50' : type === 'error' ? '#d32f2f' : '#0288d1'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 10001;
+                animation: slideInRight 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTestInfo();
+        });
+    </script>
+</body>
+</html>

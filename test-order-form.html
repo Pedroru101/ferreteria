@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Formulario de Pedido</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/orders.css">
+    
+    <style>
+        body {
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .test-header h1 {
+            font-size: 32px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        
+        .test-header p {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+        
+        .test-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .test-section h2 {
+            font-size: 20px;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .test-section h2 i {
+            color: var(--primary);
+        }
+        
+        .test-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 122, 62, 0.3);
+        }
+        
+        .test-btn.secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .test-output {
+            background: var(--bg-secondary);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--text-primary);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .test-output pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 16px 24px;
+            background: var(--bg-card);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 10001;
+            animation: slideInRight 0.3s ease;
+        }
+        
+        .notification.success {
+            border-left: 4px solid #4caf50;
+        }
+        
+        .notification.error {
+            border-left: 4px solid #d32f2f;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>Test - Formulario de Pedido</h1>
+            <p>Prueba del sistema de formulario de pedidos</p>
+        </div>
+
+        <div class="test-section">
+            <h2>
+                <i class="fas fa-play-circle"></i>
+                Acciones de Prueba
+            </h2>
+            <div class="test-buttons">
+                <button class="test-btn" onclick="testOpenForm()">
+                    <i class="fas fa-folder-open"></i>
+                    Abrir Formulario
+                </button>
+                <button class="test-btn" onclick="testOpenFormWithData()">
+                    <i class="fas fa-file-invoice"></i>
+                    Abrir con Cotización
+                </button>
+                <button class="test-btn secondary" onclick="testValidation()">
+                    <i class="fas fa-check-circle"></i>
+                    Probar Validación
+                </button>
+                <button class="test-btn secondary" onclick="testGetOrders()">
+                    <i class="fas fa-list"></i>
+                    Ver Pedidos Guardados
+                </button>
+                <button class="test-btn secondary" onclick="testClearOrders()">
+                    <i class="fas fa-trash"></i>
+                    Limpiar Pedidos
+                </button>
+            </div>
+            <div id="testOutput" class="test-output" style="display: none;">
+                <pre id="outputContent"></pre>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>
+                <i class="fas fa-info-circle"></i>
+                Información
+            </h2>
+            <p><strong>Campos Requeridos:</strong></p>
+            <ul>
+                <li>Nombre Completo (mínimo 3 caracteres)</li>
+                <li>Teléfono (formato válido)</li>
+            </ul>
+            <p><strong>Campos Opcionales:</strong></p>
+            <ul>
+                <li>Email (validación de formato si se completa)</li>
+                <li>Dirección de Instalación</li>
+                <li>Fecha Preferida de Instalación</li>
+                <li>Método de Pago (por defecto: Efectivo)</li>
+            </ul>
+            <p><strong>Funcionalidades:</strong></p>
+            <ul>
+                <li>Validación en tiempo real de campos</li>
+                <li>Resumen del pedido con totales</li>
+                <li>Guardado automático en localStorage</li>
+                <li>Generación de ID único de pedido</li>
+                <li>Integración con WhatsApp</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/products-data.js"></script>
+    <script src="js/orders.js"></script>
+
+    <script>
+        function showOutput(content) {
+            const output = document.getElementById('testOutput');
+            const outputContent = document.getElementById('outputContent');
+            outputContent.textContent = JSON.stringify(content, null, 2);
+            output.style.display = 'block';
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function testOpenForm() {
+            if (window.orderFormUI) {
+                const mockQuotation = {
+                    quotationId: 'COT-TEST-001',
+                    items: [],
+                    installation: null
+                };
+                window.orderFormUI.open(mockQuotation);
+                showNotification('Formulario abierto (sin datos)', 'success');
+            } else {
+                showNotification('OrderFormUI no está inicializado', 'error');
+            }
+        }
+
+        function testOpenFormWithData() {
+            if (window.orderFormUI) {
+                const mockQuotation = {
+                    quotationId: 'COT-1234567890-123',
+                    items: [
+                        {
+                            id: 'poste_hormigon_25',
+                            name: 'Poste de Hormigón 2.5m',
+                            category: 'postes',
+                            quantity: 10,
+                            unitPrice: 3500
+                        },
+                        {
+                            id: 'tejido_romboidal_150',
+                            name: 'Tejido Romboidal 1.50m x 10m',
+                            category: 'tejidos',
+                            quantity: 5,
+                            unitPrice: 12800
+                        },
+                        {
+                            id: 'alambre_pua',
+                            name: 'Alambre de Púa (rollo 250m)',
+                            category: 'alambres',
+                            quantity: 2,
+                            unitPrice: 12500
+                        }
+                    ],
+                    installation: {
+                        linearMeters: 100,
+                        pricePerMeter: 500,
+                        subtotal: 50000
+                    }
+                };
+                window.orderFormUI.open(mockQuotation);
+                showNotification('Formulario abierto con cotización de prueba', 'success');
+            } else {
+                showNotification('OrderFormUI no está inicializado', 'error');
+            }
+        }
+
+        function testValidation() {
+            const tests = [
+                { field: 'name', value: 'ab', valid: false, reason: 'Menos de 3 caracteres' },
+                { field: 'name', value: 'Juan Pérez', valid: true, reason: 'Nombre válido' },
+                { field: 'phone', value: '123', valid: false, reason: 'Teléfono muy corto' },
+                { field: 'phone', value: '+54 9 11 1234-5678', valid: true, reason: 'Teléfono válido' },
+                { field: 'email', value: 'invalid', valid: false, reason: 'Email inválido' },
+                { field: 'email', value: 'test@example.com', valid: true, reason: 'Email válido' }
+            ];
+
+            showOutput({
+                title: 'Pruebas de Validación',
+                tests: tests
+            });
+            showNotification('Pruebas de validación ejecutadas', 'success');
+        }
+
+        function testGetOrders() {
+            const orderManager = new OrderManager();
+            const orders = orderManager.loadOrders();
+            
+            showOutput({
+                title: 'Pedidos Guardados',
+                count: orders.length,
+                orders: orders.map(order => ({
+                    id: order.id,
+                    date: order.date,
+                    customer: order.customer.name,
+                    total: order.total,
+                    status: order.status
+                }))
+            });
+            
+            showNotification(`${orders.length} pedidos encontrados`, 'success');
+        }
+
+        function testClearOrders() {
+            if (confirm('¿Está seguro de que desea eliminar todos los pedidos de prueba?')) {
+                localStorage.removeItem('ferreteria_orders');
+                showNotification('Pedidos eliminados', 'success');
+                testGetOrders();
+            }
+        }
+
+        window.showOrderConfirmation = function(order) {
+            showOutput({
+                title: 'Pedido Creado',
+                order: {
+                    id: order.id,
+                    date: order.date,
+                    customer: order.customer,
+                    items: order.items,
+                    installation: order.installation,
+                    total: order.total,
+                    status: order.status
+                }
+            });
+            
+            showNotification(`Pedido ${order.id} creado exitosamente`, 'success');
+            
+            setTimeout(() => {
+                if (confirm('¿Desea enviar el pedido por WhatsApp?')) {
+                    const message = order.toWhatsAppMessage();
+                    const whatsappNumber = CONFIG.contact?.whatsapp?.number || '';
+                    const url = `https://wa.me/${whatsappNumber}?text=${message}`;
+                    window.open(url, '_blank');
+                }
+            }, 1000);
+        };
+
+        console.log('Test de Formulario de Pedido cargado');
+        console.log('OrderFormUI disponible:', typeof window.orderFormUI !== 'undefined');
+    </script>
+</body>
+</html>

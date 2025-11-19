@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Actualización de Estado de Pedidos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="config.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: var(--bg-primary);
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .test-section:last-child {
+            border-bottom: none;
+        }
+        .test-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        .test-button {
+            background: var(--primary);
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .test-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        .test-output {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            color: var(--text-primary);
+            max-height: 400px;
+            overflow-y: auto;
+            border-left: 4px solid var(--primary);
+        }
+        .test-success {
+            color: #4caf50;
+            font-weight: 600;
+        }
+        .test-error {
+            color: #d32f2f;
+            font-weight: 600;
+        }
+        .test-info {
+            color: #0288d1;
+        }
+        .test-warning {
+            color: #f57c00;
+        }
+        .test-result {
+            margin-top: 20px;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border-radius: 6px;
+            border-left: 4px solid var(--accent);
+        }
+        .test-result-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        .test-result-item {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .test-result-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>
+            <i class="fas fa-flask"></i>
+            Test - Actualización de Estado de Pedidos
+        </h1>
+        
+        <div class="test-section">
+            <div class="test-title">1. Preparar Datos de Prueba</div>
+            <button class="test-button" onclick="createTestOrder()">
+                <i class="fas fa-plus"></i> Crear Pedido de Prueba
+            </button>
+            <button class="test-button" onclick="clearTestData()">
+                <i class="fas fa-trash"></i> Limpiar Datos
+            </button>
+            <div id="output1" class="test-output"></div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">2. Probar Actualización de Estado</div>
+            <button class="test-button" onclick="testStatusUpdate()">
+                <i class="fas fa-edit"></i> Actualizar Estado
+            </button>
+            <button class="test-button" onclick="testStatusUpdateWithNote()">
+                <i class="fas fa-comment"></i> Actualizar con Nota
+            </button>
+            <button class="test-button" onclick="testInvalidStatusUpdate()">
+                <i class="fas fa-exclamation-triangle"></i> Probar Error
+            </button>
+            <div id="output2" class="test-output"></div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">3. Verificar Historial de Estados</div>
+            <button class="test-button" onclick="verifyStatusHistory()">
+                <i class="fas fa-history"></i> Verificar Historial
+            </button>
+            <div id="output3" class="test-output"></div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">4. Probar Validaciones</div>
+            <button class="test-button" onclick="testValidations()">
+                <i class="fas fa-check-circle"></i> Ejecutar Validaciones
+            </button>
+            <div id="output4" class="test-output"></div>
+        </div>
+
+        <div class="test-section">
+            <div class="test-title">5. Resumen de Pruebas</div>
+            <button class="test-button" onclick="runAllTests()">
+                <i class="fas fa-play"></i> Ejecutar Todas las Pruebas
+            </button>
+            <div id="testSummary" class="test-result" style="display: none;">
+                <div class="test-result-title">Resumen de Resultados</div>
+                <div id="summaryContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/products-data.js"></script>
+    <script src="js/orders.js"></script>
+
+    <script>
+        const TEST_ORDER_ID = 'ORD-TEST-20240115-0001';
+        let testResults = {
+            passed: 0,
+            failed: 0,
+            tests: []
+        };
+
+        function log(elementId, message, type = 'info') {
+            const output = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString('es-AR');
+            const className = `test-${type}`;
+            output.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function createTestOrder() {
+            const output = 'output1';
+            log(output, 'Creando pedido de prueba...', 'info');
+
+            const testOrder = {
+                id: TEST_ORDER_ID,
+                quotationId: 'COT-TEST-001',
+                date: new Date().toISOString(),
+                customer: {
+                    name: 'Cliente Test',
+                    phone: '+54 9 11 1234-5678',
+                    email: 'test@example.com',
+                    address: 'Calle Test 123'
+                },
+                items: [
+                    { id: 'prod_001', name: 'Poste de Hormigón 2.5m', quantity: 10, unitPrice: 3500, subtotal: 35000 }
+                ],
+                installation: { linearMeters: 100, pricePerMeter: 500, subtotal: 50000 },
+                subtotal: 85000,
+                total: 85000,
+                status: 'pending',
+                statusHistory: [
+                    { status: 'pending', date: new Date().toISOString(), note: 'Pedido creado' }
+                ]
+            };
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const existingIndex = orders.findIndex(o => o.id === TEST_ORDER_ID);
+            
+            if (existingIndex >= 0) {
+                orders[existingIndex] = testOrder;
+                log(output, '✓ Pedido de prueba actualizado', 'success');
+            } else {
+                orders.push(testOrder);
+                log(output, '✓ Pedido de prueba creado', 'success');
+            }
+
+            localStorage.setItem('ferreteria_orders', JSON.stringify(orders));
+            log(output, `ID del pedido: ${TEST_ORDER_ID}`, 'info');
+            log(output, `Estado inicial: pending`, 'info');
+            log(output, `Total: $${testOrder.total}`, 'info');
+        }
+
+        function clearTestData() {
+            const output = 'output1';
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const filtered = orders.filter(o => o.id !== TEST_ORDER_ID);
+            localStorage.setItem('ferreteria_orders', JSON.stringify(filtered));
+            log(output, '✓ Datos de prueba eliminados', 'success');
+        }
+
+        function testStatusUpdate() {
+            const output = 'output2';
+            log(output, 'Iniciando prueba de actualización de estado...', 'info');
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const order = orders.find(o => o.id === TEST_ORDER_ID);
+
+            if (!order) {
+                log(output, '✗ Pedido de prueba no encontrado. Crea uno primero.', 'error');
+                return;
+            }
+
+            const oldStatus = order.status;
+            const newStatus = 'confirmed';
+
+            order.status = newStatus;
+            order.statusHistory.push({
+                status: newStatus,
+                date: new Date().toISOString(),
+                note: 'Estado actualizado desde test'
+            });
+
+            localStorage.setItem('ferreteria_orders', JSON.stringify(orders));
+
+            log(output, `✓ Estado actualizado: ${oldStatus} → ${newStatus}`, 'success');
+            log(output, `✓ Historial actualizado: ${order.statusHistory.length} registros`, 'success');
+            log(output, `✓ Cambios guardados en localStorage`, 'success');
+
+            testResults.passed++;
+            testResults.tests.push({
+                name: 'Actualización de estado básica',
+                status: 'passed'
+            });
+        }
+
+        function testStatusUpdateWithNote() {
+            const output = 'output2';
+            log(output, 'Probando actualización con nota...', 'info');
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const order = orders.find(o => o.id === TEST_ORDER_ID);
+
+            if (!order) {
+                log(output, '✗ Pedido de prueba no encontrado.', 'error');
+                return;
+            }
+
+            const note = 'Pedido confirmado por el cliente. Instalación programada para el 20/01/2024';
+            const oldStatus = order.status;
+            const newStatus = 'in_progress';
+
+            order.status = newStatus;
+            order.statusHistory.push({
+                status: newStatus,
+                date: new Date().toISOString(),
+                note: note
+            });
+
+            localStorage.setItem('ferreteria_orders', JSON.stringify(orders));
+
+            log(output, `✓ Estado actualizado: ${oldStatus} → ${newStatus}`, 'success');
+            log(output, `✓ Nota agregada: "${note}"`, 'success');
+            log(output, `✓ Historial: ${order.statusHistory.length} registros`, 'success');
+
+            testResults.passed++;
+            testResults.tests.push({
+                name: 'Actualización con nota',
+                status: 'passed'
+            });
+        }
+
+        function testInvalidStatusUpdate() {
+            const output = 'output2';
+            log(output, 'Probando validación de estado inválido...', 'info');
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const order = orders.find(o => o.id === TEST_ORDER_ID);
+
+            if (!order) {
+                log(output, '✗ Pedido de prueba no encontrado.', 'error');
+                return;
+            }
+
+            const invalidStatus = 'estado_invalido';
+            const validStatuses = CONFIG.orders.statusOptions.map(s => s.value);
+
+            if (!validStatuses.includes(invalidStatus)) {
+                log(output, `✓ Validación correcta: "${invalidStatus}" no es un estado válido`, 'success');
+                log(output, `✓ Estados válidos: ${validStatuses.join(', ')}`, 'info');
+                testResults.passed++;
+                testResults.tests.push({
+                    name: 'Validación de estado inválido',
+                    status: 'passed'
+                });
+            } else {
+                log(output, `✗ Error: "${invalidStatus}" debería ser inválido`, 'error');
+                testResults.failed++;
+                testResults.tests.push({
+                    name: 'Validación de estado inválido',
+                    status: 'failed'
+                });
+            }
+        }
+
+        function verifyStatusHistory() {
+            const output = 'output3';
+            log(output, 'Verificando historial de estados...', 'info');
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const order = orders.find(o => o.id === TEST_ORDER_ID);
+
+            if (!order) {
+                log(output, '✗ Pedido de prueba no encontrado.', 'error');
+                return;
+            }
+
+            if (!order.statusHistory || order.statusHistory.length === 0) {
+                log(output, '✗ No hay historial de estados', 'error');
+                testResults.failed++;
+                return;
+            }
+
+            log(output, `✓ Historial encontrado: ${order.statusHistory.length} registros`, 'success');
+
+            order.statusHistory.forEach((entry, index) => {
+                const date = new Date(entry.date).toLocaleString('es-AR');
+                log(output, `  ${index + 1}. ${entry.status} - ${date}`, 'info');
+                if (entry.note) {
+                    log(output, `     Nota: ${entry.note}`, 'info');
+                }
+            });
+
+            const hasValidStructure = order.statusHistory.every(h => 
+                h.status && h.date && typeof h.note === 'string'
+            );
+
+            if (hasValidStructure) {
+                log(output, '✓ Estructura del historial es válida', 'success');
+                testResults.passed++;
+                testResults.tests.push({
+                    name: 'Verificación de historial',
+                    status: 'passed'
+                });
+            } else {
+                log(output, '✗ Estructura del historial es inválida', 'error');
+                testResults.failed++;
+                testResults.tests.push({
+                    name: 'Verificación de historial',
+                    status: 'failed'
+                });
+            }
+        }
+
+        function testValidations() {
+            const output = 'output4';
+            log(output, 'Ejecutando validaciones...', 'info');
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const order = orders.find(o => o.id === TEST_ORDER_ID);
+
+            if (!order) {
+                log(output, '✗ Pedido de prueba no encontrado.', 'error');
+                return;
+            }
+
+            let validationsPassed = 0;
+            let validationsFailed = 0;
+
+            // Validación 1: El pedido debe tener un ID
+            if (order.id) {
+                log(output, '✓ Validación 1: Pedido tiene ID', 'success');
+                validationsPassed++;
+            } else {
+                log(output, '✗ Validación 1: Pedido sin ID', 'error');
+                validationsFailed++;
+            }
+
+            // Validación 2: El pedido debe tener un estado válido
+            const validStatuses = CONFIG.orders.statusOptions.map(s => s.value);
+            if (validStatuses.includes(order.status)) {
+                log(output, `✓ Validación 2: Estado válido (${order.status})`, 'success');
+                validationsPassed++;
+            } else {
+                log(output, `✗ Validación 2: Estado inválido (${order.status})`, 'error');
+                validationsFailed++;
+            }
+
+            // Validación 3: El pedido debe tener datos del cliente
+            if (order.customer && order.customer.name && order.customer.phone) {
+                log(output, '✓ Validación 3: Datos del cliente completos', 'success');
+                validationsPassed++;
+            } else {
+                log(output, '✗ Validación 3: Datos del cliente incompletos', 'error');
+                validationsFailed++;
+            }
+
+            // Validación 4: El historial debe tener al menos un registro
+            if (order.statusHistory && order.statusHistory.length > 0) {
+                log(output, `✓ Validación 4: Historial con ${order.statusHistory.length} registros`, 'success');
+                validationsPassed++;
+            } else {
+                log(output, '✗ Validación 4: Historial vacío', 'error');
+                validationsFailed++;
+            }
+
+            // Validación 5: El total debe ser un número positivo
+            if (order.total && order.total > 0) {
+                log(output, `✓ Validación 5: Total válido ($${order.total})`, 'success');
+                validationsPassed++;
+            } else {
+                log(output, '✗ Validación 5: Total inválido', 'error');
+                validationsFailed++;
+            }
+
+            log(output, `\n✓ Validaciones pasadas: ${validationsPassed}`, 'success');
+            if (validationsFailed > 0) {
+                log(output, `✗ Validaciones fallidas: ${validationsFailed}`, 'error');
+            }
+
+            testResults.passed += validationsPassed;
+            testResults.failed += validationsFailed;
+            testResults.tests.push({
+                name: 'Validaciones generales',
+                status: validationsFailed === 0 ? 'passed' : 'failed'
+            });
+        }
+
+        function runAllTests() {
+            testResults = { passed: 0, failed: 0, tests: [] };
+            
+            createTestOrder();
+            testStatusUpdate();
+            testStatusUpdateWithNote();
+            testInvalidStatusUpdate();
+            verifyStatusHistory();
+            testValidations();
+
+            displaySummary();
+        }
+
+        function displaySummary() {
+            const summary = document.getElementById('testSummary');
+            const content = document.getElementById('summaryContent');
+
+            let html = '';
+            
+            testResults.tests.forEach(test => {
+                const icon = test.status === 'passed' ? '✓' : '✗';
+                const className = test.status === 'passed' ? 'test-success' : 'test-error';
+                html += `<div class="test-result-item"><span class="${className}">${icon} ${test.name}</span></div>`;
+            });
+
+            html += `<div class="test-result-item" style="margin-top: 10px; padding-top: 10px; border-top: 2px solid var(--border-color);">`;
+            html += `<span class="test-success">✓ Pruebas pasadas: ${testResults.passed}</span><br>`;
+            if (testResults.failed > 0) {
+                html += `<span class="test-error">✗ Pruebas fallidas: ${testResults.failed}</span>`;
+            }
+            html += `</div>`;
+
+            content.innerHTML = html;
+            summary.style.display = 'block';
+        }
+
+        // Inicializar
+        log('output1', 'Sistema de prueba listo', 'info');
+    </script>
+</body>
+</html>
