@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Automatizado - Sistema de Pedidos</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/orders.css">
+    
+    <style>
+        body {
+            padding: 40px 20px;
+            min-height: 100vh;
+            background: var(--bg-primary);
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-header {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px var(--shadow);
+            text-align: center;
+        }
+        
+        .test-header h1 {
+            font-size: 32px;
+            color: var(--text-primary);
+            margin: 0 0 12px 0;
+        }
+        
+        .test-header p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 16px;
+        }
+        
+        .test-controls {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px var(--shadow);
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(45, 122, 62, 0.3);
+        }
+        
+        .test-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .test-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        .test-btn.danger {
+            background: #d32f2f;
+        }
+        
+        .test-status {
+            padding: 12px 20px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .test-status.running {
+            color: #f57c00;
+        }
+        
+        .test-status.completed {
+            color: #4caf50;
+        }
+        
+        .test-output {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .test-output h2 {
+            font-size: 20px;
+            color: var(--text-primary);
+            margin: 0 0 20px 0;
+        }
+        
+        .console-output {
+            background: #0d1f0d;
+            color: #4caf50;
+            padding: 20px;
+            border-radius: 12px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+        
+        .console-line {
+            margin: 4px 0;
+        }
+        
+        .console-success {
+            color: #4caf50;
+        }
+        
+        .console-error {
+            color: #ff6b6b;
+        }
+        
+        .console-info {
+            color: #81c784;
+        }
+        
+        .console-warning {
+            color: #ffd54f;
+        }
+        
+        .test-summary {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px var(--shadow);
+        }
+        
+        .test-summary h2 {
+            font-size: 20px;
+            color: var(--text-primary);
+            margin: 0 0 20px 0;
+        }
+        
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .summary-card.success {
+            border-left-color: #4caf50;
+        }
+        
+        .summary-card.error {
+            border-left-color: #d32f2f;
+        }
+        
+        .summary-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .summary-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .test-results {
+            margin-top: 20px;
+        }
+        
+        .test-result-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .test-result-item.passed {
+            border-left-color: #4caf50;
+        }
+        
+        .test-result-item.failed {
+            border-left-color: #d32f2f;
+        }
+        
+        .test-result-icon {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .test-result-icon.passed {
+            color: #4caf50;
+        }
+        
+        .test-result-icon.failed {
+            color: #d32f2f;
+        }
+        
+        .test-result-text {
+            flex: 1;
+        }
+        
+        .test-result-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .test-result-error {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(76, 175, 80, 0.3);
+            border-radius: 50%;
+            border-top-color: #4caf50;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1>
+                <i class="fas fa-flask"></i>
+                Test Automatizado - Sistema de Pedidos
+            </h1>
+            <p>Validación completa de conversión de cotización, generación de órdenes, actualización de estado e historial</p>
+        </div>
+
+        <div class="test-controls">
+            <button class="test-btn" id="runTestsBtn" onclick="runTests()">
+                <i class="fas fa-play"></i>
+                Ejecutar Tests
+            </button>
+            <button class="test-btn secondary" id="clearDataBtn" onclick="clearTestData()">
+                <i class="fas fa-trash"></i>
+                Limpiar Datos
+            </button>
+            <div class="test-status" id="testStatus">
+                Listo para ejecutar
+            </div>
+        </div>
+
+        <div class="test-output" id="testOutputSection" style="display: none;">
+            <h2>
+                <i class="fas fa-terminal"></i>
+                Salida de Consola
+            </h2>
+            <div class="console-output" id="consoleOutput"></div>
+        </div>
+
+        <div class="test-summary" id="testSummarySection" style="display: none;">
+            <h2>
+                <i class="fas fa-chart-bar"></i>
+                Resumen de Resultados
+            </h2>
+            
+            <div class="summary-grid">
+                <div class="summary-card success">
+                    <div class="summary-value" id="passedCount">0</div>
+                    <div class="summary-label">Tests Pasados</div>
+                </div>
+                <div class="summary-card error">
+                    <div class="summary-value" id="failedCount">0</div>
+                    <div class="summary-label">Tests Fallidos</div>
+                </div>
+                <div class="summary-card">
+                    <div class="summary-value" id="totalCount">0</div>
+                    <div class="summary-label">Total de Tests</div>
+                </div>
+            </div>
+
+            <div class="test-results" id="testResultsList"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/products-data.js"></script>
+    <script src="js/quotation.js"></script>
+    <script src="js/orders.js"></script>
+    <script src="test-order-system-automated.js"></script>
+
+    <script>
+        let testRunner = null;
+        let consoleLines = [];
+
+        function setupConsoleCapture() {
+            const originalLog = console.log;
+            const originalError = console.error;
+            const originalWarn = console.warn;
+
+            console.log = function(...args) {
+                const message = args.join(' ');
+                addConsoleLine(message, 'info');
+                originalLog.apply(console, args);
+            };
+
+            console.error = function(...args) {
+                const message = args.join(' ');
+                addConsoleLine(message, 'error');
+                originalError.apply(console, args);
+            };
+
+            console.warn = function(...args) {
+                const message = args.join(' ');
+                addConsoleLine(message, 'warning');
+                originalWarn.apply(console, args);
+            };
+        }
+
+        function addConsoleLine(message, type = 'info') {
+            const consoleOutput = document.getElementById('consoleOutput');
+            if (!consoleOutput) return;
+
+            const lineDiv = document.createElement('div');
+            lineDiv.className = `console-line console-${type}`;
+            lineDiv.textContent = message;
+            consoleOutput.appendChild(lineDiv);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        async function runTests() {
+            const runBtn = document.getElementById('runTestsBtn');
+            const statusDiv = document.getElementById('testStatus');
+            const outputSection = document.getElementById('testOutputSection');
+            const summarySection = document.getElementById('testSummarySection');
+
+            runBtn.disabled = true;
+            statusDiv.className = 'test-status running';
+            statusDiv.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ejecutando tests...';
+            outputSection.style.display = 'block';
+            summarySection.style.display = 'none';
+
+            consoleLines = [];
+            document.getElementById('consoleOutput').innerHTML = '';
+
+            setupConsoleCapture();
+
+            try {
+                testRunner = new OrderSystemTest();
+                const results = await testRunner.runAllTests();
+
+                displayResults(results);
+
+                statusDiv.className = 'test-status completed';
+                statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Tests completados';
+            } catch (error) {
+                console.error('Error fatal durante los tests:', error);
+                statusDiv.className = 'test-status error';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error durante los tests';
+            } finally {
+                runBtn.disabled = false;
+            }
+        }
+
+        function displayResults(results) {
+            const summarySection = document.getElementById('testSummarySection');
+            const passedCount = document.getElementById('passedCount');
+            const failedCount = document.getElementById('failedCount');
+            const totalCount = document.getElementById('totalCount');
+            const resultsList = document.getElementById('testResultsList');
+
+            passedCount.textContent = results.passed;
+            failedCount.textContent = results.failed;
+            totalCount.textContent = results.tests.length;
+
+            let resultsHTML = '';
+            results.tests.forEach((test, index) => {
+                const status = test.passed ? 'passed' : 'failed';
+                const icon = test.passed ? '✓' : '✗';
+                const errorHTML = test.error ? `<div class="test-result-error">${test.error}</div>` : '';
+
+                resultsHTML += `
+                    <div class="test-result-item ${status}">
+                        <div class="test-result-icon ${status}">${icon}</div>
+                        <div class="test-result-text">
+                            <div class="test-result-name">${index + 1}. ${test.name}</div>
+                            ${errorHTML}
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsList.innerHTML = resultsHTML;
+            summarySection.style.display = 'block';
+        }
+
+        function clearTestData() {
+            if (confirm('¿Estás seguro de que quieres eliminar todos los datos de prueba?')) {
+                localStorage.removeItem('ferreteria_orders');
+                localStorage.removeItem('ferreteria_quotations');
+                alert('Datos de prueba eliminados');
+                location.reload();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Sistema de pruebas listo');
+        });
+    </script>
+</body>
+</html>

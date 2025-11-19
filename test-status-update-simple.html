@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple - Actualización de Estado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .test-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #2d7a3e;
+            border-radius: 4px;
+        }
+        .test-section h2 {
+            margin-top: 0;
+            color: #2d7a3e;
+            font-size: 16px;
+        }
+        button {
+            background: #2d7a3e;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #236030;
+        }
+        .output {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .error {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        .info {
+            color: #0288d1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Simple - Actualización de Estado de Pedidos</h1>
+        
+        <div class="test-section">
+            <h2>1. Crear Pedido de Prueba</h2>
+            <button onclick="createTestOrder()">Crear Pedido</button>
+            <button onclick="clearData()">Limpiar</button>
+            <div id="output1" class="output"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>2. Actualizar Estado</h2>
+            <button onclick="updateStatus()">Actualizar Estado</button>
+            <button onclick="updateStatusWithNote()">Actualizar con Nota</button>
+            <div id="output2" class="output"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>3. Verificar Datos</h2>
+            <button onclick="verifyData()">Verificar</button>
+            <div id="output3" class="output"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        const TEST_ORDER_ID = 'ORD-TEST-001';
+
+        function log(elementId, message, type = 'info') {
+            const output = document.getElementById(elementId);
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            output.innerHTML += `<div class="${className}">${message}</div>`;
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function createTestOrder() {
+            const output = 'output1';
+            log(output, 'Creando pedido de prueba...', 'info');
+
+            const order = {
+                id: TEST_ORDER_ID,
+                date: new Date().toISOString(),
+                customer: {
+                    name: 'Cliente Test',
+                    phone: '+54 9 11 1234-5678',
+                    email: 'test@example.com'
+                },
+                items: [
+                    { name: 'Producto Test', quantity: 1, unitPrice: 1000, subtotal: 1000 }
+                ],
+                total: 1000,
+                status: 'pending',
+                statusHistory: [
+                    { status: 'pending', date: new Date().toISOString(), note: 'Creado' }
+                ]
+            };
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const index = orders.findIndex(o => o.id === TEST_ORDER_ID);
+            
+            if (index >= 0) {
+                orders[index] = order;
+            } else {
+                orders.push(order);
+            }
+
+            localStorage.setItem('ferreteria_orders', JSON.stringify(orders));
+            log(output, 'Pedido creado: ' + TEST_ORDER_ID, 'success');
+            log(output, 'Estado inicial: pending', 'info');
+        }
+
+        function clearData() {
+            const output = 'output1';
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const filtered = orders.filter(o => o.id !== TEST_ORDER_ID);
+            localStorage.setItem('ferreteria_orders', JSON.stringify(filtered));
+            log(output, 'Datos eliminados', 'success');
+        }
+
+        function updateStatus() {
+            const output = 'output2';
+            log(output, 'Actualizando estado...', 'info');
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const order = orders.find(o => o.id === TEST_ORDER_ID);
+
+            if (!order) {
+                log(output, 'Pedido no encontrado', 'error');
+                return;
+            }
+
+            const oldStatus = order.status;
+            order.status = 'confirmed';
+            order.statusHistory.push({
+                status: 'confirmed',
+                date: new Date().toISOString(),
+                note: 'Actualizado desde test'
+            });
+
+            localStorage.setItem('ferreteria_orders', JSON.stringify(orders));
+            log(output, `Estado actualizado: ${oldStatus} → confirmed`, 'success');
+            log(output, `Historial: ${order.statusHistory.length} registros`, 'info');
+        }
+
+        function updateStatusWithNote() {
+            const output = 'output2';
+            log(output, 'Actualizando estado con nota...', 'info');
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const order = orders.find(o => o.id === TEST_ORDER_ID);
+
+            if (!order) {
+                log(output, 'Pedido no encontrado', 'error');
+                return;
+            }
+
+            const oldStatus = order.status;
+            order.status = 'in_progress';
+            order.statusHistory.push({
+                status: 'in_progress',
+                date: new Date().toISOString(),
+                note: 'En proceso de instalación'
+            });
+
+            localStorage.setItem('ferreteria_orders', JSON.stringify(orders));
+            log(output, `Estado actualizado: ${oldStatus} → in_progress`, 'success');
+            log(output, 'Nota: En proceso de instalación', 'info');
+            log(output, `Historial: ${order.statusHistory.length} registros`, 'info');
+        }
+
+        function verifyData() {
+            const output = 'output3';
+            log(output, 'Verificando datos...', 'info');
+
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const order = orders.find(o => o.id === TEST_ORDER_ID);
+
+            if (!order) {
+                log(output, 'Pedido no encontrado', 'error');
+                return;
+            }
+
+            log(output, `ID: ${order.id}`, 'info');
+            log(output, `Estado actual: ${order.status}`, 'info');
+            log(output, `Cliente: ${order.customer.name}`, 'info');
+            log(output, `Total: $${order.total}`, 'info');
+            log(output, `Historial de estados:`, 'info');
+
+            order.statusHistory.forEach((h, i) => {
+                const date = new Date(h.date).toLocaleString('es-AR');
+                log(output, `  ${i + 1}. ${h.status} - ${date}`, 'info');
+                if (h.note) {
+                    log(output, `     Nota: ${h.note}`, 'info');
+                }
+            });
+
+            log(output, 'Verificación completada', 'success');
+        }
+    </script>
+</body>
+</html>

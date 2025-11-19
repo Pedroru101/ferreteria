@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Conversión de Cotización a Pedido</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/quotation.css">
+    <link rel="stylesheet" href="css/orders.css">
+    
+    <style>
+        body {
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .test-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .test-header h1 {
+            font-size: 32px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        
+        .test-section {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .test-section h2 {
+            font-size: 20px;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+        }
+        
+        .test-btn {
+            padding: 12px 24px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 12px;
+            margin-bottom: 12px;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(45, 122, 62, 0.3);
+        }
+        
+        .test-btn i {
+            margin-right: 8px;
+        }
+        
+        .info-box {
+            background: rgba(76, 175, 80, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box p {
+            margin: 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+        
+        .step-list {
+            list-style: none;
+            padding: 0;
+            counter-reset: step-counter;
+        }
+        
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 12px;
+            padding-left: 40px;
+            position: relative;
+        }
+        
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-header">
+            <h1><i class="fas fa-exchange-alt"></i> Test - Conversión de Cotización a Pedido</h1>
+            <p>Prueba la funcionalidad completa de conversión de cotización a pedido</p>
+        </div>
+
+        <div class="test-section">
+            <h2><i class="fas fa-info-circle"></i> Instrucciones</h2>
+            <div class="info-box">
+                <p><strong>Esta prueba verifica:</strong></p>
+                <ul class="step-list">
+                    <li>Apertura del modal de cotización con datos de prueba</li>
+                    <li>Visualización correcta de materiales y totales</li>
+                    <li>Botón "Confirmar Pedido" funcional</li>
+                    <li>Apertura del formulario de pedido con datos pre-cargados</li>
+                    <li>Guardado del pedido en localStorage</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2><i class="fas fa-play-circle"></i> Acciones de Prueba</h2>
+            
+            <button class="test-btn" onclick="testOpenQuotationModal()">
+                <i class="fas fa-file-invoice"></i>
+                Abrir Modal de Cotización
+            </button>
+            
+            <button class="test-btn" onclick="testQuotationWithInstallation()">
+                <i class="fas fa-tools"></i>
+                Cotización con Instalación
+            </button>
+            
+            <button class="test-btn" onclick="testLargeQuotation()">
+                <i class="fas fa-list"></i>
+                Cotización Grande (Muchos Items)
+            </button>
+            
+            <button class="test-btn" onclick="viewSavedOrders()">
+                <i class="fas fa-shopping-cart"></i>
+                Ver Pedidos Guardados
+            </button>
+            
+            <button class="test-btn" onclick="clearAllData()">
+                <i class="fas fa-trash"></i>
+                Limpiar Datos de Prueba
+            </button>
+        </div>
+
+        <div class="test-section">
+            <h2><i class="fas fa-database"></i> Estado del Sistema</h2>
+            <div id="systemStatus"></div>
+        </div>
+
+        <div class="test-section">
+            <h2><i class="fas fa-list-ul"></i> Pedidos Guardados</h2>
+            <div id="savedOrdersList"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/products-data.js"></script>
+    <script src="js/quotation.js"></script>
+    <script src="js/quotation-modal.js"></script>
+    <script src="js/orders.js"></script>
+
+    <script>
+        function testOpenQuotationModal() {
+            const testQuotation = {
+                quotationId: `COT-TEST-${Date.now()}`,
+                projectData: {
+                    perimeter: 120,
+                    postType: 'hormigon',
+                    materialType: 'mesh'
+                },
+                items: [
+                    {
+                        id: 'poste_hormigon_25',
+                        name: 'Poste de Hormigón 2.5m',
+                        category: 'postes',
+                        description: '4 esquineros + 44 intermedios',
+                        quantity: 48,
+                        unitPrice: 3500,
+                        unit: 'unidad'
+                    },
+                    {
+                        id: 'mesh_150',
+                        name: 'Tejido Romboidal',
+                        category: 'tejidos',
+                        description: 'Altura 1.5m - 120m lineales',
+                        quantity: 12,
+                        unitPrice: 12800,
+                        unit: 'rollos'
+                    },
+                    {
+                        id: 'acc_abrazaderas',
+                        name: 'Abrazaderas',
+                        category: 'accesorios',
+                        description: 'Para fijación de tejido',
+                        quantity: 240,
+                        unitPrice: 280,
+                        unit: 'unidades'
+                    },
+                    {
+                        id: 'acc_tensores',
+                        name: 'Tensores',
+                        category: 'accesorios',
+                        description: 'Para tensado de tejido',
+                        quantity: 8,
+                        unitPrice: 320,
+                        unit: 'unidades'
+                    }
+                ],
+                installation: null
+            };
+
+            if (typeof window.openQuotationModal === 'function') {
+                window.openQuotationModal(testQuotation);
+            } else {
+                alert('El modal de cotización no está disponible');
+            }
+        }
+
+        function testQuotationWithInstallation() {
+            const testQuotation = {
+                quotationId: `COT-TEST-${Date.now()}`,
+                projectData: {
+                    perimeter: 200,
+                    postType: 'quebracho',
+                    materialType: 'wire'
+                },
+                items: [
+                    {
+                        id: 'poste_quebracho_25',
+                        name: 'Poste de Quebracho 2.5m',
+                        category: 'postes',
+                        description: '4 esquineros + 76 intermedios',
+                        quantity: 80,
+                        unitPrice: 4200,
+                        unit: 'unidad'
+                    },
+                    {
+                        id: 'wire_galvanizado',
+                        name: 'Alambre Galvanizado',
+                        category: 'alambres',
+                        description: '5 hilos - Aprox. 500 kg',
+                        quantity: 1000,
+                        unitPrice: 190,
+                        unit: 'metros'
+                    },
+                    {
+                        id: 'acc_grampas',
+                        name: 'Grampas',
+                        category: 'accesorios',
+                        description: 'Para fijación de alambre',
+                        quantity: 400,
+                        unitPrice: 850,
+                        unit: 'unidades'
+                    }
+                ],
+                installation: {
+                    linearMeters: 200,
+                    pricePerMeter: 500,
+                    subtotal: 100000
+                }
+            };
+
+            if (typeof window.openQuotationModal === 'function') {
+                window.openQuotationModal(testQuotation);
+            } else {
+                alert('El modal de cotización no está disponible');
+            }
+        }
+
+        function testLargeQuotation() {
+            const testQuotation = {
+                quotationId: `COT-TEST-${Date.now()}`,
+                projectData: {
+                    perimeter: 500,
+                    postType: 'olimpo',
+                    materialType: 'wire'
+                },
+                items: [
+                    {
+                        id: 'poste_olimpo_25',
+                        name: 'Poste Olimpo 2.5m',
+                        category: 'postes',
+                        description: '4 esquineros + 196 intermedios',
+                        quantity: 200,
+                        unitPrice: 4000,
+                        unit: 'unidad'
+                    },
+                    {
+                        id: 'wire_pua',
+                        name: 'Alambre de Púa',
+                        category: 'alambres',
+                        description: '3 hilos incluidos con postes Olimpo',
+                        quantity: 1500,
+                        unitPrice: 12500,
+                        unit: 'metros'
+                    },
+                    {
+                        id: 'acc_grampas',
+                        name: 'Grampas',
+                        category: 'accesorios',
+                        quantity: 1000,
+                        unitPrice: 850,
+                        unit: 'unidades'
+                    },
+                    {
+                        id: 'acc_tensores',
+                        name: 'Tensores',
+                        category: 'accesorios',
+                        quantity: 20,
+                        unitPrice: 320,
+                        unit: 'unidades'
+                    },
+                    {
+                        id: 'acc_varillas',
+                        name: 'Varillas de Anclaje',
+                        category: 'accesorios',
+                        quantity: 200,
+                        unitPrice: 450,
+                        unit: 'unidades'
+                    }
+                ],
+                installation: {
+                    linearMeters: 500,
+                    pricePerMeter: 500,
+                    subtotal: 250000
+                }
+            };
+
+            if (typeof window.openQuotationModal === 'function') {
+                window.openQuotationModal(testQuotation);
+            } else {
+                alert('El modal de cotización no está disponible');
+            }
+        }
+
+        function viewSavedOrders() {
+            updateOrdersList();
+            document.getElementById('savedOrdersList').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function clearAllData() {
+            if (confirm('¿Estás seguro de que quieres eliminar todos los datos de prueba?')) {
+                localStorage.removeItem('ferreteria_orders');
+                localStorage.removeItem('ferreteria_quotations');
+                updateSystemStatus();
+                updateOrdersList();
+                alert('Datos eliminados correctamente');
+            }
+        }
+
+        function updateSystemStatus() {
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const quotations = JSON.parse(localStorage.getItem('ferreteria_quotations') || '[]');
+
+            const statusHTML = `
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px;">
+                        <div style="font-size: 32px; font-weight: 800; color: var(--primary);">${orders.length}</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Pedidos Guardados</div>
+                    </div>
+                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px;">
+                        <div style="font-size: 32px; font-weight: 800; color: var(--primary);">${quotations.length}</div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">Cotizaciones Guardadas</div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('systemStatus').innerHTML = statusHTML;
+        }
+
+        function updateOrdersList() {
+            const orders = JSON.parse(localStorage.getItem('ferreteria_orders') || '[]');
+            const container = document.getElementById('savedOrdersList');
+
+            if (orders.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+                        <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 16px; opacity: 0.5;"></i>
+                        <p>No hay pedidos guardados</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '<div style="display: flex; flex-direction: column; gap: 12px;">';
+            
+            orders.forEach(order => {
+                const date = new Date(order.date).toLocaleDateString('es-AR');
+                const statusColors = {
+                    'pending': '#f57c00',
+                    'confirmed': '#4caf50',
+                    'in_progress': '#0288d1',
+                    'completed': '#2d7a3e',
+                    'cancelled': '#d32f2f'
+                };
+                const statusColor = statusColors[order.status] || '#666';
+
+                html += `
+                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 8px; border-left: 4px solid ${statusColor};">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <strong style="color: var(--text-primary);">${order.id}</strong>
+                            <span style="padding: 4px 12px; background: ${statusColor}; color: white; border-radius: 4px; font-size: 12px; font-weight: 600;">
+                                ${order.status}
+                            </span>
+                        </div>
+                        <div style="font-size: 14px; color: var(--text-secondary);">
+                            <div>Cliente: ${order.customer.name}</div>
+                            <div>Fecha: ${date}</div>
+                            <div>Total: $${order.total.toLocaleString('es-AR')}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateSystemStatus();
+            updateOrdersList();
+            
+            setInterval(() => {
+                updateSystemStatus();
+                updateOrdersList();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

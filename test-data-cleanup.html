@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Data Cleanup Manager</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #ff6b35;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .test-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .test-section h2 {
+            color: #4caf50;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        button {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #e55a24;
+            transform: translateY(-2px);
+        }
+        
+        button.secondary {
+            background: #2d7a3e;
+        }
+        
+        button.secondary:hover {
+            background: #1f5a2e;
+        }
+        
+        .output {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid #4caf50;
+            border-radius: 4px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            color: #4caf50;
+        }
+        
+        .log-entry {
+            margin-bottom: 8px;
+            padding: 5px;
+            border-left: 3px solid #4caf50;
+            padding-left: 10px;
+        }
+        
+        .log-entry.error {
+            border-left-color: #d32f2f;
+            color: #ff6b6b;
+        }
+        
+        .log-entry.warning {
+            border-left-color: #f57c00;
+            color: #ffb74d;
+        }
+        
+        .log-entry.success {
+            border-left-color: #4caf50;
+            color: #81c784;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .stat-box {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4caf50;
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .stat-value {
+            color: #4caf50;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.3);
+            border-radius: 4px;
+            color: #e0e0e0;
+        }
+        
+        input::placeholder {
+            color: #808080;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-broom"></i> Test - Data Cleanup Manager</h1>
+        
+        <!-- Test de Limpieza de Cotizaciones Expiradas -->
+        <div class="test-section">
+            <h2>1. Limpieza de Cotizaciones Expiradas</h2>
+            <div class="test-controls">
+                <button onclick="testCreateExpiredQuotations()">Crear Cotizaciones Expiradas</button>
+                <button class="secondary" onclick="testCleanupExpiredQuotations()">Limpiar Cotizaciones</button>
+                <button class="secondary" onclick="testShowQuotations()">Ver Cotizaciones</button>
+            </div>
+            <div id="quotationsOutput" class="output">
+                <div class="log-entry">Esperando acciones...</div>
+            </div>
+        </div>
+        
+        <!-- Test de Limpieza de Logs de Error -->
+        <div class="test-section">
+            <h2>2. Limpieza de Logs de Error Antiguos</h2>
+            <div class="test-controls">
+                <button onclick="testCreateOldErrorLogs()">Crear Logs Antiguos</button>
+                <button class="secondary" onclick="testCleanupOldErrorLogs()">Limpiar Logs</button>
+                <button class="secondary" onclick="testShowErrorLogs()">Ver Logs</button>
+            </div>
+            <div id="logsOutput" class="output">
+                <div class="log-entry">Esperando acciones...</div>
+            </div>
+        </div>
+        
+        <!-- Test de Verificación de Cuota de Almacenamiento -->
+        <div class="test-section">
+            <h2>3. Verificación de Cuota de Almacenamiento</h2>
+            <div class="test-controls">
+                <button onclick="testCheckStorageQuota()">Verificar Cuota</button>
+                <button class="secondary" onclick="testShowStorageStats()">Ver Estadísticas</button>
+                <button class="secondary" onclick="testClearAllStorage()">Limpiar Todo</button>
+            </div>
+            <div id="storageOutput" class="output">
+                <div class="log-entry">Esperando acciones...</div>
+            </div>
+            <div class="stats-grid" id="storageStats"></div>
+        </div>
+        
+        <!-- Test de Limpieza Automática Completa -->
+        <div class="test-section">
+            <h2>4. Limpieza Automática Completa</h2>
+            <div class="test-controls">
+                <button onclick="testRunFullCleanup()">Ejecutar Limpieza Completa</button>
+                <button class="secondary" onclick="testGetCleanupStats()">Ver Estadísticas</button>
+                <button class="secondary" onclick="testForceCleanup()">Forzar Limpieza</button>
+            </div>
+            <div id="cleanupOutput" class="output">
+                <div class="log-entry">Esperando acciones...</div>
+            </div>
+        </div>
+        
+        <!-- Test de Limpieza de Emergencia -->
+        <div class="test-section">
+            <h2>5. Limpieza de Emergencia (Almacenamiento Crítico)</h2>
+            <div class="test-controls">
+                <button onclick="testFillStorage()">Llenar Almacenamiento</button>
+                <button class="secondary" onclick="testEmergencyCleanup()">Limpieza de Emergencia</button>
+            </div>
+            <div id="emergencyOutput" class="output">
+                <div class="log-entry">Esperando acciones...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/data-cleanup.js"></script>
+
+    <script>
+        // Utilidades para logging
+        function log(elementId, message, type = 'info') {
+            const output = document.getElementById(elementId);
+            const entry = document.createElement('div');
+            entry.className = `log-entry ${type}`;
+            const timestamp = new Date().toLocaleTimeString();
+            entry.textContent = `[${timestamp}] ${message}`;
+            output.appendChild(entry);
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function clearLog(elementId) {
+            document.getElementById(elementId).innerHTML = '';
+        }
+
+        // Test 1: Cotizaciones Expiradas
+        function testCreateExpiredQuotations() {
+            clearLog('quotationsOutput');
+            log('quotationsOutput', 'Creando cotizaciones de prueba...', 'info');
+            
+            const quotations = [
+                {
+                    id: 'COT-001',
+                    date: new Date(Date.now() - 40 * 24 * 60 * 60 * 1000).toISOString(),
+                    validUntil: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+                    total: 5000,
+                    status: 'sent'
+                },
+                {
+                    id: 'COT-002',
+                    date: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000).toISOString(),
+                    validUntil: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000).toISOString(),
+                    total: 3000,
+                    status: 'sent'
+                },
+                {
+                    id: 'COT-003',
+                    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+                    validUntil: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(),
+                    total: 7500,
+                    status: 'draft'
+                }
+            ];
+            
+            StorageManager.set('quotations', quotations);
+            log('quotationsOutput', `Se crearon ${quotations.length} cotizaciones`, 'success');
+            log('quotationsOutput', 'COT-001: Expirada hace 10 días', 'warning');
+            log('quotationsOutput', 'COT-002: Válida por 10 días más', 'success');
+            log('quotationsOutput', 'COT-003: Válida por 25 días más', 'success');
+        }
+
+        function testCleanupExpiredQuotations() {
+            clearLog('quotationsOutput');
+            log('quotationsOutput', 'Ejecutando limpieza de cotizaciones expiradas...', 'info');
+            
+            if (!dataCleanupManager) {
+                dataCleanupManager = new DataCleanupManager(CONFIG.dataCleanup);
+            }
+            
+            const removed = dataCleanupManager.cleanupExpiredQuotations();
+            log('quotationsOutput', `Se eliminaron ${removed} cotizaciones expiradas`, 'success');
+            
+            const remaining = StorageManager.get('quotations', []);
+            log('quotationsOutput', `Cotizaciones restantes: ${remaining.length}`, 'info');
+        }
+
+        function testShowQuotations() {
+            clearLog('quotationsOutput');
+            const quotations = StorageManager.get('quotations', []);
+            
+            if (quotations.length === 0) {
+                log('quotationsOutput', 'No hay cotizaciones almacenadas', 'warning');
+                return;
+            }
+            
+            log('quotationsOutput', `Total de cotizaciones: ${quotations.length}`, 'info');
+            quotations.forEach(q => {
+                const validUntil = new Date(q.validUntil);
+                const now = new Date();
+                const isExpired = validUntil < now;
+                log('quotationsOutput', `${q.id} - Total: $${q.total} - ${isExpired ? 'EXPIRADA' : 'Válida'}`, isExpired ? 'error' : 'success');
+            });
+        }
+
+        // Test 2: Logs de Error Antiguos
+        function testCreateOldErrorLogs() {
+            clearLog('logsOutput');
+            log('logsOutput', 'Creando logs de error de prueba...', 'info');
+            
+            const logs = [
+                {
+                    timestamp: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+                    context: 'Test Error 1',
+                    message: 'Error antiguo (10 días)',
+                    stack: 'test stack'
+                },
+                {
+                    timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+                    context: 'Test Error 2',
+                    message: 'Error moderado (5 días)',
+                    stack: 'test stack'
+                },
+                {
+                    timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+                    context: 'Test Error 3',
+                    message: 'Error reciente (1 día)',
+                    stack: 'test stack'
+                }
+            ];
+            
+            StorageManager.set('error_logs', logs);
+            log('logsOutput', `Se crearon ${logs.length} logs de error`, 'success');
+            log('logsOutput', 'Log 1: 10 días atrás (será eliminado)', 'warning');
+            log('logsOutput', 'Log 2: 5 días atrás (será eliminado)', 'warning');
+            log('logsOutput', 'Log 3: 1 día atrás (se mantendrá)', 'success');
+        }
+
+        function testCleanupOldErrorLogs() {
+            clearLog('logsOutput');
+            log('logsOutput', 'Ejecutando limpieza de logs antiguos...', 'info');
+            
+            if (!dataCleanupManager) {
+                dataCleanupManager = new DataCleanupManager(CONFIG.dataCleanup);
+            }
+            
+            const removed = dataCleanupManager.cleanupOldErrorLogs();
+            log('logsOutput', `Se eliminaron ${removed} logs antiguos (> 7 días)`, 'success');
+            
+            const remaining = StorageManager.get('error_logs', []);
+            log('logsOutput', `Logs restantes: ${remaining.length}`, 'info');
+        }
+
+        function testShowErrorLogs() {
+            clearLog('logsOutput');
+            const logs = StorageManager.get('error_logs', []);
+            
+            if (logs.length === 0) {
+                log('logsOutput', 'No hay logs de error almacenados', 'warning');
+                return;
+            }
+            
+            log('logsOutput', `Total de logs: ${logs.length}`, 'info');
+            logs.forEach(log_entry => {
+                const logDate = new Date(log_entry.timestamp);
+                const daysOld = Math.floor((Date.now() - logDate.getTime()) / (24 * 60 * 60 * 1000));
+                log('logsOutput', `${log_entry.context} - ${daysOld} días atrás - ${log_entry.message}`, 'info');
+            });
+        }
+
+        // Test 3: Cuota de Almacenamiento
+        function testCheckStorageQuota() {
+            clearLog('storageOutput');
+            log('storageOutput', 'Verificando cuota de almacenamiento...', 'info');
+            
+            if (!dataCleanupManager) {
+                dataCleanupManager = new DataCleanupManager(CONFIG.dataCleanup);
+            }
+            
+            const warnings = dataCleanupManager.checkStorageQuota();
+            log('storageOutput', `Advertencias generadas: ${warnings}`, warnings > 0 ? 'warning' : 'success');
+            
+            testShowStorageStats();
+        }
+
+        function testShowStorageStats() {
+            clearLog('storageOutput');
+            const sizeMB = StorageManager.getSizeInMB();
+            const maxMB = CONFIG.dataCleanup.maxStorageMB;
+            const percentage = (sizeMB / maxMB) * 100;
+            
+            log('storageOutput', `Almacenamiento usado: ${sizeMB}MB / ${maxMB}MB (${percentage.toFixed(1)}%)`, 'info');
+            
+            const statsHtml = `
+                <div class="stat-box">
+                    <div class="stat-label">Almacenamiento Usado</div>
+                    <div class="stat-value">${sizeMB}MB</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Límite Máximo</div>
+                    <div class="stat-value">${maxMB}MB</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Porcentaje Usado</div>
+                    <div class="stat-value">${percentage.toFixed(1)}%</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Espacio Disponible</div>
+                    <div class="stat-value">${(maxMB - sizeMB).toFixed(2)}MB</div>
+                </div>
+            `;
+            document.getElementById('storageStats').innerHTML = statsHtml;
+        }
+
+        function testClearAllStorage() {
+            clearLog('storageOutput');
+            log('storageOutput', 'Limpiando todo el almacenamiento...', 'warning');
+            StorageManager.clear();
+            log('storageOutput', 'Almacenamiento limpiado completamente', 'success');
+            testShowStorageStats();
+        }
+
+        // Test 4: Limpieza Completa
+        function testRunFullCleanup() {
+            clearLog('cleanupOutput');
+            log('cleanupOutput', 'Ejecutando limpieza automática completa...', 'info');
+            
+            if (!dataCleanupManager) {
+                dataCleanupManager = new DataCleanupManager(CONFIG.dataCleanup);
+            }
+            
+            const stats = dataCleanupManager.runCleanup();
+            if (stats) {
+                log('cleanupOutput', `Cotizaciones eliminadas: ${stats.quotationsRemoved}`, 'success');
+                log('cleanupOutput', `Logs eliminados: ${stats.logsRemoved}`, 'success');
+                log('cleanupOutput', `Advertencias de almacenamiento: ${stats.storageWarnings}`, stats.storageWarnings > 0 ? 'warning' : 'success');
+            }
+        }
+
+        function testGetCleanupStats() {
+            clearLog('cleanupOutput');
+            
+            if (!dataCleanupManager) {
+                dataCleanupManager = new DataCleanupManager(CONFIG.dataCleanup);
+            }
+            
+            const stats = dataCleanupManager.getCleanupStats();
+            log('cleanupOutput', `Última limpieza: ${stats.lastRun || 'Nunca'}`, 'info');
+            log('cleanupOutput', `Próxima limpieza: ${stats.nextCleanupTime.toLocaleString()}`, 'info');
+            log('cleanupOutput', `Almacenamiento actual: ${stats.currentStorageMB}MB / ${stats.maxStorageMB}MB`, 'info');
+        }
+
+        function testForceCleanup() {
+            clearLog('cleanupOutput');
+            log('cleanupOutput', 'Forzando limpieza inmediata...', 'warning');
+            
+            if (!dataCleanupManager) {
+                dataCleanupManager = new DataCleanupManager(CONFIG.dataCleanup);
+            }
+            
+            const stats = dataCleanupManager.forceCleanup();
+            if (stats) {
+                log('cleanupOutput', 'Limpieza forzada completada', 'success');
+                testGetCleanupStats();
+            }
+        }
+
+        // Test 5: Limpieza de Emergencia
+        function testFillStorage() {
+            clearLog('emergencyOutput');
+            log('emergencyOutput', 'Llenando almacenamiento con datos de prueba...', 'warning');
+            
+            const largeData = 'x'.repeat(1000000);
+            for (let i = 0; i < 5; i++) {
+                StorageManager.set(`test_data_${i}`, { data: largeData });
+            }
+            
+            const sizeMB = StorageManager.getSizeInMB();
+            log('emergencyOutput', `Almacenamiento lleno: ${sizeMB}MB`, 'warning');
+        }
+
+        function testEmergencyCleanup() {
+            clearLog('emergencyOutput');
+            log('emergencyOutput', 'Ejecutando limpieza de emergencia...', 'warning');
+            
+            if (!dataCleanupManager) {
+                dataCleanupManager = new DataCleanupManager(CONFIG.dataCleanup);
+            }
+            
+            dataCleanupManager.attemptEmergencyCleanup();
+            log('emergencyOutput', 'Limpieza de emergencia completada', 'success');
+            
+            const sizeMB = StorageManager.getSizeInMB();
+            log('emergencyOutput', `Almacenamiento después de limpieza: ${sizeMB}MB`, 'info');
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            log('quotationsOutput', 'Sistema listo para pruebas', 'success');
+            log('logsOutput', 'Sistema listo para pruebas', 'success');
+            log('storageOutput', 'Sistema listo para pruebas', 'success');
+            log('cleanupOutput', 'Sistema listo para pruebas', 'success');
+            log('emergencyOutput', 'Sistema listo para pruebas', 'success');
+        });
+    </script>
+</body>
+</html>

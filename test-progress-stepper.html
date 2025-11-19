@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Progress Stepper Component</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/progress-stepper.css">
+    
+    <style>
+        body {
+            padding: 2rem;
+            background: var(--bg-primary);
+        }
+        
+        .test-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .test-section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .test-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .test-controls button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .test-controls button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        .test-info {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 14px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .info-value {
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="color: var(--primary); margin-bottom: 2rem;">
+            <i class="fas fa-tasks"></i> Test - Progress Stepper Component
+        </h1>
+
+        <!-- Test 1: Horizontal Stepper -->
+        <div class="test-section">
+            <h2>1. Stepper Horizontal (Estándar)</h2>
+            <div id="progressStepper1"></div>
+            
+            <div class="test-controls">
+                <button onclick="testStepper1.nextStep()">Siguiente Paso</button>
+                <button onclick="testStepper1.previousStep()">Paso Anterior</button>
+                <button onclick="testStepper1.reset()">Reiniciar</button>
+                <button onclick="testStepper1.goToStep(2)">Ir a Paso 3</button>
+            </div>
+            
+            <div class="test-info">
+                <div class="info-item">
+                    <span class="info-label">Paso Actual:</span>
+                    <span class="info-value" id="info1-current">1</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Progreso:</span>
+                    <span class="info-value" id="info1-progress">33%</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Pasos Completados:</span>
+                    <span class="info-value" id="info1-completed">0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 2: Compact Stepper -->
+        <div class="test-section">
+            <h2>2. Stepper Compacto</h2>
+            <div id="progressStepper2"></div>
+            
+            <div class="test-controls">
+                <button onclick="testStepper2.nextStep()">Siguiente Paso</button>
+                <button onclick="testStepper2.previousStep()">Paso Anterior</button>
+                <button onclick="testStepper2.reset()">Reiniciar</button>
+            </div>
+            
+            <div class="test-info">
+                <div class="info-item">
+                    <span class="info-label">Paso Actual:</span>
+                    <span class="info-value" id="info2-current">1</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Progreso:</span>
+                    <span class="info-value" id="info2-progress">33%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 3: Vertical Stepper -->
+        <div class="test-section">
+            <h2>3. Stepper Vertical</h2>
+            <div id="progressStepper3"></div>
+            
+            <div class="test-controls">
+                <button onclick="testStepper3.nextStep()">Siguiente Paso</button>
+                <button onclick="testStepper3.previousStep()">Paso Anterior</button>
+                <button onclick="testStepper3.reset()">Reiniciar</button>
+            </div>
+            
+            <div class="test-info">
+                <div class="info-item">
+                    <span class="info-label">Paso Actual:</span>
+                    <span class="info-value" id="info3-current">1</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Progreso:</span>
+                    <span class="info-value" id="info3-progress">33%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test 4: Flow Stepper (Flujo Completo) -->
+        <div class="test-section">
+            <h2>4. Flow Stepper (Flujo Calculadora → Cotización → Pedido)</h2>
+            <div id="progressStepper4"></div>
+            
+            <div class="test-controls">
+                <button onclick="testFlowStepper.completeCalculator({test: true})">Completar Calculadora</button>
+                <button onclick="testFlowStepper.completeQuotation({test: true})">Completar Cotización</button>
+                <button onclick="testFlowStepper.completeOrder({test: true})">Completar Pedido</button>
+                <button onclick="testFlowStepper.resetFlow()">Reiniciar Flujo</button>
+            </div>
+            
+            <div class="test-info">
+                <div class="info-item">
+                    <span class="info-label">Calculadora:</span>
+                    <span class="info-value" id="info4-calc">No completada</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Cotización:</span>
+                    <span class="info-value" id="info4-quote">No completada</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Pedido:</span>
+                    <span class="info-value" id="info4-order">No completado</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/progress-stepper.js"></script>
+    
+    <script>
+        // Test 1: Horizontal Stepper
+        const testStepper1 = new ProgressStepper({
+            containerId: 'progressStepper1',
+            steps: [
+                { id: 'step1', label: 'Paso 1', description: 'Inicio', icon: 'play-circle' },
+                { id: 'step2', label: 'Paso 2', description: 'Proceso', icon: 'cog' },
+                { id: 'step3', label: 'Paso 3', description: 'Finalización', icon: 'check-circle' }
+            ],
+            currentStep: 0,
+            variant: 'horizontal',
+            compact: false,
+            showProgressBar: true,
+            onStepClick: (stepIndex, step) => {
+                console.log('Navegando a paso:', step.label);
+                updateInfo1();
+                return true;
+            }
+        });
+
+        function updateInfo1() {
+            const progress = testStepper1.getProgress();
+            document.getElementById('info1-current').textContent = progress.current;
+            document.getElementById('info1-progress').textContent = Math.round(progress.percentage) + '%';
+            document.getElementById('info1-completed').textContent = progress.completed;
+        }
+
+        // Test 2: Compact Stepper
+        const testStepper2 = new ProgressStepper({
+            containerId: 'progressStepper2',
+            steps: [
+                { id: 'step1', label: 'Inicio', icon: 'play' },
+                { id: 'step2', label: 'Proceso', icon: 'cog' },
+                { id: 'step3', label: 'Fin', icon: 'check' }
+            ],
+            currentStep: 0,
+            variant: 'horizontal',
+            compact: true,
+            showProgressBar: true,
+            onStepClick: (stepIndex, step) => {
+                updateInfo2();
+                return true;
+            }
+        });
+
+        function updateInfo2() {
+            const progress = testStepper2.getProgress();
+            document.getElementById('info2-current').textContent = progress.current;
+            document.getElementById('info2-progress').textContent = Math.round(progress.percentage) + '%';
+        }
+
+        // Test 3: Vertical Stepper
+        const testStepper3 = new ProgressStepper({
+            containerId: 'progressStepper3',
+            steps: [
+                { id: 'step1', label: 'Información', description: 'Ingresa tus datos', icon: 'user' },
+                { id: 'step2', label: 'Confirmación', description: 'Revisa los datos', icon: 'check-square' },
+                { id: 'step3', label: 'Finalización', description: 'Completa el proceso', icon: 'flag-checkered' }
+            ],
+            currentStep: 0,
+            variant: 'vertical',
+            compact: false,
+            showProgressBar: true,
+            onStepClick: (stepIndex, step) => {
+                updateInfo3();
+                return true;
+            }
+        });
+
+        function updateInfo3() {
+            const progress = testStepper3.getProgress();
+            document.getElementById('info3-current').textContent = progress.current;
+            document.getElementById('info3-progress').textContent = Math.round(progress.percentage) + '%';
+        }
+
+        // Test 4: Flow Stepper
+        const testFlowStepper = new FlowStepper();
+        
+        // Reemplazar el stepper del flow con uno en nuestro contenedor de prueba
+        testFlowStepper.stepper.destroy();
+        testFlowStepper.stepper = new ProgressStepper({
+            containerId: 'progressStepper4',
+            steps: [
+                { id: 'calculator', label: 'Calculadora', description: 'Calcula materiales', icon: 'calculator' },
+                { id: 'quotation', label: 'Cotización', description: 'Genera presupuesto', icon: 'file-invoice' },
+                { id: 'order', label: 'Pedido', description: 'Confirma orden', icon: 'shopping-cart' }
+            ],
+            currentStep: 0,
+            variant: 'horizontal',
+            compact: false,
+            showProgressBar: true,
+            onStepClick: (stepIndex, step) => {
+                updateInfo4();
+                return true;
+            }
+        });
+
+        function updateInfo4() {
+            const state = testFlowStepper.getFlowState();
+            document.getElementById('info4-calc').textContent = state.calculator.completed ? '✓ Completada' : 'No completada';
+            document.getElementById('info4-quote').textContent = state.quotation.completed ? '✓ Completada' : 'No completada';
+            document.getElementById('info4-order').textContent = state.order.completed ? '✓ Completado' : 'No completado';
+        }
+
+        // Actualizar info inicial
+        updateInfo1();
+        updateInfo2();
+        updateInfo3();
+        updateInfo4();
+
+        // Agregar listeners para actualizar info cuando cambia el stepper
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#progressStepper1')) {
+                setTimeout(updateInfo1, 100);
+            }
+            if (e.target.closest('#progressStepper2')) {
+                setTimeout(updateInfo2, 100);
+            }
+            if (e.target.closest('#progressStepper3')) {
+                setTimeout(updateInfo3, 100);
+            }
+            if (e.target.closest('#progressStepper4')) {
+                setTimeout(updateInfo4, 100);
+            }
+        });
+    </script>
+</body>
+</html>

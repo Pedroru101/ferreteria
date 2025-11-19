@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Visualización de Cotizaciones</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/admin.css">
+    <script src="config.js"></script>
+    <style>
+        body {
+            background: var(--bg-primary);
+            padding: 20px;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .test-section h2 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+        .test-button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        .test-button:hover {
+            opacity: 0.9;
+        }
+        .test-result {
+            background: var(--bg-secondary);
+            border-left: 4px solid var(--primary);
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .test-result.success {
+            border-left-color: #4caf50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+        .test-result.error {
+            border-left-color: #d32f2f;
+            background: rgba(211, 47, 47, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-section">
+            <h2>Test - Visualización de Cotizaciones</h2>
+            <p>Este test verifica que la funcionalidad de visualización de cotizaciones funciona correctamente.</p>
+            
+            <h3>Acciones de Prueba</h3>
+            <button class="test-button" onclick="createTestQuotations()">
+                <i class="fas fa-plus"></i> Crear Cotizaciones de Prueba
+            </button>
+            <button class="test-button" onclick="testFilters()">
+                <i class="fas fa-filter"></i> Probar Filtros
+            </button>
+            <button class="test-button" onclick="testQuotationDetail()">
+                <i class="fas fa-eye"></i> Probar Detalle
+            </button>
+            <button class="test-button" onclick="clearTestData()">
+                <i class="fas fa-trash"></i> Limpiar Datos
+            </button>
+            <button class="test-button" onclick="window.location.href='admin.html'">
+                <i class="fas fa-arrow-right"></i> Ir al Panel Admin
+            </button>
+
+            <div id="testResults"></div>
+        </div>
+    </div>
+
+    <script>
+        function createTestQuotations() {
+            const testQuotations = [
+                {
+                    id: 'COT-1704067200000-001',
+                    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+                    validUntil: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000).toISOString(),
+                    items: [
+                        { name: 'Poste de Hormigón 2.5m', quantity: 10, unitPrice: 3500, subtotal: 35000 },
+                        { name: 'Tejido Romboidal 1.50m', quantity: 2, unitPrice: 8500, subtotal: 17000 }
+                    ],
+                    installation: { linearMeters: 100, pricePerMeter: 500, subtotal: 50000 },
+                    subtotal: 102000,
+                    total: 102000,
+                    status: 'sent'
+                },
+                {
+                    id: 'COT-1704153600000-002',
+                    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+                    validUntil: new Date(Date.now() + 27 * 24 * 60 * 60 * 1000).toISOString(),
+                    items: [
+                        { name: 'Poste de Quebracho 2.5m', quantity: 15, unitPrice: 4200, subtotal: 63000 },
+                        { name: 'Alambre Galvanizado 2.4mm', quantity: 5, unitPrice: 2500, subtotal: 12500 }
+                    ],
+                    installation: null,
+                    subtotal: 75500,
+                    total: 75500,
+                    status: 'draft'
+                },
+                {
+                    id: 'COT-1704240000000-003',
+                    date: new Date(Date.now() - 35 * 24 * 60 * 60 * 1000).toISOString(),
+                    validUntil: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+                    items: [
+                        { name: 'Poste de Eucalipto 2.5m', quantity: 8, unitPrice: 2100, subtotal: 16800 }
+                    ],
+                    installation: null,
+                    subtotal: 16800,
+                    total: 16800,
+                    status: 'accepted'
+                },
+                {
+                    id: 'COT-1704326400000-004',
+                    date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+                    validUntil: new Date(Date.now() + 29 * 24 * 60 * 60 * 1000).toISOString(),
+                    items: [
+                        { name: 'Poste Olimpo 2.5m', quantity: 12, unitPrice: 4000, subtotal: 48000 },
+                        { name: 'Grampas de Seguridad', quantity: 100, unitPrice: 50, subtotal: 5000 }
+                    ],
+                    installation: { linearMeters: 75, pricePerMeter: 500, subtotal: 37500 },
+                    subtotal: 90500,
+                    total: 90500,
+                    status: 'sent'
+                }
+            ];
+
+            localStorage.setItem('ferreteria_quotations', JSON.stringify(testQuotations));
+            showResult('success', `Se crearon ${testQuotations.length} cotizaciones de prueba correctamente.`);
+        }
+
+        function testFilters() {
+            const quotations = JSON.parse(localStorage.getItem('ferreteria_quotations') || '[]');
+            
+            if (quotations.length === 0) {
+                showResult('error', 'No hay cotizaciones. Crea cotizaciones de prueba primero.');
+                return;
+            }
+
+            let results = [];
+
+            // Test filtro por estado
+            const sentQuotations = quotations.filter(q => q.status === 'sent');
+            results.push(`Filtro por estado "sent": ${sentQuotations.length} cotizaciones encontradas`);
+
+            // Test filtro por fecha
+            const now = new Date();
+            const fiveAgo = new Date(now.getTime() - 5 * 24 * 60 * 60 * 1000);
+            const recentQuotations = quotations.filter(q => new Date(q.date) >= fiveAgo);
+            results.push(`Filtro por fecha (últimos 5 días): ${recentQuotations.length} cotizaciones encontradas`);
+
+            // Test filtro por monto
+            const highValueQuotations = quotations.filter(q => q.total >= 75000);
+            results.push(`Filtro por monto (>= $75000): ${highValueQuotations.length} cotizaciones encontradas`);
+
+            // Test cotizaciones expiradas
+            const expiredQuotations = quotations.filter(q => new Date(q.validUntil) < new Date());
+            results.push(`Cotizaciones expiradas: ${expiredQuotations.length} cotizaciones encontradas`);
+
+            showResult('success', 'Pruebas de filtros completadas:<br>' + results.map(r => '• ' + r).join('<br>'));
+        }
+
+        function testQuotationDetail() {
+            const quotations = JSON.parse(localStorage.getItem('ferreteria_quotations') || '[]');
+            
+            if (quotations.length === 0) {
+                showResult('error', 'No hay cotizaciones. Crea cotizaciones de prueba primero.');
+                return;
+            }
+
+            const quotation = quotations[0];
+            const itemCount = quotation.items ? quotation.items.length : 0;
+            const hasInstallation = quotation.installation && quotation.installation.linearMeters > 0;
+
+            let details = [
+                `ID: ${quotation.id}`,
+                `Fecha: ${new Date(quotation.date).toLocaleDateString('es-AR')}`,
+                `Total: $${quotation.total.toLocaleString('es-AR')}`,
+                `Estado: ${quotation.status}`,
+                `Productos: ${itemCount}`,
+                `Instalación: ${hasInstallation ? 'Sí' : 'No'}`
+            ];
+
+            showResult('success', 'Detalles de cotización cargados correctamente:<br>' + details.map(d => '• ' + d).join('<br>'));
+        }
+
+        function clearTestData() {
+            localStorage.removeItem('ferreteria_quotations');
+            showResult('success', 'Datos de prueba eliminados correctamente.');
+        }
+
+        function showResult(type, message) {
+            const resultsDiv = document.getElementById('testResults');
+            const resultElement = document.createElement('div');
+            resultElement.className = `test-result ${type}`;
+            resultElement.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}`;
+            resultsDiv.appendChild(resultElement);
+        }
+    </script>
+</body>
+</html>

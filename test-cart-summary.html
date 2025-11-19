@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Resumen de Productos en Carrito</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/catalog.css">
+    
+    <style>
+        body {
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .test-section {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-section h2 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .test-section h2 i {
+            color: var(--primary);
+        }
+        
+        .test-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .test-btn {
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: none;
+            background: var(--gradient-primary);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 122, 62, 0.4);
+        }
+        
+        .test-btn.secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+        
+        .test-btn.secondary:hover {
+            border-color: var(--primary);
+            background: var(--bg-primary);
+        }
+        
+        .test-info {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .test-info strong {
+            color: var(--text-primary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .test-info ul {
+            margin: 0.5rem 0 0 1.5rem;
+        }
+        
+        .test-info li {
+            margin: 0.25rem 0;
+        }
+        
+        .test-info code {
+            background: var(--bg-card);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .status-card {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid var(--border-color);
+        }
+        
+        .status-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+        
+        .status-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .checklist li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .checklist li i {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-section">
+            <h2>
+                <i class="fas fa-clipboard-check"></i>
+                Test - Resumen de Productos en Carrito
+            </h2>
+            <p>Este archivo prueba la implementación completa del resumen de productos en el dropdown del carrito flotante.</p>
+            
+            <div class="test-info">
+                <strong>Funcionalidades a Probar:</strong>
+                <ul class="checklist">
+                    <li><i class="fas fa-check-circle"></i> Mostrar lista de productos con nombre, precio y cantidad</li>
+                    <li><i class="fas fa-check-circle"></i> Mostrar subtotal por cada producto</li>
+                    <li><i class="fas fa-check-circle"></i> Botones para aumentar/disminuir cantidad</li>
+                    <li><i class="fas fa-check-circle"></i> Botón para eliminar productos</li>
+                    <li><i class="fas fa-check-circle"></i> Mostrar total general del carrito</li>
+                    <li><i class="fas fa-check-circle"></i> Botón "Generar Cotización" habilitado/deshabilitado</li>
+                    <li><i class="fas fa-check-circle"></i> Mensaje cuando el carrito está vacío</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>
+                <i class="fas fa-plus-circle"></i>
+                Agregar Productos de Prueba
+            </h2>
+            <div class="test-buttons">
+                <button class="test-btn" onclick="addTestProduct('poste_hormigon', 2)">
+                    <i class="fas fa-plus"></i> 2x Poste Hormigón
+                </button>
+                <button class="test-btn" onclick="addTestProduct('tejido_romboidal', 3)">
+                    <i class="fas fa-plus"></i> 3x Tejido Romboidal
+                </button>
+                <button class="test-btn" onclick="addTestProduct('alambre_puas', 5)">
+                    <i class="fas fa-plus"></i> 5x Alambre Púas
+                </button>
+                <button class="test-btn" onclick="addTestProduct('grampa', 10)">
+                    <i class="fas fa-plus"></i> 10x Grampas
+                </button>
+                <button class="test-btn" onclick="addTestProduct('poste_quebracho', 1)">
+                    <i class="fas fa-plus"></i> 1x Poste Quebracho
+                </button>
+                <button class="test-btn" onclick="addTestProduct('tensor', 4)">
+                    <i class="fas fa-plus"></i> 4x Tensores
+                </button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>
+                <i class="fas fa-cog"></i>
+                Acciones del Carrito
+            </h2>
+            <div class="test-buttons">
+                <button class="test-btn secondary" onclick="openCartDropdown()">
+                    <i class="fas fa-eye"></i> Abrir Carrito
+                </button>
+                <button class="test-btn secondary" onclick="closeCartDropdown()">
+                    <i class="fas fa-eye-slash"></i> Cerrar Carrito
+                </button>
+                <button class="test-btn secondary" onclick="toggleCartDropdown()">
+                    <i class="fas fa-exchange-alt"></i> Toggle Carrito
+                </button>
+                <button class="test-btn secondary" onclick="clearTestCart()">
+                    <i class="fas fa-trash"></i> Limpiar Carrito
+                </button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>
+                <i class="fas fa-chart-bar"></i>
+                Estado del Carrito
+            </h2>
+            <div class="status-grid">
+                <div class="status-card">
+                    <div class="status-label">Productos</div>
+                    <div class="status-value" id="cartItemCount">0</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-label">Items Únicos</div>
+                    <div class="status-value" id="cartUniqueItems">0</div>
+                </div>
+                <div class="status-card">
+                    <div class="status-label">Total</div>
+                    <div class="status-value" id="cartTotalAmount">$0</div>
+                </div>
+            </div>
+            
+            <div class="test-info" style="margin-top: 1.5rem;">
+                <strong>Instrucciones de Prueba:</strong>
+                <ol>
+                    <li>Agrega varios productos usando los botones de arriba</li>
+                    <li>Haz clic en el botón flotante del carrito (esquina inferior derecha)</li>
+                    <li>Verifica que se muestre el nombre, precio unitario y cantidad de cada producto</li>
+                    <li>Verifica que se muestre el subtotal de cada producto</li>
+                    <li>Prueba los botones <code>-</code> y <code>+</code> para cambiar cantidades</li>
+                    <li>Prueba el botón <code><i class="fas fa-trash"></i></code> para eliminar productos</li>
+                    <li>Verifica que el total general se actualice correctamente</li>
+                    <li>Verifica que el botón "Generar Cotización" esté habilitado solo cuando hay productos</li>
+                    <li>Limpia el carrito y verifica que se muestre el mensaje de carrito vacío</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carrito Flotante -->
+    <div id="quoteCart" class="quote-cart">
+        <button class="cart-toggle" id="cartToggle" aria-label="Ver carrito de cotización">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+        <div class="cart-dropdown" id="cartDropdown">
+            <div class="cart-header">
+                <h3>Carrito de Cotización</h3>
+                <button class="cart-close" id="cartClose" aria-label="Cerrar carrito">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <div class="cart-empty">
+                    <i class="fas fa-shopping-cart"></i>
+                    <p>No hay productos en el carrito</p>
+                    <small>Agrega productos desde el catálogo</small>
+                </div>
+            </div>
+            <div class="cart-footer">
+                <button class="btn-primary generate-quote-btn" id="generateQuoteBtn" onclick="testGenerateQuote()" disabled>
+                    <i class="fas fa-file-invoice"></i>
+                    Generar Cotización
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="js/products-data.js"></script>
+    <script src="js/catalog.js"></script>
+    
+    <script>
+        const testProducts = {
+            poste_hormigon: {
+                id: 'poste_hormigon',
+                name: 'Poste de Hormigón 2.5m',
+                category: 'postes',
+                price: 3500,
+                priceUnit: 'unidad',
+                image: ''
+            },
+            tejido_romboidal: {
+                id: 'tejido_romboidal',
+                name: 'Tejido Romboidal 1.50m x 10m',
+                category: 'tejidos',
+                price: 8500,
+                priceUnit: 'rollo',
+                image: ''
+            },
+            alambre_puas: {
+                id: 'alambre_puas',
+                name: 'Alambre de Púas Galvanizado',
+                category: 'alambres',
+                price: 1200,
+                priceUnit: 'kg',
+                image: ''
+            },
+            grampa: {
+                id: 'grampa',
+                name: 'Grampas para Tejido (x100)',
+                category: 'accesorios',
+                price: 450,
+                priceUnit: 'paquete',
+                image: ''
+            },
+            poste_quebracho: {
+                id: 'poste_quebracho',
+                name: 'Poste de Quebracho 2.5m',
+                category: 'postes',
+                price: 4200,
+                priceUnit: 'unidad',
+                image: ''
+            },
+            tensor: {
+                id: 'tensor',
+                name: 'Tensor para Alambre',
+                category: 'accesorios',
+                price: 350,
+                priceUnit: 'unidad',
+                image: ''
+            }
+        };
+
+        catalogManager.products = Object.values(testProducts);
+
+        function addTestProduct(productId, quantity = 1) {
+            const product = testProducts[productId];
+            if (product) {
+                catalogManager.addToCart(productId, quantity);
+                updateTestInfo();
+                showNotification(`${quantity}x ${product.name} agregado al carrito`, 'success');
+            }
+        }
+
+        function clearTestCart() {
+            catalogManager.clearCart();
+            updateTestInfo();
+            showNotification('Carrito limpiado', 'info');
+        }
+
+        function updateTestInfo() {
+            const count = catalogManager.getCartCount();
+            const uniqueItems = catalogManager.selectedProducts.length;
+            const total = catalogManager.getCartTotal();
+            
+            document.getElementById('cartItemCount').textContent = count;
+            document.getElementById('cartUniqueItems').textContent = uniqueItems;
+            document.getElementById('cartTotalAmount').textContent = catalogManager.formatPrice(total);
+        }
+
+        function testGenerateQuote() {
+            const cartData = catalogManager.exportCartForQuotation();
+            console.log('Datos del carrito para cotización:', cartData);
+            
+            let message = `Cotización generada con ${cartData.itemCount} productos\n\n`;
+            message += 'Productos:\n';
+            cartData.items.forEach(item => {
+                message += `- ${item.name} x${item.quantity} = ${catalogManager.formatPrice(item.subtotal)}\n`;
+            });
+            message += `\nTotal: ${catalogManager.formatPrice(cartData.subtotal)}`;
+            
+            alert(message);
+            console.table(cartData.items);
+        }
+
+        function showNotification(message, type = 'info') {
+            console.log(`[${type.toUpperCase()}] ${message}`);
+            
+            const colors = {
+                success: '#4caf50',
+                error: '#d32f2f',
+                warning: '#f57c00',
+                info: '#0288d1'
+            };
+            
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${colors[type] || colors.info};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                z-index: 10001;
+                animation: slideInRight 0.3s ease;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            `;
+            
+            const icon = document.createElement('i');
+            icon.className = type === 'success' ? 'fas fa-check-circle' : 
+                           type === 'error' ? 'fas fa-times-circle' :
+                           type === 'warning' ? 'fas fa-exclamation-triangle' :
+                           'fas fa-info-circle';
+            
+            notification.appendChild(icon);
+            notification.appendChild(document.createTextNode(message));
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTestInfo();
+            console.log('Test de resumen de productos cargado');
+            console.log('Productos disponibles:', Object.keys(testProducts));
+        });
+    </script>
+    
+    <style>
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+    </style>
+</body>
+</html>
