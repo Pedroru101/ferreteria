@@ -275,10 +275,11 @@ html {
 .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     font-family: var(--font-display);
     font-weight: 800;
     margin-left: 0;
+    padding-left: 0;
 }
 
 .logo-image {
@@ -288,29 +289,32 @@ html {
     border-radius: 4px;
 }
 
-.logo-placeholder {
-    height: 50px;
-    width: 50px;
+.logo-icon {
+    height: 60px;
+    width: 60px;
     background: var(--gradient-primary);
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-size: 28px;
+    font-size: 40px;
     flex-shrink: 0;
+    font-weight: bold;
 }
 
 .logo-text {
     display: flex;
     flex-direction: column;
-    line-height: 1.2;
+    line-height: 1.1;
+    justify-content: center;
 }
 
 .logo-main {
-    font-size: 18px;
+    font-size: 20px;
     color: var(--primary);
     font-weight: 800;
+    white-space: nowrap;
 }
 
 .logo-sub {
@@ -333,6 +337,11 @@ html {
     font-size: 15px;
     position: relative;
     transition: color var(--transition-fast);
+    white-space: nowrap;
+}
+
+.nav-link-compact {
+    font-size: 14px;
 }
 
 .nav-link::after {
