@@ -288,6 +288,19 @@ html {
     border-radius: 4px;
 }
 
+.logo-placeholder {
+    height: 50px;
+    width: 50px;
+    background: var(--gradient-primary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
 .logo-text {
     display: flex;
     flex-direction: column;
