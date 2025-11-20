@@ -278,14 +278,27 @@ html {
     gap: 12px;
     font-family: var(--font-display);
     font-weight: 800;
+    margin-left: 0;
 }
 
-.logo i {
-    font-size: 32px;
+.logo-image {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    border-radius: 4px;
+}
+
+.logo-placeholder {
+    height: 50px;
+    width: 50px;
     background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    flex-shrink: 0;
 }
 
 .logo-text {
@@ -295,18 +308,16 @@ html {
 }
 
 .logo-main {
-    font-size: 24px;
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: 18px;
+    color: var(--primary);
+    font-weight: 800;
 }
 
 .logo-sub {
     font-size: 11px;
     color: var(--grey);
     font-weight: 500;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 .nav-menu {
@@ -2271,5 +2282,276 @@ html {
 
     .product-price {
         font-size: 24px;
+    }
+}
+
+
+/* ========================================
+   RESPONSIVE NAVBAR & MOBILE STYLES
+   ======================================== */
+@media (max-width: 1024px) {
+    .nav-menu {
+        gap: 1.5rem;
+    }
+
+    .nav-link {
+        font-size: 14px;
+    }
+
+    .logo-main {
+        font-size: 16px;
+    }
+
+    .logo-image {
+        height: 45px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 70px);
+        background: var(--bg-card);
+        flex-direction: column;
+        gap: 0;
+        padding: 2rem 1rem;
+        transform: translateX(-100%);
+        transition: transform var(--transition-normal);
+        z-index: 998;
+        overflow-y: auto;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    .nav-menu.active {
+        transform: translateX(0);
+    }
+
+    .nav-link {
+        padding: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        font-size: 16px;
+    }
+
+    .btn-primary-nav {
+        margin-top: 1rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .logo {
+        gap: 8px;
+    }
+
+    .logo-image {
+        height: 40px;
+    }
+
+    .logo-main {
+        font-size: 14px;
+    }
+
+    .logo-sub {
+        font-size: 10px;
+    }
+
+    .nav-wrapper {
+        padding: 0.75rem 0;
+    }
+
+    .hero {
+        padding-top: 70px;
+    }
+
+    .hero-stats {
+        gap: 1rem;
+    }
+
+    .stat-item {
+        padding: 10px 16px;
+        font-size: 13px;
+    }
+
+    .hero-buttons {
+        gap: 1rem;
+        flex-direction: column;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 24px;
+        font-size: 15px;
+    }
+
+    .trust-badges {
+        gap: 1rem;
+        flex-direction: column;
+    }
+
+    .badge {
+        font-size: 13px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.8rem, 5vw, 3rem);
+    }
+
+    .title-subtitle {
+        font-size: clamp(1.2rem, 3vw, 2rem);
+    }
+
+    .hero-description {
+        font-size: clamp(0.9rem, 1.8vw, 1rem);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .nav-menu {
+        top: 60px;
+        height: calc(100vh - 60px);
+        padding: 1.5rem 0.75rem;
+    }
+
+    .nav-link {
+        padding: 0.75rem;
+        font-size: 15px;
+    }
+
+    .logo {
+        gap: 6px;
+    }
+
+    .logo-image {
+        height: 35px;
+    }
+
+    .logo-main {
+        font-size: 12px;
+    }
+
+    .logo-sub {
+        font-size: 9px;
+    }
+
+    .nav-wrapper {
+        padding: 0.5rem 0;
+    }
+
+    .hamburger span {
+        width: 24px;
+        height: 2.5px;
+    }
+
+    .hero {
+        padding-top: 60px;
+        min-height: 80vh;
+    }
+
+    .hero-content {
+        max-width: 100%;
+    }
+
+    .hero-title {
+        font-size: clamp(1.5rem, 4vw, 2.5rem);
+        margin-bottom: 1rem;
+    }
+
+    .title-subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.5rem);
+        margin-top: 0.25rem;
+    }
+
+    .hero-description {
+        font-size: clamp(0.85rem, 1.5vw, 0.95rem);
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-stats {
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .stat-item {
+        padding: 8px 12px;
+        font-size: 12px;
+        gap: 6px;
+    }
+
+    .stat-item i {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 12px 20px;
+        font-size: 14px;
+        gap: 8px;
+    }
+
+    .trust-badges {
+        gap: 0.75rem;
+    }
+
+    .badge {
+        font-size: 12px;
+    }
+
+    .badge i {
+        font-size: 16px;
+    }
+
+    .whatsapp-float {
+        width: 60px;
+        height: 60px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 28px;
+    }
+
+    .whatsapp-text {
+        right: 75px;
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 360px) {
+    .logo-main {
+        font-size: 11px;
+    }
+
+    .logo-sub {
+        font-size: 8px;
+    }
+
+    .hero-title {
+        font-size: clamp(1.3rem, 3.5vw, 2rem);
+    }
+
+    .title-subtitle {
+        font-size: clamp(0.9rem, 2vw, 1.2rem);
+    }
+
+    .btn-primary,
+    .btn-secondary {
+        padding: 10px 16px;
+        font-size: 13px;
     }
 }
