@@ -87,7 +87,6 @@ class LazyLoader {
             script.defer = true;
 
             script.onload = () => {
-                console.log(`Módulo cargado: ${moduleName}`);
                 resolve();
             };
 
@@ -117,7 +116,6 @@ class LazyLoader {
             script.async = true;
 
             script.onload = () => {
-                console.log('jsPDF cargado');
                 resolve(window.jspdf);
             };
 
@@ -144,7 +142,6 @@ class LazyLoader {
             script.async = true;
 
             script.onload = () => {
-                console.log('Chart.js cargado');
                 resolve(window.Chart);
             };
 

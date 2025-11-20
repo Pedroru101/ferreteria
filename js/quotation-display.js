@@ -13,7 +13,6 @@ class QuotationDisplay {
         this.loadQuotations();
         this.setupEventListeners();
         this.displayQuotations();
-        console.log('QuotationDisplay inicializado');
     }
 
     setupEventListeners() {
@@ -38,7 +37,6 @@ class QuotationDisplay {
         try {
             const data = localStorage.getItem('ferreteria_quotations');
             this.quotations = data ? JSON.parse(data) : [];
-            console.log(`${this.quotations.length} cotizaciones cargadas`);
         } catch (error) {
             console.error('Error al cargar cotizaciones:', error);
             this.quotations = [];

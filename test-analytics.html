@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Analytics Module</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2d7a3e;
+            border-bottom: 2px solid #2d7a3e;
+            padding-bottom: 10px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9f9f9;
+            border-left: 4px solid #4caf50;
+            border-radius: 4px;
+        }
+        .test-section h3 {
+            margin-top: 0;
+            color: #1a4d2e;
+        }
+        button {
+            background: #2d7a3e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 5px 5px 0;
+            font-size: 14px;
+        }
+        button:hover {
+            background: #236030;
+        }
+        .output {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+        .success {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .error {
+            color: #d32f2f;
+            font-weight: bold;
+        }
+        .info {
+            color: #0288d1;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .status.ok {
+            background: #e8f5e9;
+            color: #2d7a3e;
+            border: 1px solid #4caf50;
+        }
+        .status.error {
+            background: #ffebee;
+            color: #d32f2f;
+            border: 1px solid #d32f2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test - Módulo de Analytics</h1>
+        
+        <div class="status ok" id="status">
+            <strong>Estado:</strong> Cargando módulo...
+        </div>
+
+        <div class="test-section">
+            <h3>1. Verificación de Inicialización</h3>
+            <button onclick="testInitialization()">Verificar Inicialización</button>
+            <button onclick="testConfig()">Verificar Configuración</button>
+            <div class="output" id="output1"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>2. Eventos de Cotización</h3>
+            <button onclick="testQuotationCreated()">Crear Cotización</button>
+            <button onclick="testPDFDownload()">Descargar PDF</button>
+            <button onclick="testWhatsAppSend()">Enviar WhatsApp</button>
+            <div class="output" id="output2"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>3. Eventos de Pedidos</h3>
+            <button onclick="testOrderCreated()">Crear Pedido</button>
+            <button onclick="testOrderTrack()">Consultar Pedido</button>
+            <div class="output" id="output3"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>4. Eventos de Catálogo</h3>
+            <button onclick="testViewProduct()">Ver Producto</button>
+            <button onclick="testAddToCart()">Agregar al Carrito</button>
+            <div class="output" id="output4"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>5. Eventos de Calculadora</h3>
+            <button onclick="testCalculation()">Realizar Cálculo</button>
+            <button onclick="testComparison()">Comparar Productos</button>
+            <div class="output" id="output5"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>6. Eventos de Administración</h3>
+            <button onclick="testAdminLogin()">Login Admin</button>
+            <button onclick="testError()">Simular Error</button>
+            <div class="output" id="output6"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>7. Información de Sesión</h3>
+            <button onclick="testSessionInfo()">Obtener Info de Sesión</button>
+            <button onclick="testSessionDuration()">Registrar Duración</button>
+            <div class="output" id="output7"></div>
+        </div>
+
+        <div class="test-section">
+            <h3>8. Pruebas Generales</h3>
+            <button onclick="testAllEvents()">Ejecutar Todos los Tests</button>
+            <button onclick="clearConsole()">Limpiar Consola</button>
+            <div class="output" id="output8"></div>
+        </div>
+    </div>
+
+    <!-- Cargar módulos necesarios -->
+    <script src="config.js"></script>
+    <script src="js/analytics.js"></script>
+
+    <script>
+        // Funciones de utilidad
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = `[${timestamp}]`;
+            
+            if (type === 'success') {
+                console.log(`%c${prefix} ✓ ${message}`, 'color: #4caf50; font-weight: bold;');
+            } else if (type === 'error') {
+                console.error(`%c${prefix} ✗ ${message}`, 'color: #d32f2f; font-weight: bold;');
+            } else {
+                console.log(`%c${prefix} ℹ ${message}`, 'color: #0288d1;');
+            }
+        }
+
+        function addOutput(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            const className = type === 'success' ? 'success' : type === 'error' ? 'error' : 'info';
+            const prefix = type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ';
+            
+            const line = `<div class="${className}">[${timestamp}] ${prefix} ${message}</div>`;
+            element.innerHTML += line;
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function updateStatus(message, isOk = true) {
+            const status = document.getElementById('status');
+            status.className = `status ${isOk ? 'ok' : 'error'}`;
+            status.innerHTML = `<strong>Estado:</strong> ${message}`;
+        }
+
+        // Tests
+        function testInitialization() {
+            const output = 'output1';
+            addOutput(output, 'Verificando inicialización...', 'info');
+            
+            if (typeof analyticsManager !== 'undefined' && analyticsManager) {
+                addOutput(output, 'analyticsManager está disponible', 'success');
+                addOutput(output, `Tracking habilitado: ${analyticsManager.isEnabled}`, 'success');
+                addOutput(output, `Google Analytics disponible: ${analyticsManager.hasGA}`, 'success');
+                addOutput(output, `Facebook Pixel disponible: ${analyticsManager.hasFBQ}`, 'success');
+                updateStatus('Inicialización correcta ✓', true);
+            } else {
+                addOutput(output, 'analyticsManager NO está disponible', 'error');
+                updateStatus('Error en inicialización ✗', false);
+            }
+        }
+
+        function testConfig() {
+            const output = 'output1';
+            addOutput(output, 'Verificando configuración...', 'info');
+            
+            if (typeof CONFIG !== 'undefined' && CONFIG.analytics) {
+                addOutput(output, `Google Analytics ID: ${CONFIG.analytics.googleAnalyticsId || 'No configurado'}`, 'success');
+                addOutput(output, `GTM ID: ${CONFIG.analytics.googleTagManagerId || 'No configurado'}`, 'success');
+                addOutput(output, `Facebook Pixel ID: ${CONFIG.analytics.facebookPixelId || 'No configurado'}`, 'success');
+                addOutput(output, `Eventos configurados: ${Object.keys(CONFIG.analytics.events || {}).length}`, 'success');
+                addOutput(output, `Goals configurados: ${Object.keys(CONFIG.analytics.goals || {}).length}`, 'success');
+            } else {
+                addOutput(output, 'CONFIG.analytics no está disponible', 'error');
+            }
+        }
+
+        function testQuotationCreated() {
+            const output = 'output2';
+            addOutput(output, 'Registrando cotización creada...', 'info');
+            
+            analyticsManager.trackQuotationCreated({
+                id: 'COT-TEST-001',
+                total: 50000,
+                items: [
+                    { name: 'Poste de Hormigón', quantity: 10 },
+                    { name: 'Alambre', quantity: 100 }
+                ],
+                installation: null
+            });
+            
+            addOutput(output, 'Evento quotation_create registrado', 'success');
+        }
+
+        function testPDFDownload() {
+            const output = 'output2';
+            addOutput(output, 'Registrando descarga de PDF...', 'info');
+            
+            analyticsManager.trackPDFDownload({
+                id: 'COT-TEST-001',
+                total: 50000
+            });
+            
+            addOutput(output, 'Evento quotation_download_pdf registrado', 'success');
+        }
+
+        function testWhatsAppSend() {
+            const output = 'output2';
+            addOutput(output, 'Registrando envío por WhatsApp...', 'info');
+            
+            analyticsManager.trackWhatsAppSend({
+                id: 'COT-TEST-001',
+                total: 50000
+            });
+            
+            addOutput(output, 'Evento quotation_send_whatsapp registrado', 'success');
+        }
+
+        function testOrderCreated() {
+            const output = 'output3';
+            addOutput(output, 'Registrando pedido creado...', 'info');
+            
+            analyticsManager.trackOrderCreated({
+                id: 'ORD-TEST-001',
+                total: 85000,
+                items: [
+                    { name: 'Poste de Hormigón', quantity: 10 }
+                ],
+                customer: { name: 'Juan Pérez' }
+            });
+            
+            addOutput(output, 'Evento order_create registrado', 'success');
+        }
+
+        function testOrderTrack() {
+            const output = 'output3';
+            addOutput(output, 'Registrando consulta de pedido...', 'info');
+            
+            analyticsManager.trackEvent('order_track', {
+                order_id: 'ORD-TEST-001',
+                order_status: 'confirmed'
+            });
+            
+            addOutput(output, 'Evento order_track registrado', 'success');
+        }
+
+        function testViewProduct() {
+            const output = 'output4';
+            addOutput(output, 'Registrando vista de producto...', 'info');
+            
+            analyticsManager.trackViewProduct({
+                id: 'prod_001',
+                name: 'Poste de Hormigón 2.5m',
+                category: 'postes',
+                price: 3500
+            });
+            
+            addOutput(output, 'Evento catalog_view_product registrado', 'success');
+        }
+
+        function testAddToCart() {
+            const output = 'output4';
+            addOutput(output, 'Registrando producto agregado...', 'info');
+            
+            analyticsManager.trackAddToCart({
+                id: 'prod_001',
+                name: 'Poste de Hormigón 2.5m',
+                category: 'postes',
+                price: 3500,
+                quantity: 10
+            });
+            
+            addOutput(output, 'Evento catalog_add_to_cart registrado', 'success');
+        }
+
+        function testCalculation() {
+            const output = 'output5';
+            addOutput(output, 'Registrando cálculo...', 'info');
+            
+            analyticsManager.trackCalculation({
+                perimeter: 100,
+                postType: 'hormigon',
+                materialType: 'alambre',
+                totalPosts: 40
+            });
+            
+            addOutput(output, 'Evento calculator_calculate registrado', 'success');
+        }
+
+        function testComparison() {
+            const output = 'output5';
+            addOutput(output, 'Registrando comparación...', 'info');
+            
+            analyticsManager.trackComparison([
+                { name: 'Hormigón' },
+                { name: 'Quebracho' }
+            ]);
+            
+            addOutput(output, 'Evento comparator_select_products registrado', 'success');
+        }
+
+        function testAdminLogin() {
+            const output = 'output6';
+            addOutput(output, 'Registrando login de admin...', 'info');
+            
+            analyticsManager.trackAdminLogin('Administrator');
+            
+            addOutput(output, 'Evento admin_login registrado', 'success');
+        }
+
+        function testError() {
+            const output = 'output6';
+            addOutput(output, 'Registrando error simulado...', 'info');
+            
+            analyticsManager.trackError('Error de prueba', 'test_context');
+            
+            addOutput(output, 'Evento error_occurred registrado', 'success');
+        }
+
+        function testSessionInfo() {
+            const output = 'output7';
+            addOutput(output, 'Obteniendo información de sesión...', 'info');
+            
+            const info = analyticsManager.getSessionInfo();
+            addOutput(output, `Duración: ${info.duration} segundos`, 'success');
+            addOutput(output, `Página: ${info.pageTitle}`, 'success');
+            addOutput(output, `URL: ${info.pageUrl}`, 'success');
+        }
+
+        function testSessionDuration() {
+            const output = 'output7';
+            addOutput(output, 'Registrando duración de sesión...', 'info');
+            
+            analyticsManager.trackSessionDuration();
+            
+            addOutput(output, 'Evento session_duration registrado', 'success');
+        }
+
+        function testAllEvents() {
+            const output = 'output8';
+            addOutput(output, 'Ejecutando todos los tests...', 'info');
+            
+            testInitialization();
+            testConfig();
+            testQuotationCreated();
+            testOrderCreated();
+            testViewProduct();
+            testCalculation();
+            testAdminLogin();
+            testSessionInfo();
+            
+            addOutput(output, 'Todos los tests completados', 'success');
+            updateStatus('Todos los tests completados ✓', true);
+        }
+
+        function clearConsole() {
+            document.querySelectorAll('.output').forEach(el => {
+                el.innerHTML = '';
+            });
+            console.clear();
+            log('Consola limpiada');
+        }
+
+        // Inicializar
+        window.addEventListener('load', () => {
+            log('Página de test cargada');
+            testInitialization();
+        });
+    </script>
+</body>
+</html>

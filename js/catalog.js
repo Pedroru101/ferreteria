@@ -26,8 +26,6 @@ class CatalogManager {
 
         try {
             if (CONFIG.products.enableGoogleSheets && typeof productsLoader !== 'undefined') {
-                console.log('Intentando cargar productos desde Google Sheets...');
-                
                 if (typeof loaderManager !== 'undefined') {
                     loaderManager.showOverlay('Cargando catálogo...', 'Conectando con Google Sheets');
                 }
@@ -36,7 +34,6 @@ class CatalogManager {
                 
                 if (sheetsData && sheetsData.length > 0) {
                     this.products = this.normalizeGoogleSheetsData(sheetsData);
-                    console.log(`✓ Cargados ${this.products.length} productos desde Google Sheets`);
                     
                     if (typeof loaderManager !== 'undefined') {
                         loaderManager.hideOverlay();
@@ -55,7 +52,6 @@ class CatalogManager {
             }
         }
 
-        console.log('Usando catálogo de productos hardcodeado');
         this.products = this.loadHardcodedProducts();
         this.isLoading = false;
         return this.products;

@@ -12,7 +12,6 @@ class OrderTracking {
     init() {
         this.loadOrders();
         this.setupEventListeners();
-        console.log('OrderTracking inicializado');
     }
 
     setupEventListeners() {
@@ -36,7 +35,6 @@ class OrderTracking {
         try {
             const data = localStorage.getItem('ferreteria_orders');
             this.orders = data ? JSON.parse(data) : [];
-            console.log(`${this.orders.length} pedidos cargados`);
         } catch (error) {
             console.error('Error al cargar pedidos:', error);
             this.orders = [];
