@@ -104,13 +104,11 @@ class PriceManager {
     async _loadPricesInternal() {
         try {
             if (CONFIG.products.enableGoogleSheets && typeof productsLoader !== 'undefined') {
-                console.log('Intentando cargar precios desde Google Sheets...');
                 const sheetsProducts = await productsLoader.loadProductos();
                 
                 if (sheetsProducts && sheetsProducts.length > 0) {
                     this.products = this._normalizeGoogleSheetsProducts(sheetsProducts);
                     this.pricesLoaded = true;
-                    console.log(`✓ Precios cargados desde Google Sheets: ${this.products.length} productos`);
                     return this.products;
                 }
             }
@@ -121,7 +119,6 @@ class PriceManager {
         if (typeof PRODUCTS_DATA !== 'undefined') {
             this.products = this._normalizeLocalProducts(PRODUCTS_DATA);
             this.pricesLoaded = true;
-            console.log(`✓ Precios cargados desde products-data.js: ${this.products.length} productos`);
             return this.products;
         }
 
@@ -618,8 +615,6 @@ class QuotationStorage {
             quotations.push(quotationToSave);
             
             localStorage.setItem(this.storageKey, JSON.stringify(quotations));
-            
-            console.log(`✓ Cotización guardada: ${quotationToSave.id}`);
             return quotationToSave;
         } catch (error) {
             console.error('Error al guardar cotización:', error);
@@ -1448,8 +1443,6 @@ class QuotationModal {
             showNotification('El módulo completo de cotizaciones estará disponible próximamente', 'info');
         }
         
-        console.log('Quotation data ready:', this.currentData);
-        
         this.close();
     }
 }
@@ -1493,9 +1486,6 @@ window.deleteQuotation = function(quotationId) {
 window.cleanExpiredQuotations = function() {
     const storage = new QuotationStorage();
     const result = storage.deleteExpired();
-    if (result) {
-        console.log('✓ Cotizaciones expiradas eliminadas');
-    }
     return result;
 };
 
@@ -1514,8 +1504,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
     
     const storage = new QuotationStorage();
-    const info = storage.getStorageInfo();
-    console.log(`Sistema de Cotizaciones inicializado: ${info.valid} válidas, ${info.expired} expiradas`);
 });
 
 

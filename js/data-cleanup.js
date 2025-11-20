@@ -31,7 +31,6 @@ class DataCleanupManager {
 
     init() {
         if (!this.config.enabled) {
-            console.log('DataCleanupManager deshabilitado');
             return;
         }
 
@@ -82,9 +81,7 @@ class DataCleanupManager {
                 lastRun: this.lastCleanupTime.toISOString()
             };
 
-            if (stats.quotationsRemoved > 0 || stats.logsRemoved > 0) {
-                console.log(`DataCleanup completado en ${duration}ms:`, stats);
-            }
+
 
             return stats;
         } catch (error) {
@@ -119,7 +116,6 @@ class DataCleanupManager {
 
             if (removedCount > 0) {
                 StorageManager.set('quotations', filtered);
-                console.log(`Se eliminaron ${removedCount} cotizaciones expiradas`);
             }
 
             return removedCount;
@@ -155,7 +151,6 @@ class DataCleanupManager {
 
             if (removedCount > 0) {
                 StorageManager.set('error_logs', filtered);
-                console.log(`Se eliminaron ${removedCount} logs de error antiguos`);
             }
 
             return removedCount;
@@ -199,8 +194,6 @@ class DataCleanupManager {
 
     attemptEmergencyCleanup() {
         try {
-            console.log('Iniciando limpieza de emergencia...');
-
             const quotations = StorageManager.get('quotations', []);
             if (Array.isArray(quotations) && quotations.length > 0) {
                 const sorted = quotations.sort((a, b) => {
@@ -213,14 +206,12 @@ class DataCleanupManager {
                 const cleaned = sorted.slice(-toKeep);
 
                 StorageManager.set('quotations', cleaned);
-                console.log(`Limpieza de emergencia: se mantuvieron ${toKeep} cotizaciones recientes`);
             }
 
             const logs = StorageManager.get('error_logs', []);
             if (Array.isArray(logs) && logs.length > 0) {
                 const cleaned = logs.slice(-20);
                 StorageManager.set('error_logs', cleaned);
-                console.log('Limpieza de emergencia: se mantuvieron 20 logs recientes');
             }
         } catch (error) {
             console.error('Error durante limpieza de emergencia:', error);
@@ -245,7 +236,6 @@ class DataCleanupManager {
     }
 
     forceCleanup() {
-        console.log('Limpieza forzada iniciada...');
         return this.runCleanup();
     }
 
@@ -254,7 +244,6 @@ class DataCleanupManager {
             clearInterval(this.cleanupTimer);
             this.cleanupTimer = null;
         }
-        console.log('DataCleanupManager destruido');
     }
 }
 

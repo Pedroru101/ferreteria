@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Responsive Design - Tarea 68</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0d1f0d 0%, #1a2e1a 100%);
+            color: #e8f5e9;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #a5d6a7;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4caf50 0%, #66bb6a 100%);
+            color: #0d1f0d;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 2px solid #4caf50;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .result-card {
+            background: rgba(26, 46, 26, 0.8);
+            border: 2px solid #2d4a2d;
+            border-radius: 12px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .result-card.success {
+            border-color: #4caf50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .result-card.warning {
+            border-color: #f57c00;
+            background: rgba(245, 124, 0, 0.1);
+        }
+
+        .result-card.error {
+            border-color: #d32f2f;
+            background: rgba(211, 47, 47, 0.1);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .result-icon {
+            font-size: 2rem;
+        }
+
+        .result-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .result-subtitle {
+            color: #a5d6a7;
+            font-size: 0.9rem;
+        }
+
+        .result-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4caf50;
+        }
+
+        .stat-label {
+            color: #a5d6a7;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+        }
+
+        .issues-list {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .issue-item {
+            color: #f57c00;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .issue-item::before {
+            content: '⚠️';
+            position: absolute;
+            left: 0;
+        }
+
+        .summary {
+            background: rgba(26, 46, 26, 0.8);
+            border: 2px solid #4caf50;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .summary h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #4caf50;
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .summary-stat {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .summary-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4caf50;
+        }
+
+        .summary-stat-label {
+            color: #a5d6a7;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .console-output {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #2d4a2d;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #81c784;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 2rem;
+        }
+
+        .console-line {
+            margin-bottom: 0.5rem;
+            word-break: break-word;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #a5d6a7;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(76, 175, 80, 0.3);
+            border-top-color: #4caf50;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .results-container {
+                grid-template-columns: 1fr;
+            }
+
+            .result-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Test de Responsive Design</h1>
+            <p>Verificación de usabilidad en mobile, tablet y desktop</p>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="runTests()">
+                ▶️ Ejecutar Tests
+            </button>
+            <button class="btn btn-secondary" onclick="clearResults()">
+                🗑️ Limpiar Resultados
+            </button>
+        </div>
+
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Ejecutando tests...</p>
+        </div>
+
+        <div id="resultsContainer" class="results-container" style="display: none;"></div>
+
+        <div id="summary" class="summary" style="display: none;">
+            <h2>📊 Resumen General</h2>
+            <div class="summary-stats">
+                <div class="summary-stat">
+                    <div class="summary-stat-value" id="totalTests">0</div>
+                    <div class="summary-stat-label">Tests Totales</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value" id="totalPassed">0</div>
+                    <div class="summary-stat-label">Pasados</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value" id="totalFailed">0</div>
+                    <div class="summary-stat-label">Fallidos</div>
+                </div>
+                <div class="summary-stat">
+                    <div class="summary-stat-value" id="successRate">0%</div>
+                    <div class="summary-stat-label">Tasa de Éxito</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="consoleOutput" class="console-output" style="display: none;"></div>
+    </div>
+
+    <script src="test-responsive-design.js"></script>
+    <script>
+        // Capturar console.log
+        const consoleOutput = document.getElementById('consoleOutput');
+        const originalLog = console.log;
+        const logs = [];
+
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.map(arg => {
+                if (typeof arg === 'object') {
+                    return JSON.stringify(arg, null, 2);
+                }
+                return String(arg);
+            }).join(' ');
+            logs.push(message);
+            updateConsoleOutput();
+        };
+
+        function updateConsoleOutput() {
+            consoleOutput.innerHTML = logs
+                .map(log => `<div class="console-line">${escapeHtml(log)}</div>`)
+                .join('');
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function runTests() {
+            logs.length = 0;
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('summary').style.display = 'none';
+            document.getElementById('consoleOutput').style.display = 'none';
+
+            // Ejecutar tests después de un pequeño delay
+            setTimeout(() => {
+                const tester = new ResponsiveDesignTester();
+                const results = tester.runAllTests();
+
+                displayResults(results, tester.getSummary());
+
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('consoleOutput').style.display = 'block';
+            }, 100);
+        }
+
+        function displayResults(results, summary) {
+            const container = document.getElementById('resultsContainer');
+            container.innerHTML = '';
+
+            const breakpoints = ['mobile', 'tablet', 'desktop'];
+            const breakpointNames = {
+                mobile: '📱 Mobile (320-767px)',
+                tablet: '📊 Tablet (768-1199px)',
+                desktop: '🖥️ Desktop (1200px+)'
+            };
+
+            breakpoints.forEach(breakpoint => {
+                const result = results[breakpoint];
+                const total = result.passed + result.failed;
+                const percentage = total > 0 ? ((result.passed / total) * 100).toFixed(1) : 0;
+                const status = result.failed === 0 ? 'success' : result.failed <= 2 ? 'warning' : 'error';
+
+                const card = document.createElement('div');
+                card.className = `result-card ${status}`;
+
+                let icon = '✅';
+                if (result.failed > 0) {
+                    icon = result.failed <= 2 ? '⚠️' : '❌';
+                }
+
+                card.innerHTML = `
+                    <div class="result-header">
+                        <div class="result-icon">${icon}</div>
+                        <div>
+                            <div class="result-title">${breakpointNames[breakpoint]}</div>
+                            <div class="result-subtitle">${percentage}% de éxito</div>
+                        </div>
+                    </div>
+                    <div class="result-stats">
+                        <div class="stat">
+                            <div class="stat-value">${result.passed}</div>
+                            <div class="stat-label">Pasados</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-value">${result.failed}</div>
+                            <div class="stat-label">Fallidos</div>
+                        </div>
+                    </div>
+                    ${result.issues.length > 0 ? `
+                        <div class="issues-list">
+                            ${result.issues.map(issue => `
+                                <div class="issue-item">${escapeHtml(issue)}</div>
+                            `).join('')}
+                        </div>
+                    ` : '<p style="color: #4caf50; text-align: center;">✨ Sin problemas detectados</p>'}
+                `;
+
+                container.appendChild(card);
+            });
+
+            // Actualizar resumen
+            document.getElementById('totalTests').textContent = summary.totalTests;
+            document.getElementById('totalPassed').textContent = summary.totalPassed;
+            document.getElementById('totalFailed').textContent = summary.totalFailed;
+            const successRate = summary.totalTests > 0 
+                ? ((summary.totalPassed / summary.totalTests) * 100).toFixed(1) 
+                : 0;
+            document.getElementById('successRate').textContent = successRate + '%';
+
+            container.style.display = 'grid';
+            document.getElementById('summary').style.display = 'block';
+        }
+
+        function clearResults() {
+            logs.length = 0;
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('summary').style.display = 'none';
+            document.getElementById('consoleOutput').style.display = 'none';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // Ejecutar tests automáticamente al cargar
+        window.addEventListener('load', () => {
+            console.log('✅ Página cargada. Haz clic en "Ejecutar Tests" para comenzar.');
+        });
+    </script>
+</body>
+</html>

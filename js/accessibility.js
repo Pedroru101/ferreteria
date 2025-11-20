@@ -16,7 +16,6 @@ class AccessibilityManager {
         this.setupFocusTraps();
         this.setupSkipLinks();
         this.setupLiveRegions();
-        console.log('AccessibilityManager inicializado');
     }
 
     setupKeyboardNavigation() {

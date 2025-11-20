@@ -194,38 +194,52 @@ class ComparatorManager {
     }
 
     init() {
-        this.setupEventListeners();
-        this.updateComparison();
+        try {
+            this.setupEventListeners();
+            this.updateComparison();
+        } catch (error) {
+            console.error('Error inicializando ComparatorManager:', error);
+            this.showError('Error al inicializar el comparador');
+        }
     }
 
     setupEventListeners() {
-        const contextButtons = document.querySelectorAll('.context-btn');
-        contextButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => this.handleContextSelection(e));
-        });
+        try {
+            const contextButtons = document.querySelectorAll('.context-btn');
+            contextButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => this.handleContextSelection(e));
+            });
 
-        const checkboxes = document.querySelectorAll('.product-checkbox input[type="checkbox"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', (e) => this.handleProductSelection(e));
-        });
+            const checkboxes = document.querySelectorAll('.product-checkbox input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => this.handleProductSelection(e));
+            });
 
-        const sliders = document.querySelectorAll('.slider-input');
-        sliders.forEach(slider => {
-            slider.addEventListener('input', (e) => this.handlePriorityChange(e));
-        });
+            const sliders = document.querySelectorAll('.slider-input');
+            sliders.forEach(slider => {
+                slider.addEventListener('input', (e) => this.handlePriorityChange(e));
+            });
+        } catch (error) {
+            console.error('Error configurando event listeners:', error);
+        }
     }
 
     handleContextSelection(event) {
-        const button = event.currentTarget;
-        const context = button.dataset.context;
-        
-        document.querySelectorAll('.context-btn').forEach(btn => {
-            btn.classList.remove('active');
-        });
-        button.classList.add('active');
-        
-        this.selectedContext = context;
-        this.applyContextRecommendation(context);
+        try {
+            const button = event.currentTarget;
+            const context = button.dataset.context;
+            
+            document.querySelectorAll('.context-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            button.classList.add('active');
+            
+            this.selectedContext = context;
+            this.applyContextRecommendation(context);
+        } catch (error) {
+            console.error('Error seleccionando contexto:', error);
+            this.showError('Error al seleccionar contexto');
+        }
     }
 
     applyContextRecommendation(context) {
@@ -310,40 +324,62 @@ class ComparatorManager {
     }
 
     handleProductSelection(event) {
-        const checkbox = event.target;
-        const productId = checkbox.value;
-        const errorElement = document.querySelector('.selection-error');
+        try {
+            const checkbox = event.target;
+            const productId = checkbox.value;
+            const errorElement = document.querySelector('.selection-error');
 
-        if (checkbox.checked) {
-            if (this.selectedProducts.size >= this.maxSelection) {
-                checkbox.checked = false;
-                errorElement.textContent = `Solo puedes seleccionar hasta ${this.maxSelection} productos para comparar`;
-                errorElement.classList.add('show');
-                setTimeout(() => errorElement.classList.remove('show'), 3000);
-                return;
+            if (checkbox.checked) {
+                if (this.selectedProducts.size >= this.maxSelection) {
+                    checkbox.checked = false;
+                    if (errorElement) {
+                        errorElement.textContent = `Solo puedes seleccionar hasta ${this.maxSelection} productos para comparar`;
+                        errorElement.classList.add('show');
+                        setTimeout(() => errorElement.classList.remove('show'), 3000);
+                    }
+                    return;
+                }
+                this.selectedProducts.add(productId);
+                const productCheckbox = checkbox.closest('.product-checkbox');
+                if (productCheckbox) {
+                    productCheckbox.classList.add('selected');
+                }
+            } else {
+                this.selectedProducts.delete(productId);
+                const productCheckbox = checkbox.closest('.product-checkbox');
+                if (productCheckbox) {
+                    productCheckbox.classList.remove('selected');
+                }
             }
-            this.selectedProducts.add(productId);
-            checkbox.closest('.product-checkbox').classList.add('selected');
-        } else {
-            this.selectedProducts.delete(productId);
-            checkbox.closest('.product-checkbox').classList.remove('selected');
-        }
 
-        errorElement.classList.remove('show');
-        this.updateComparison();
+            if (errorElement) {
+                errorElement.classList.remove('show');
+            }
+            this.updateComparison();
+        } catch (error) {
+            console.error('Error seleccionando producto:', error);
+            this.showError('Error al seleccionar producto');
+        }
     }
 
     handlePriorityChange(event) {
-        const slider = event.target;
-        const priority = slider.dataset.priority;
-        const value = parseInt(slider.value);
-        
-        this.priorities[priority] = value;
-        
-        const valueDisplay = slider.parentElement.querySelector('.slider-value');
-        valueDisplay.textContent = value;
+        try {
+            const slider = event.target;
+            const priority = slider.dataset.priority;
+            const value = parseInt(slider.value);
+            
+            this.priorities[priority] = value;
+            
+            const valueDisplay = slider.parentElement.querySelector('.slider-value');
+            if (valueDisplay) {
+                valueDisplay.textContent = value;
+            }
 
-        this.updateComparison();
+            this.updateComparison();
+        } catch (error) {
+            console.error('Error cambiando prioridad:', error);
+            this.showError('Error al cambiar prioridades');
+        }
     }
 
     calculateScore(productId) {
@@ -365,29 +401,35 @@ class ComparatorManager {
     }
 
     updateComparison() {
-        const container = document.querySelector('.comparison-table-container');
-        
-        if (this.selectedProducts.size === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <i class="fas fa-clipboard-list"></i>
-                    <h3>Selecciona productos para comparar</h3>
-                    <p>Elige hasta ${this.maxSelection} productos para ver una comparación detallada</p>
-                </div>
-            `;
-            return;
+        try {
+            const container = document.querySelector('.comparison-table-container');
+            if (!container) return;
+            
+            if (this.selectedProducts.size === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3>Selecciona productos para comparar</h3>
+                        <p>Elige hasta ${this.maxSelection} productos para ver una comparación detallada</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const productsArray = Array.from(this.selectedProducts);
+            const scores = productsArray.map(id => ({
+                id,
+                score: this.calculateScore(id)
+            }));
+            scores.sort((a, b) => b.score - a.score);
+            const recommendedId = scores[0].id;
+
+            container.innerHTML = this.generateComparisonTable(productsArray, recommendedId);
+            this.attachTableEventListeners();
+        } catch (error) {
+            console.error('Error actualizando comparación:', error);
+            this.showError('Error al actualizar comparación');
         }
-
-        const productsArray = Array.from(this.selectedProducts);
-        const scores = productsArray.map(id => ({
-            id,
-            score: this.calculateScore(id)
-        }));
-        scores.sort((a, b) => b.score - a.score);
-        const recommendedId = scores[0].id;
-
-        container.innerHTML = this.generateComparisonTable(productsArray, recommendedId);
-        this.attachTableEventListeners();
     }
 
     generateComparisonTable(productIds, recommendedId) {
@@ -569,42 +611,51 @@ class ComparatorManager {
     }
 
     attachTableEventListeners() {
-        const buttons = document.querySelectorAll('.use-solution-btn');
-        buttons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const productId = e.currentTarget.dataset.product;
-                this.useSolution(productId);
+        try {
+            const buttons = document.querySelectorAll('.use-solution-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = e.currentTarget.dataset.product;
+                    this.useSolution(productId);
+                });
             });
-        });
+        } catch (error) {
+            console.error('Error adjuntando event listeners a tabla:', error);
+        }
     }
 
     useSolution(productId) {
-        const calculatorSection = document.querySelector('#calculadora');
-        if (!calculatorSection) {
-            this.showError('La sección de calculadora no está disponible');
-            return;
-        }
-
-        const postTypeSelect = document.querySelector('#postType');
-        if (!postTypeSelect) {
-            this.showError('No se encontró el selector de tipo de poste');
-            return;
-        }
-
-        postTypeSelect.value = productId;
-        postTypeSelect.dispatchEvent(new Event('change', { bubbles: true }));
-        
-        this.showSuccess(`Tipo de poste "${COMPARISON_DATA[productId].name}" seleccionado en la calculadora`);
-        
-        calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        
-        setTimeout(() => {
-            const firstInput = calculatorSection.querySelector('input[type="number"]');
-            if (firstInput) {
-                firstInput.focus();
-                firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        try {
+            const calculatorSection = document.querySelector('#calculadora');
+            if (!calculatorSection) {
+                this.showError('La sección de calculadora no está disponible');
+                return;
             }
-        }, 800);
+
+            const postTypeSelect = document.querySelector('#postType');
+            if (!postTypeSelect) {
+                this.showError('No se encontró el selector de tipo de poste');
+                return;
+            }
+
+            postTypeSelect.value = productId;
+            postTypeSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            
+            this.showSuccess(`Tipo de poste "${COMPARISON_DATA[productId].name}" seleccionado en la calculadora`);
+            
+            calculatorSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            setTimeout(() => {
+                const firstInput = calculatorSection.querySelector('input[type="number"]');
+                if (firstInput) {
+                    firstInput.focus();
+                    firstInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 800);
+        } catch (error) {
+            console.error('Error usando solución:', error);
+            this.showError('Error al usar esta solución');
+        }
     }
 
     showError(message) {
@@ -618,8 +669,6 @@ class ComparatorManager {
     showSuccess(message) {
         if (typeof showNotification === 'function') {
             showNotification(message, 'success');
-        } else {
-            console.log(message);
         }
     }
 }

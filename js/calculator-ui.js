@@ -13,7 +13,6 @@ class CalculatorUI {
     init() {
         this.setupEventListeners();
         this.loadSavedProgress();
-        console.log('CalculatorUI inicializado');
     }
 
     setupEventListeners() {
