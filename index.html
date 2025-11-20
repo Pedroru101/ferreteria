@@ -23,18 +23,6 @@
     <meta property="og:image" content="https://www.metalesmdp.com.ar/og-image.jpg">
     <meta property="og:locale" content="es_AR">
     <meta property="og:site_name" content="Metales & Hierros Mar del Plata">
-    <meta property="og:type" content="business.business">
-    <meta property="business:contact_data:street_address" content="Av. Luro 1234">
-    <meta property="business:contact_data:locality" content="Mar del Plata">
-    <meta property="business:contact_data:postal_code" content="7600">
-    <meta property="business:contact_data:country_name" content="Argentina">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://www.metalesmdp.com.ar/">
-    <meta name="twitter:title" content="Metales & Hierros Mar del Plata - Calculadora Online">
-    <meta name="twitter:description"
-        content="Calcula materiales, genera cotizaciones y compara soluciones de alambrados. Fabricación a medida con +20 años de experiencia.">
     <meta name="twitter:image" content="https://www.metalesmdp.com.ar/twitter-image.jpg">
     <meta name="twitter:creator" content="@metalesmdp">
 
@@ -74,18 +62,6 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- AOS Animation -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/calculator.css">
-    <link rel="stylesheet" href="css/quotation.css">
-    <link rel="stylesheet" href="css/catalog.css">
-    <link rel="stylesheet" href="css/orders.css">
     <link rel="stylesheet" href="css/comparator.css">
     <link rel="stylesheet" href="css/progress-manager.css">
     <link rel="stylesheet" href="css/progress-stepper.css">
@@ -443,814 +419,572 @@
     </a>
 
     <!-- Dark Mode Toggle Button -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-        <i class="fas fa-moon"></i>
-    </button>
+    </label>
+    <input type="number" id="terrainLength" class="form-input" placeholder="Ej: 50" min="1" step="0.1">
+    </div>
+    <div class="form-group">
+        <label for="terrainWidth" class="form-label">
+            <i class="fas fa-arrows-alt-v"></i>
+            Ancho (metros)
+        </label>
+        <input type="number" id="terrainWidth" class="form-input" placeholder="Ej: 30" min="1" step="0.1">
+    </div>
+    </div>
+    <div class="form-group">
+        <label for="totalPerimeter" class="form-label">
+            <i class="fas fa-border-all"></i>
+            O ingresa el perímetro total
+        </label>
+        <input type="number" id="totalPerimeter" class="form-input" placeholder="Ej: 160" min="1" step="0.1">
+        <small class="form-hint">Si conoces el perímetro total, ingrésalo aquí
+            directamente</small>
+    </div>
+    </div>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <div class="nav-wrapper">
-                <div class="logo">
-                    <div class="logo-icon">◇</div>
-                    <span class="logo-text">
-                        <span class="logo-top">Rombos</span>
-                        <span class="logo-bottom">del Mar</span>
-                    </span>
-                </div>
-
-                <div class="nav-menu" id="navMenu">
-                    <a href="#inicio" class="nav-link active">Inicio</a>
-                    <a href="#productos" class="nav-link">Productos</a>
-                    <a href="#servicios" class="nav-link">Servicios</a>
-                    <a href="#fabricacion" class="nav-link">Fabricación</a>
-                    <a href="#calculadora" class="nav-link">Calculadora</a>
-                    <a href="#comparador" class="nav-link">Comparador</a>
-                    <a href="#consulta-cotizacion" class="nav-link nav-link-compact">Mis Cotizaciones</a>
-                    <a href="#consulta-pedido" class="nav-link nav-link-compact">Mis Pedidos</a>
-                    <a href="#galeria" class="nav-link">Galería</a>
-                    <a href="#contacto" class="nav-link">Contacto</a>
-                    <a href="#contacto" class="btn-primary-nav">Cotizar Ahora</a>
-                </div>
-
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <div class="section-header" data-aos="fade-up">
-                        <span class="section-subtitle">Planifica tu Proyecto</span>
-                        <h2 class="section-title">Calculadora de <span class="text-gradient">Materiales</span></h2>
-                        <p class="section-description">Calcula los materiales necesarios para tu proyecto de alambrado
-                        </p>
-                    </div>
-
-                    <div class="calculator-wrapper">
-                        <!-- Calculator Form -->
-                        <div class="calculator-form" data-aos="fade-right">
-                            <div class="form-card">
-                                <h3 class="form-title">
-                                    <i class="fas fa-ruler-combined"></i>
-                                    Dimensiones del Terreno
-                                </h3>
-
-                                <!-- Fence Type Selector -->
-                                <div class="form-group">
-                                    <label class="form-label">Tipo de Cerca</label>
-                                    <div class="fence-type-selector">
-                                        <label class="radio-card">
-                                            <input type="radio" name="fenceType" value="simple" checked>
-                                            <div class="radio-content">
-                                                <i class="fas fa-square"></i>
-                                                <span>Perímetro Simple</span>
-                                                <small>Ingresa largo y ancho</small>
-                                            </div>
-                                        </label>
-                                        <label class="radio-card">
-                                            <input type="radio" name="fenceType" value="multiple">
-                                            <div class="radio-content">
-                                                <i class="fas fa-vector-square"></i>
-                                                <span>Múltiples Segmentos</span>
-                                                <small>Terreno irregular</small>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <!-- Simple Perimeter Inputs -->
-                                <div id="simplePerimeter" class="perimeter-inputs">
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="terrainLength" class="form-label">
-                                                <i class="fas fa-arrows-alt-h"></i>
-                                                Largo (metros)
-                                            </label>
-                                            <input type="number" id="terrainLength" class="form-input"
-                                                placeholder="Ej: 50" min="1" step="0.1">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="terrainWidth" class="form-label">
-                                                <i class="fas fa-arrows-alt-v"></i>
-                                                Ancho (metros)
-                                            </label>
-                                            <input type="number" id="terrainWidth" class="form-input"
-                                                placeholder="Ej: 30" min="1" step="0.1">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="totalPerimeter" class="form-label">
-                                            <i class="fas fa-border-all"></i>
-                                            O ingresa el perímetro total
-                                        </label>
-                                        <input type="number" id="totalPerimeter" class="form-input"
-                                            placeholder="Ej: 160" min="1" step="0.1">
-                                        <small class="form-hint">Si conoces el perímetro total, ingrésalo aquí
-                                            directamente</small>
-                                    </div>
-                                </div>
-
-                                <!-- Multiple Segments Inputs -->
-                                <div id="multipleSegments" class="perimeter-inputs" style="display: none;">
-                                    <div id="segmentsList">
-                                        <div class="segment-item">
-                                            <label class="form-label">Segmento 1 (metros)</label>
-                                            <div class="segment-input-group">
-                                                <input type="number" class="form-input segment-length"
-                                                    placeholder="Longitud" min="1" step="0.1">
-                                                <button type="button" class="btn-icon btn-remove-segment" disabled>
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="button" id="addSegmentBtn" class="btn-secondary btn-block">
-                                        <i class="fas fa-plus"></i>
-                                        Agregar Segmento
-                                    </button>
-                                </div>
-
-                                <!-- Post Type Selector -->
-                                <div class="form-group">
-                                    <label for="postType" class="form-label">
-                                        <i class="fas fa-columns"></i>
-                                        Tipo de Poste
-                                    </label>
-                                    <select id="postType" class="form-select">
-                                        <option value="">Selecciona un tipo de poste</option>
-                                        <option value="hormigon">Hormigón - Mayor durabilidad</option>
-                                        <option value="quebracho">Quebracho - Alta resistencia natural</option>
-                                        <option value="eucalipto">Eucalipto - Económico</option>
-                                        <option value="olimpo">Olimpo (Hormigón + 3 hilos de púa)</option>
-                                    </select>
-                                </div>
-
-                                <!-- Material Type Tabs -->
-                                <div class="form-group">
-                                    <label class="form-label">
-                                        <i class="fas fa-th"></i>
-                                        Material de Cerramiento
-                                    </label>
-                                    <div class="material-tabs">
-                                        <button type="button" class="tab-btn active" data-tab="wire">
-                                            <i class="fas fa-grip-lines"></i>
-                                            Alambre
-                                        </button>
-                                        <button type="button" class="tab-btn" data-tab="mesh">
-                                            <i class="fas fa-th-large"></i>
-                                            Tejido Romboidal
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Wire Configuration -->
-                                <div id="wireConfig" class="material-config">
-                                    <div class="form-group">
-                                        <label for="wireStrands" class="form-label">Cantidad de Hilos</label>
-                                        <input type="number" id="wireStrands" class="form-input" value="5" min="1"
-                                            max="10">
-                                        <small class="form-hint">Típicamente 5-7 hilos para cercas rurales</small>
-                                    </div>
-                                </div>
-
-                                <!-- Mesh Configuration -->
-                                <div id="meshConfig" class="material-config" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="meshHeight" class="form-label">Altura del Tejido</label>
-                                        <select id="meshHeight" class="form-select">
-                                            <option value="1.00">1.00 m</option>
-                                            <option value="1.20">1.20 m</option>
-                                            <option value="1.50" selected>1.50 m</option>
-                                            <option value="1.80">1.80 m</option>
-                                            <option value="2.00">2.00 m</option>
-                                        </select>
-                                        <small class="form-hint">Rollos estándar de 10 metros de largo</small>
-                                    </div>
-                                </div>
-
-                                <!-- Calculate Button -->
-                                <button type="button" id="calculateBtn" class="btn-primary btn-block btn-large">
-                                    <i class="fas fa-calculator"></i>
-                                    Calcular Materiales
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Calculator Results -->
-                        <div class="calculator-results" data-aos="fade-left">
-                            <div class="results-card">
-                                <div class="results-header">
-                                    <h3 class="results-title">
-                                        <i class="fas fa-clipboard-list"></i>
-                                        Materiales Necesarios
-                                    </h3>
-                                    <span class="results-badge">Estimación</span>
-                                </div>
-
-                                <div id="resultsContent" class="results-content">
-                                    <div class="empty-state">
-                                        <i class="fas fa-calculator"></i>
-                                        <p>Completa el formulario y presiona "Calcular Materiales" para ver los
-                                            resultados</p>
-                                    </div>
-                                </div>
-
-                                <!-- Results will be populated here by JavaScript -->
-                                <div id="resultsData" class="results-data" style="display: none;">
-                                    <!-- Perimeter Info -->
-                                    <div class="result-section">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-border-all"></i>
-                                            Información del Perímetro
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Perímetro Total:</span>
-                                            <span class="result-value" id="resultPerimeter">-</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Posts -->
-                                    <div class="result-section">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-columns"></i>
-                                            Postes
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Postes Esquineros:</span>
-                                            <span class="result-value" id="resultCornerPosts">4</span>
-                                        </div>
-                                        <div class="result-item">
-                                            <span class="result-label">Postes Intermedios:</span>
-                                            <span class="result-value" id="resultIntermediatePosts">-</span>
-                                        </div>
-                                        <div class="result-item highlight">
-                                            <span class="result-label">Total de Postes:</span>
-                                            <span class="result-value" id="resultTotalPosts">-</span>
-                                        </div>
-                                        <small class="result-note" id="postSpacingNote">Separación: 2.5m entre
-                                            postes</small>
-                                    </div>
-
-                                    <!-- Wire/Mesh -->
-                                    <div class="result-section" id="wireResults">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-grip-lines"></i>
-                                            Alambre
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Hilos de Alambre:</span>
-                                            <span class="result-value" id="resultWireStrands">-</span>
-                                        </div>
-                                        <div class="result-item highlight">
-                                            <span class="result-label">Total de Alambre:</span>
-                                            <span class="result-value" id="resultTotalWire">-</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="result-section" id="meshResults" style="display: none;">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-th-large"></i>
-                                            Tejido Romboidal
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Altura del Tejido:</span>
-                                            <span class="result-value" id="resultMeshHeight">-</span>
-                                        </div>
-                                        <div class="result-item highlight">
-                                            <span class="result-label">Rollos Necesarios:</span>
-                                            <span class="result-value" id="resultMeshRolls">-</span>
-                                        </div>
-                                        <small class="result-note">Rollos de 10 metros de largo</small>
-                                    </div>
-
-                                    <!-- Accessories -->
-                                    <div class="result-section">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-tools"></i>
-                                            Accesorios Estimados
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Grampas:</span>
-                                            <span class="result-value" id="resultStaples">-</span>
-                                        </div>
-                                        <div class="result-item">
-                                            <span class="result-label">Tensores:</span>
-                                            <span class="result-value" id="resultTensioners">-</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Special Notes -->
-                                    <div id="specialNotes" class="result-notes" style="display: none;">
-                                        <div class="note-box">
-                                            <i class="fas fa-info-circle"></i>
-                                            <span id="specialNotesText"></span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Action Buttons -->
-                                    <div class="results-actions">
-                                        <button type="button" id="generateQuoteBtn" class="btn-primary btn-block">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                            Generar Cotización
-                                        </button>
-                                        <button type="button" id="resetCalculatorBtn" class="btn-secondary btn-block">
-                                            <i class="fas fa-redo"></i>
-                                            Nueva Consulta
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Info Card -->
-                            <div class="info-card" data-aos="fade-up" data-aos-delay="200">
-                                <div class="info-icon">
-                                    <i class="fas fa-lightbulb"></i>
-                                </div>
-                                <h4>¿Necesitas Ayuda?</h4>
-                                <p>Nuestro equipo puede asesorarte sobre el mejor tipo de material para tu proyecto.</p>
-                                <a href="#contacto" class="info-link">
-                                    Contactar Asesor <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </section>
-
-                <!-- Comparator Section -->
-                <section id="comparador" class="comparator-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Compara y Decide</span>
-                            <h2 class="section-title">Comparador de <span class="text-gradient">Soluciones</span></h2>
-                            <p class="section-description">Encuentra la mejor opción según tus necesidades y presupuesto
-                            </p>
-                        </div>
-
-                        <div class="comparator-controls" data-aos="fade-up">
-                            <div class="context-selector">
-                                <h3>¿Cuál es tu necesidad principal?</h3>
-                                <div class="context-buttons">
-                                    <button class="context-btn" data-context="high-demand">
-                                        <i class="fas fa-industry"></i>
-                                        <span>Alta Exigencia</span>
-                                        <small>Uso intensivo, máxima durabilidad</small>
-                                    </button>
-                                    <button class="context-btn" data-context="budget">
-                                        <i class="fas fa-piggy-bank"></i>
-                                        <span>Presupuesto Económico</span>
-                                        <small>Mejor relación precio-calidad</small>
-                                    </button>
-                                    <button class="context-btn" data-context="balanced">
-                                        <i class="fas fa-balance-scale"></i>
-                                        <span>Equilibrado</span>
-                                        <small>Balance entre precio y durabilidad</small>
-                                    </button>
-                                    <button class="context-btn" data-context="security">
-                                        <i class="fas fa-shield-alt"></i>
-                                        <span>Seguridad</span>
-                                        <small>Máxima protección perimetral</small>
-                                    </button>
-                                </div>
-                                <div class="context-recommendation"></div>
-                            </div>
-
-                            <div class="product-selection">
-                                <h3>Selecciona productos para comparar (máximo 3)</h3>
-                                <div class="selection-grid">
-                                    <div class="product-checkbox">
-                                        <input type="checkbox" id="check-hormigon" value="hormigon">
-                                        <label for="check-hormigon">
-                                            <i class="fas fa-cube"></i> Postes de Hormigón
-                                        </label>
-                                    </div>
-                                    <div class="product-checkbox">
-                                        <input type="checkbox" id="check-quebracho" value="quebracho">
-                                        <label for="check-quebracho">
-                                            <i class="fas fa-tree"></i> Postes de Quebracho
-                                        </label>
-                                    </div>
-                                    <div class="product-checkbox">
-                                        <input type="checkbox" id="check-eucalipto" value="eucalipto">
-                                        <label for="check-eucalipto">
-                                            <i class="fas fa-leaf"></i> Postes de Eucalipto
-                                        </label>
-                                    </div>
-                                    <div class="product-checkbox">
-                                        <input type="checkbox" id="check-olimpo" value="olimpo">
-                                        <label for="check-olimpo">
-                                            <i class="fas fa-shield-alt"></i> Postes Olimpo
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="selection-error"></div>
-                            </div>
-
-                            <div class="priority-sliders">
-                                <h3>Ajusta tus prioridades</h3>
-                                <div class="slider-group">
-                                    <div class="slider-label">
-                                        <span><i class="fas fa-dollar-sign"></i> Precio</span>
-                                        <span class="slider-value">5</span>
-                                    </div>
-                                    <input type="range" class="slider-input" data-priority="price" min="0" max="10"
-                                        value="5">
-                                </div>
-                                <div class="slider-group">
-                                    <div class="slider-label">
-                                        <span><i class="fas fa-clock"></i> Durabilidad</span>
-                                        <span class="slider-value">5</span>
-                                    </div>
-                                    <input type="range" class="slider-input" data-priority="durability" min="0" max="10"
-                                        value="5">
-                                </div>
-                                <div class="slider-group">
-                                    <div class="slider-label">
-                                        <span><i class="fas fa-palette"></i> Estética</span>
-                                        <span class="slider-value">5</span>
-                                    </div>
-                                    <input type="range" class="slider-input" data-priority="aesthetics" min="0" max="10"
-                                        value="5">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comparison-table-container" data-aos="fade-up" data-aos-delay="200">
-                            <div class="empty-state">
-                                <i class="fas fa-clipboard-list"></i>
-                                <h3>Selecciona productos para comparar</h3>
-                                <p>Elige hasta 3 productos para ver una comparación detallada</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Quotation Lookup Section -->
-                <section id="consulta-cotizacion" class="quotation-lookup-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Consulta tu Cotización</span>
-                            <h2 class="section-title">Buscar <span class="text-gradient">Cotización Guardada</span></h2>
-                            <p class="section-description">Ingresa el ID de tu cotización para ver los detalles</p>
-                        </div>
-
-                        <div class="quotation-lookup-wrapper" data-aos="fade-up" data-aos-delay="100">
-                            <div class="lookup-form-card">
-                                <div class="form-group">
-                                    <label for="quotationIdInput">
-                                        <i class="fas fa-search"></i>
-                                        ID de Cotización
-                                    </label>
-                                    <input type="text" id="quotationIdInput" class="form-input"
-                                        placeholder="Ej: COT-1234567890-123" aria-label="ID de cotización">
-                                </div>
-                                <button class="btn-primary" id="searchQuotationBtn" onclick="searchQuotation()">
-                                    <i class="fas fa-search"></i>
-                                    Buscar Cotización
-                                </button>
-                            </div>
-
-                            <div id="quotationDisplayContainer" class="quotation-display-container">
-                                <!-- La cotización se mostrará aquí -->
-                            </div>
-
-                            <div id="quotationNotFound" class="quotation-not-found" style="display: none;">
-                                <i class="fas fa-exclamation-circle"></i>
-                                <h3>Cotización no encontrada</h3>
-                                <p>No se encontró ninguna cotización con ese ID. Verifica que el ID sea correcto.</p>
-                            </div>
-
-                            <div class="recent-quotations" id="recentQuotations">
-                                <h3><i class="fas fa-history"></i> Cotizaciones Recientes</h3>
-                                <div id="recentQuotationsList" class="recent-list">
-                                    <!-- Lista de cotizaciones recientes -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Gallery Section -->
-                <section id="galeria" class="gallery-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Nuestros Trabajos</span>
-                            <h2 class="section-title">Galería de <span class="text-gradient">Proyectos</span></h2>
-                            <p class="section-description">Algunos de nuestros trabajos realizados</p>
-                        </div>
-
-                        <div class="gallery-grid">
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-border-all"></i>
-                                    <span>Tejido Romboidal</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-building"></i>
-                                    <span>Estructura Metálica</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-warehouse"></i>
-                                    <span>Galpón Industrial</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-home"></i>
-                                    <span>Portón Corredizo</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-fence"></i>
-                                    <span>Cerco Perimetral</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-toolbox"></i>
-                                    <span>Trabajos a Medida</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Order Tracking Section -->
-                <section id="consulta-pedido" class="order-tracking-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Seguimiento</span>
-                            <h2 class="section-title">Consultar Estado de <span class="text-gradient">Pedido</span></h2>
-                            <p class="section-description">Ingresa tu número de orden para ver el estado actual de tu
-                                pedido</p>
-                        </div>
-
-                        <div class="tracking-wrapper" data-aos="fade-up" data-aos-delay="100">
-                            <div class="tracking-form-container">
-                                <div class="tracking-form">
-                                    <div class="form-group">
-                                        <label for="orderIdInput" class="form-label">
-                                            <i class="fas fa-hashtag"></i>
-                                            Número de Orden
-                                        </label>
-                                        <div class="input-with-button">
-                                            <input type="text" id="orderIdInput" class="form-input"
-                                                placeholder="Ej: ORD-20240115-0001" aria-label="Número de orden">
-                                            <button class="btn-track" onclick="trackOrder()"
-                                                aria-label="Consultar pedido">
-                                                <i class="fas fa-search"></i>
-                                                Consultar
-                                            </button>
-                                        </div>
-                                        <div class="form-hint">
-                                            <i class="fas fa-info-circle"></i>
-                                            El número de orden fue enviado por WhatsApp al confirmar tu pedido
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="orderStatusDisplay" class="order-status-display" style="display: none;">
-                                <!-- Contenido dinámico del estado del pedido -->
-                            </div>
-
-                            <div id="orderNotFound" class="order-not-found" style="display: none;">
-                                <div class="not-found-icon">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                                <h3>Pedido no encontrado</h3>
-                                <p>No se encontró ningún pedido con ese número de orden.</p>
-                                <p class="not-found-hint">Verifica que el número sea correcto o contactanos por
-                                    WhatsApp.</p>
-                                <a href="https://wa.me/5491171416157?text=Hola!%20Necesito%20ayuda%20con%20mi%20pedido"
-                                    target="_blank" class="btn-secondary">
-                                    <i class="fab fa-whatsapp"></i>
-                                    Contactar por WhatsApp
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Contact Section -->
-                <section id="contacto" class="contact-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Contacto</span>
-                            <h2 class="section-title">¿Listo para tu <span class="text-gradient">Proyecto?</span></h2>
-                            <p class="section-description">Comunicate con nosotros por el medio que prefieras</p>
-                        </div>
-
-                        <div class="contact-wrapper">
-                            <div class="contact-info" data-aos="fade-right">
-                                <div class="info-card">
-                                    <h3>Información de Contacto</h3>
-
-                                    <div class="contact-method">
-                                        <div class="method-icon whatsapp-bg">
-                                            <i class="fab fa-whatsapp"></i>
-                                        </div>
-                                        <div class="method-content">
-                                            <h4>WhatsApp</h4>
-                                            <p>+54 9 11 7141-6157</p>
-                                            <a href="https://wa.me/5491171416157?text=Hola!%20Me%20interesa%20consultar"
-                                                target="_blank" class="method-link">
-                                                Enviar mensaje <i class="fas fa-arrow-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="contact-method">
-                                        <div class="method-icon phone-bg">
-                                            <i class="fas fa-phone-alt"></i>
-                                        </div>
-                                        <div class="method-content">
-                                            <h4>Teléfono</h4>
-                                            <p>+54 9 11 7141-6157</p>
-                                            <a href="tel:+5491171416157" class="method-link">
-                                                Llamar ahora <i class="fas fa-arrow-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="contact-method">
-                                        <div class="method-icon email-bg">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                        <div class="method-content">
-                                            <h4>Email</h4>
-                                            <p>materialesencontruccion@gmail.com</p>
-                                            <a href="mailto:materialesencontruccion@gmail.com" class="method-link">
-                                                Enviar email <i class="fas fa-arrow-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="contact-method">
-                                        <div class="method-icon location-bg">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                        </div>
-                                        <div class="method-content">
-                                            <h4>Ubicación</h4>
-                                            <p>Mar del Plata, Buenos Aires</p>
-                                            <p class="location-detail">Argentina</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="social-links">
-                                        <a href="https://www.facebook.com/profile.php?id=61584020816125" target="_blank"
-                                            class="social-link facebook" aria-label="Facebook">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                        <a href="https://www.instagram.com/materialesencontruccion/" target="_blank"
-                                            class="social-link instagram" aria-label="Instagram">
-                                            <i class="fab fa-instagram"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="business-hours">
-                                    <h4><i class="fas fa-clock"></i> Horarios de Atención</h4>
-                                    <div class="hours-list">
-                                        <div class="hour-item">
-                                            <span>Lunes a Viernes:</span>
-                                            <span>8:00 - 18:00</span>
-                                        </div>
-                                        <div class="hour-item">
-                                            <span>Sábados:</span>
-                                            <span>8:00 - 13:00</span>
-                                        </div>
-                                        <div class="hour-item">
-                                            <span>Domingos:</span>
-                                            <span>Cerrado</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="contact-form-wrapper" data-aos="fade-left">
-                                <form id="contactForm" class="contact-form">
-                                    <h3>Solicitar Cotización</h3>
-
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="nombre">Nombre Completo *</label>
-                                            <input type="text" id="nombre" name="nombre" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="telefono">Teléfono *</label>
-                                            <input type="tel" id="telefono" name="telefono" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="email">Email *</label>
-                                        <input type="email" id="email" name="email" required>
-                                        card.addEventListener('click', function (e) {
-                                        if (e.target.tagName === 'A' || e.target.closest('a')) {
-                                        return;
-                                        }
-
-                                        e.preventDefault();
-                                        const id = this.dataset.productId;
-                                        if (id) {
-                                        openProductModal(id);
-                                        }
-                                        });
-
-                                        const productLink = card.querySelector('.product-link');
-                                        if (productLink) {
-                                        productLink.textContent = 'Ver Detalles ';
-                                        productLink.innerHTML += '<i class="fas fa-arrow-right"></i>';
-                                        productLink.href = '#';
-                                        productLink.addEventListener('click', function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        const id = card.dataset.productId;
-                                        if (id) {
-                                        openProductModal(id);
-                                        }
-                                        });
-                                        }
-                                        }
-                                        });
-                                        }
-                                        </script>
-</body>
-
-</html>
-
-<!-- Progress Stepper Script -->
-<script src="js/progress-stepper.js"></script>
-
-<!-- Accessibility Module -->
-<script src="js/accessibility.js"></script>
-
-<!-- Modal de Producto Detallado -->
-<div id="productModal" class="modal">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeProductModal()" aria-label="Cerrar">&times;</button>
-        <div class="product-detail">
-            <div class="product-image">
-                <img id="modalProductImage" src="" alt="" style="display: none;">
-                <div id="modalProductImagePlaceholder" class="product-image-placeholder">
-                    <i class="fas fa-box-open"></i>
-                    <span>Imagen no disponible</span>
-                </div>
-                <span id="modalProductBadge" class="product-badge-modal" style="display: none;"></span>
-            </div>
-            <div class="product-info">
-                <span id="modalProductCategory" class="product-category-tag"></span>
-                <h3 id="modalProductName" class="product-name"></h3>
-                <div id="modalProductPrice" class="product-price"></div>
-                <div id="modalProductPriceUnit" class="product-price-unit"></div>
-                <div id="modalProductAvailability" class="product-availability">
-                    <i class="fas fa-circle"></i>
-                    <span></span>
-                </div>
-                <p id="modalProductDescription" class="product-description-text"></p>
-
-                <div id="modalProductSpecs" class="product-specs">
-                    <h4><i class="fas fa-cog"></i> Especificaciones Técnicas</h4>
-                    <div id="modalSpecsGrid" class="specs-grid"></div>
-                </div>
-
-                <div id="modalProductResistance" class="product-resistance" style="display: none;">
-                    <h4><i class="fas fa-shield-alt"></i> Resistencia</h4>
-                    <div id="modalResistanceBars" class="resistance-bars"></div>
-                </div>
-
-                <div id="modalProductApplications" class="product-applications" style="display: none;">
-                    <h4><i class="fas fa-tasks"></i> Aplicaciones Recomendadas</h4>
-                    <div id="modalApplicationsList" class="applications-list"></div>
-                </div>
-
-                <div class="product-actions">
-                    <div class="quantity-selector">
-                        <label for="modalProductQuantity">Cantidad:</label>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="decreaseModalQuantity()"
-                                aria-label="Disminuir cantidad">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <input type="number" id="modalProductQuantity" value="1" min="1" max="9999"
-                                class="quantity-input">
-                            <button class="quantity-btn" onclick="increaseModalQuantity()"
-                                aria-label="Aumentar cantidad">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button class="add-to-quote" onclick="addProductToQuoteFromModal()">
-                        <i class="fas fa-shopping-cart"></i>
-                        Agregar a Cotización
+    <!-- Multiple Segments Inputs -->
+    <div id="multipleSegments" class="perimeter-inputs" style="display: none;">
+        <div id="segmentsList">
+            <div class="segment-item">
+                <label class="form-label">Segmento 1 (metros)</label>
+                <div class="segment-input-group">
+                    <input type="number" class="form-input segment-length" placeholder="Longitud" min="1" step="0.1">
+                    <button type="button" class="btn-icon btn-remove-segment" disabled>
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
             </div>
         </div>
+        <button type="button" id="addSegmentBtn" class="btn-secondary btn-block">
+            <i class="fas fa-plus"></i>
+            Agregar Segmento
+        </button>
     </div>
-</div>
+
+    <!-- Post Type Selector -->
+    <div class="form-group">
+        <label for="postType" class="form-label">
+            <i class="fas fa-columns"></i>
+            Tipo de Poste
+        </label>
+        <select id="postType" class="form-select">
+            <option value="">Selecciona un tipo de poste</option>
+            <option value="hormigon">Hormigón - Mayor durabilidad</option>
+            <option value="quebracho">Quebracho - Alta resistencia natural</option>
+            <option value="eucalipto">Eucalipto - Económico</option>
+            <option value="olimpo">Olimpo (Hormigón + 3 hilos de púa)</option>
+        </select>
+    </div>
+
+    <!-- Material Type Tabs -->
+    <div class="form-group">
+        <label class="form-label">
+            <i class="fas fa-th"></i>
+            Material de Cerramiento
+        </label>
+        <div class="material-tabs">
+            <button type="button" class="tab-btn active" data-tab="wire">
+                <i class="fas fa-grip-lines"></i>
+                Alambre
+            </button>
+            <button type="button" class="tab-btn" data-tab="mesh">
+                <i class="fas fa-th-large"></i>
+        </div>
+
+        <!-- Mesh Configuration -->
+        <div id="meshConfig" class="material-config" style="display: none;">
+            <div class="form-group">
+                <label for="meshHeight" class="form-label">Altura del Tejido</label>
+                <select id="meshHeight" class="form-select">
+                    <option value="1.00">1.00 m</option>
+                    <option value="1.20">1.20 m</option>
+                    <option value="1.50" selected>1.50 m</option>
+                    <option value="1.80">1.80 m</option>
+                    <option value="2.00">2.00 m</option>
+                </select>
+                <small class="form-hint">Rollos estándar de 10 metros de largo</small>
+            </div>
+        </div>
+
+        <!-- Calculate Button -->
+        <button type="button" id="calculateBtn" class="btn-primary btn-block btn-large">
+            <i class="fas fa-calculator"></i>
+            Calcular Materiales
+        </button>
+    </div>
+    </div>
+
+    <!-- Calculator Results -->
+    <div class="calculator-results" data-aos="fade-left">
+        <div class="results-card">
+            <div class="results-header">
+                <h3 class="results-title">
+                    <i class="fas fa-clipboard-list"></i>
+                    Materiales Necesarios
+                </h3>
+                <span class="results-badge">Estimación</span>
+            </div>
+
+            <div id="resultsContent" class="results-content">
+                <div class="empty-state">
+                    <i class="fas fa-calculator"></i>
+                    <p>Completa el formulario y presiona "Calcular Materiales" para ver los
+                        resultados</p>
+                </div>
+            </div>
+
+            <!-- Results will be populated here by JavaScript -->
+            <div id="resultsData" class="results-data" style="display: none;">
+                <!-- Perimeter Info -->
+                <div class="result-section">
+                    <h4 class="result-section-title">
+                        <i class="fas fa-border-all"></i>
+                        Información del Perímetro
+                    </h4>
+                    <div class="result-item">
+                        <span class="result-label">Perímetro Total:</span>
+                        <span class="result-value" id="resultPerimeter">-</span>
+                    </div>
+                </div>
+
+                <!-- Posts -->
+                <div class="result-section">
+                    <h4 class="result-section-title">
+                        <i class="fas fa-columns"></i>
+                        Postes
+                    </h4>
+                    <div class="result-item">
+                        <span class="result-label">Postes Esquineros:</span>
+                        <span class="result-value" id="resultCornerPosts">4</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Postes Intermedios:</span>
+                        <span class="result-value" id="resultIntermediatePosts">-</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Total de Postes:</span>
+                        <span class="result-value" id="resultTotalPosts">-</span>
+                    </div>
+                    <small class="result-note" id="postSpacingNote">Separación: 2.5m entre
+                        postes</small>
+                </div>
+
+                <!-- Wire/Mesh -->
+                <div class="result-section" id="wireResults">
+                    <h4 class="result-section-title">
+                        <i class="fas fa-grip-lines"></i>
+                        Alambre
+                    </h4>
+                    <div class="result-item">
+                        <span class="result-label">Hilos de Alambre:</span>
+                        <span class="result-value" id="resultWireStrands">-</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Total de Alambre:</span>
+                        <span class="result-value" id="resultTotalWire">-</span>
+                    </div>
+                </div>
+
+                <div class="result-section" id="meshResults" style="display: none;">
+                    <h4 class="result-section-title">
+                        <i class="fas fa-th-large"></i>
+                        Tejido Romboidal
+                    </h4>
+                    <div class="result-item">
+                        <span class="result-label">Altura del Tejido:</span>
+                        <span class="result-value" id="resultMeshHeight">-</span>
+                    </div>
+                    <div class="result-item highlight">
+                        <span class="result-label">Rollos Necesarios:</span>
+                        <span class="result-value" id="resultMeshRolls">-</span>
+                    </div>
+                    <small class="result-note">Rollos de 10 metros de largo</small>
+                </div>
+
+                <!-- Accessories -->
+                <div class="result-section">
+                    <h4 class="result-section-title">
+                        <i class="fas fa-tools"></i>
+                        Accesorios Estimados
+                    </h4>
+                    <div class="result-item">
+                        <span class="result-label">Grampas:</span>
+                        <span class="result-value" id="resultStaples">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Tensores:</span>
+                        <span class="result-value" id="resultTensioners">-</span>
+                    </div>
+                </div>
+
+                <!-- Special Notes -->
+                <div id="specialNotes" class="result-notes" style="display: none;">
+                    <div class="note-box">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="specialNotesText"></span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="results-actions">
+                    <button type="button" id="generateQuoteBtn" class="btn-primary btn-block">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        Generar Cotización
+                    </button>
+                    <button type="button" id="resetCalculatorBtn" class="btn-secondary btn-block">
+                        <i class="fas fa-redo"></i>
+                        Nueva Consulta
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Card -->
+        <div class="info-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="info-icon">
+                <i class="fas fa-lightbulb"></i>
+            </div>
+            <h4>¿Necesitas Ayuda?</h4>
+            <p>Nuestro equipo puede asesorarte sobre el mejor tipo de material para tu proyecto.</p>
+            <a href="#contacto" class="info-link">
+                Contactar Asesor <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    </div>
+    </div>
+    </section>
+
+    <!-- Comparator Section -->
+    <section id="comparador" class="comparator-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-subtitle">Compara y Decide</span>
+                <h2 class="section-title">Comparador de <span class="text-gradient">Soluciones</span></h2>
+                <p class="section-description">Encuentra la mejor opción según tus necesidades y presupuesto
+                </p>
+            </div>
+
+            <div class="comparator-controls" data-aos="fade-up">
+                <div class="context-selector">
+                    <h3>¿Cuál es tu necesidad principal?</h3>
+                    <div class="context-buttons">
+                        <button class="context-btn" data-context="high-demand">
+                            <i class="fas fa-industry"></i>
+                            <span>Alta Exigencia</span>
+                            <small>Uso intensivo, máxima durabilidad</small>
+                        </button>
+                        <button class="context-btn" data-context="budget">
+                            <i class="fas fa-piggy-bank"></i>
+                            <span>Presupuesto Económico</span>
+                            <small>Mejor relación precio-calidad</small>
+                        </button>
+                        <button class="context-btn" data-context="balanced">
+                            <i class="fas fa-balance-scale"></i>
+                            <span>Equilibrado</span>
+                            <small>Balance entre precio y durabilidad</small>
+                        </button>
+                        <button class="context-btn" data-context="security">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Seguridad</span>
+                            <small>Máxima protección perimetral</small>
+                        </button>
+                    </div>
+                    <div class="context-recommendation"></div>
+                </div>
+
+                <div class="product-selection">
+                    <h3>Selecciona productos para comparar (máximo 3)</h3>
+                    <div class="selection-grid">
+                        <div class="product-checkbox">
+                            <input type="checkbox" id="check-hormigon" value="hormigon">
+                            <label for="check-hormigon">
+                                <i class="fas fa-cube"></i> Postes de Hormigón
+                            </label>
+                        </div>
+                        <div class="product-checkbox">
+                            <input type="checkbox" id="check-quebracho" value="quebracho">
+                            <label for="check-quebracho">
+                                <i class="fas fa-tree"></i> Postes de Quebracho
+                            </label>
+                        </div>
+                        <div class="product-checkbox">
+                            <input type="checkbox" id="check-eucalipto" value="eucalipto">
+                            <label for="check-eucalipto">
+                                <i class="fas fa-leaf"></i> Postes de Eucalipto
+                            </label>
+                        </div>
+                        <div class="product-checkbox">
+                            <input type="checkbox" id="check-olimpo" value="olimpo">
+                            <label for="check-olimpo">
+                                <i class="fas fa-shield-alt"></i> Postes Olimpo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="selection-error"></div>
+                </div>
+
+                <div class="priority-sliders">
+                    <h3>Ajusta tus prioridades</h3>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span><i class="fas fa-dollar-sign"></i> Precio</span>
+                            <span class="slider-value">5</span>
+                        </div>
+                        <input type="range" class="slider-input" data-priority="price" min="0" max="10" value="5">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span><i class="fas fa-clock"></i> Durabilidad</span>
+                            <span class="slider-value">5</span>
+                        </div>
+                        <input type="range" class="slider-input" data-priority="durability" min="0" max="10" value="5">
+                    </div>
+                    <div class="slider-group">
+                        <div class="slider-label">
+                            <span><i class="fas fa-palette"></i> Estética</span>
+                            <span class="slider-value">5</span>
+                        </div>
+                        <input type="range" class="slider-input" data-priority="aesthetics" min="0" max="10" value="5">
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-table-container" data-aos="fade-up" data-aos-delay="200">
+                <div class="empty-state">
+                    <i class="fas fa-clipboard-list"></i>
+                    <h3>Selecciona productos para comparar</h3>
+                    <p>Elige hasta 3 productos para ver una comparación detallada</p>
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="method-content">
+                    <h4>WhatsApp</h4>
+                    <p>+54 9 11 7141-6157</p>
+                    <a href="https://wa.me/5491171416157?text=Hola!%20Me%20interesa%20consultar" target="_blank"
+                        class="method-link">
+                        Enviar mensaje <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-method">
+                <div class="method-icon phone-bg">
+                    <i class="fas fa-phone-alt"></i>
+                </div>
+                <div class="method-content">
+                    <h4>Teléfono</h4>
+                    <p>+54 9 11 7141-6157</p>
+                    <a href="tel:+5491171416157" class="method-link">
+                        Llamar ahora <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-method">
+                <div class="method-icon email-bg">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="method-content">
+                    <h4>Email</h4>
+                    <p>materialesencontruccion@gmail.com</p>
+                    <a href="mailto:materialesencontruccion@gmail.com" class="method-link">
+                        Enviar email <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="contact-method">
+                <div class="method-icon location-bg">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <div class="method-content">
+                    <h4>Ubicación</h4>
+                    <p>Mar del Plata, Buenos Aires</p>
+                    <p class="location-detail">Argentina</p>
+                </div>
+            </div>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=61584020816125" target="_blank"
+                    class="social-link facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/materialesencontruccion/" target="_blank"
+                    class="social-link instagram" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="business-hours">
+            <h4><i class="fas fa-clock"></i> Horarios de Atención</h4>
+            <div class="hours-list">
+                <div class="hour-item">
+                    <span>Lunes a Viernes:</span>
+                    <span>8:00 - 18:00</span>
+                </div>
+                <div class="hour-item">
+                    <span>Sábados:</span>
+                    <span>8:00 - 13:00</span>
+                </div>
+                <div class="hour-item">
+                    <span>Domingos:</span>
+                    <span>Cerrado</span>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <div class="contact-form-wrapper" data-aos="fade-left">
+            <form id="contactForm" class="contact-form">
+                <h3>Solicitar Cotización</h3>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo *</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="telefono">Teléfono *</label>
+                        <input type="tel" id="telefono" name="telefono" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="form-group full-width">
+                        <label for="mensaje">Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" rows="4"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary btn-block">Enviar Consulta</button>
+            </form>
+        </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <div class="logo-icon">◇</div>
+                        <span class="logo-text">
+                            <span class="logo-top">Rombos</span>
+                            <span class="logo-bottom">del Mar</span>
+                        </span>
+                    </div>
+                    <p>Soluciones integrales en alambrados y cercos perimetrales. Calidad y confianza para tu seguridad.
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="#productos">Productos</a></li>
+                        <li><a href="#servicios">Servicios</a></li>
+                        <li><a href="#calculadora">Calculadora</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contacto</h4>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Mar del Plata, Buenos Aires</li>
+                        <li><i class="fas fa-phone"></i> +54 9 11 7141-6157</li>
+                        <li><i class="fas fa-envelope"></i> info@rombosdelmar.com.ar</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Rombos del Mar. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeProductModal()" aria-label="Cerrar">&times;</button>
+            <div class="product-detail">
+                <div class="product-image">
+                    <img id="modalProductImage" src="" alt="" style="display: none;">
+                    <div id="modalProductImagePlaceholder" class="product-image-placeholder">
+                        <i class="fas fa-box-open"></i>
+                        <span>Imagen no disponible</span>
+                    </div>
+                    <span id="modalProductBadge" class="product-badge-modal" style="display: none;"></span>
+                </div>
+                <div class="product-info">
+                    <span id="modalProductCategory" class="product-category-tag"></span>
+                    <h3 id="modalProductName" class="product-name"></h3>
+                    <div id="modalProductPrice" class="product-price"></div>
+                    <div id="modalProductPriceUnit" class="product-price-unit"></div>
+                    <div id="modalProductAvailability" class="product-availability">
+                        <i class="fas fa-circle"></i>
+                        <span></span>
+                    </div>
+                    <p id="modalProductDescription" class="product-description-text"></p>
+
+                    <div id="modalProductSpecs" class="product-specs">
+                        <h4><i class="fas fa-cog"></i> Especificaciones Técnicas</h4>
+                        <div id="modalSpecsGrid" class="specs-grid"></div>
+                    </div>
+
+                    <div id="modalProductResistance" class="product-resistance" style="display: none;">
+                        <h4><i class="fas fa-shield-alt"></i> Resistencia</h4>
+                        <div id="modalResistanceBars" class="resistance-bars"></div>
+                    </div>
+
+                    <div id="modalProductApplications" class="product-applications" style="display: none;">
+                        <h4><i class="fas fa-tasks"></i> Aplicaciones Recomendadas</h4>
+                        <div id="modalApplicationsList" class="applications-list"></div>
+                    </div>
+
+                    <div class="product-actions">
+                        <div class="quantity-selector">
+                            <label for="modalProductQuantity">Cantidad:</label>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="decreaseModalQuantity()"
+                                    aria-label="Disminuir cantidad">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="number" id="modalProductQuantity" value="1" min="1" max="9999"
+                                    class="quantity-input">
+                                <button class="quantity-btn" onclick="increaseModalQuantity()"
+                                    aria-label="Aumentar cantidad">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <button class="add-to-quote" onclick="addProductToQuoteFromModal()">
+                            <i class="fas fa-shopping-cart"></i>
+                            Agregar a Cotización
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
+    <script src="js/script.js"></script>
+    <script src="js/products-loader.js"></script>
+    <script src="js/catalog.js"></script>
+    <script src="js/quotation.js"></script>
+    <script src="js/orders.js"></script>
+    <script src="js/progress-stepper.js"></script>
+    <script src="js/accessibility.js"></script>
+</body>
+
+</html>
