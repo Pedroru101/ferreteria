@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ferretería especializada en metales, hierros y estructuras en Mar del Plata. Calculadora de materiales, cotizaciones online, comparador de soluciones. Fabricación a medida de tejidos, postes y colocación profesional.">
-    <meta name="keywords" content="ferretería, metales, hierros, Mar del Plata, tejidos, postes, fabricación a medida, estructuras metálicas, herrería, chapas, caños, bulonería, calculadora de materiales, cotizaciones online, alambrados, cercas, postes de hormigón, postes de quebracho, tejido romboidal">
+    <meta name="description"
+        content="Ferretería especializada en metales, hierros y estructuras en Mar del Plata. Calculadora de materiales, cotizaciones online, comparador de soluciones. Fabricación a medida de tejidos, postes y colocación profesional.">
+    <meta name="keywords"
+        content="ferretería, metales, hierros, Mar del Plata, tejidos, postes, fabricación a medida, estructuras metálicas, herrería, chapas, caños, bulonería, calculadora de materiales, cotizaciones online, alambrados, cercas, postes de hormigón, postes de quebracho, tejido romboidal">
     <meta name="author" content="Ferretería Metales Mar del Plata">
     <meta name="robots" content="index, follow">
     <meta name="language" content="Spanish">
@@ -15,7 +18,8 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.metalesmdp.com.ar/">
     <meta property="og:title" content="Metales & Hierros Mar del Plata - Ferretería Especializada | Calculadora Online">
-    <meta property="og:description" content="Calculadora de materiales, cotizaciones online y comparador de soluciones. Fabricación a medida de tejidos, postes y estructuras metálicas. +20 años de experiencia.">
+    <meta property="og:description"
+        content="Calculadora de materiales, cotizaciones online y comparador de soluciones. Fabricación a medida de tejidos, postes y estructuras metálicas. +20 años de experiencia.">
     <meta property="og:image" content="https://www.metalesmdp.com.ar/og-image.jpg">
     <meta property="og:locale" content="es_AR">
     <meta property="og:site_name" content="Metales & Hierros Mar del Plata">
@@ -29,7 +33,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://www.metalesmdp.com.ar/">
     <meta name="twitter:title" content="Metales & Hierros Mar del Plata - Calculadora Online">
-    <meta name="twitter:description" content="Calcula materiales, genera cotizaciones y compara soluciones de alambrados. Fabricación a medida con +20 años de experiencia.">
+    <meta name="twitter:description"
+        content="Calcula materiales, genera cotizaciones y compara soluciones de alambrados. Fabricación a medida con +20 años de experiencia.">
     <meta name="twitter:image" content="https://www.metalesmdp.com.ar/twitter-image.jpg">
     <meta name="twitter:creator" content="@metalesmdp">
 
@@ -45,7 +50,9 @@
     <meta name="msapplication-config" content="browserconfig.xml">
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" as="style">
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        as="style">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
 
     <!-- DNS Prefetch for external resources -->
@@ -57,12 +64,15 @@
     <title>Metales & Hierros Mar del Plata | Ferretería Especializada | Calculadora de Materiales</title>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <link rel="icon" type="image/png"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -92,30 +102,36 @@
             document.head.appendChild(gaScript);
 
             window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
+            function gtag() { dataLayer.push(arguments); }
             gtag('js', new Date());
             gtag('config', CONFIG.analytics.googleAnalyticsId);
         }
 
         // Cargar Google Tag Manager si está configurado
         if (typeof CONFIG !== 'undefined' && CONFIG.analytics && CONFIG.analytics.googleTagManagerId) {
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer',CONFIG.analytics.googleTagManagerId);
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', CONFIG.analytics.googleTagManagerId);
         }
 
         // Cargar Facebook Pixel si está configurado
         if (typeof CONFIG !== 'undefined' && CONFIG.analytics && CONFIG.analytics.facebookPixelId) {
-            !function(f,b,e,v,n,t,s)
-            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-            n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-            if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-            n.queue=[];t=b.createElement(e);t.async=!0;
-            t.src=v;s=b.getElementsByTagName(e)[0];
-            s.parentNode.insertBefore(t,s)}(window, document,'script',
-            'https://connect.facebook.net/en_US/fbevents.js');
+            !function (f, b, e, v, n, t, s) {
+                if (f.fbq) return; n = f.fbq = function () {
+                    n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+                };
+                if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
+                n.queue = []; t = b.createElement(e); t.async = !0;
+                t.src = v; s = b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t, s)
+            }(window, document, 'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
             fbq('init', CONFIG.analytics.facebookPixelId);
             fbq('track', 'PageView');
         }
@@ -408,6 +424,7 @@
     }
     </script>
 </head>
+
 <body>
     <!-- Preloader -->
     <div id="preloader">
@@ -420,9 +437,7 @@
 
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/5491171416157?text=Hola!%20Me%20interesa%20consultar%20sobre%20sus%20productos"
-       class="whatsapp-float"
-       target="_blank"
-       aria-label="Contactar por WhatsApp">
+        class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
         <i class="fab fa-whatsapp"></i>
         <span class="whatsapp-text">¡Consultanos!</span>
     </a>
@@ -439,7 +454,8 @@
                 <div class="logo">
                     <div class="logo-icon">◇</div>
                     <span class="logo-text">
-                        <span class="logo-main">Rombos del Mar</span>
+                        <span class="logo-top">Rombos</span>
+                        <span class="logo-bottom">del Mar</span>
                     </span>
                 </div>
 
@@ -535,7 +551,8 @@
             <div class="section-header" data-aos="fade-up">
                 <span class="section-subtitle">Nuestros Productos</span>
                 <h2 class="section-title">Amplio Stock de <span class="text-gradient">Metales y Hierros</span></h2>
-                <p class="section-description">Ofrecemos la más amplia variedad de productos metálicos para construcción, industria y hogar</p>
+                <p class="section-description">Ofrecemos la más amplia variedad de productos metálicos para
+                    construcción, industria y hogar</p>
             </div>
 
             <div class="products-grid">
@@ -544,7 +561,8 @@
                         <i class="fas fa-grip-lines"></i>
                     </div>
                     <h3 class="product-title">Hierros y Perfiles</h3>
-                    <p class="product-description">Hierros redondos, cuadrados, perfiles L, U, C, vigas IPN. Todas las medidas y largos.</p>
+                    <p class="product-description">Hierros redondos, cuadrados, perfiles L, U, C, vigas IPN. Todas las
+                        medidas y largos.</p>
                     <ul class="product-features">
                         <li><i class="fas fa-check"></i> Hierro redondo y cuadrado</li>
                         <li><i class="fas fa-check"></i> Perfiles estructurales</li>
@@ -560,7 +578,8 @@
                         <i class="fas fa-th"></i>
                     </div>
                     <h3 class="product-title">Tejidos y Alambrados</h3>
-                    <p class="product-description">Tejido romboidal, hexagonal, alambre de púas, malla sima. Fabricación a medida.</p>
+                    <p class="product-description">Tejido romboidal, hexagonal, alambre de púas, malla sima. Fabricación
+                        a medida.</p>
                     <ul class="product-features">
                         <li><i class="fas fa-check"></i> Tejido romboidal</li>
                         <li><i class="fas fa-check"></i> Malla hexagonal</li>
@@ -575,7 +594,8 @@
                         <i class="fas fa-square"></i>
                     </div>
                     <h3 class="product-title">Chapas y Planchuelas</h3>
-                    <p class="product-description">Chapas lisas, lagrimadas, perforadas. Planchuelas de distintos espesores y anchos.</p>
+                    <p class="product-description">Chapas lisas, lagrimadas, perforadas. Planchuelas de distintos
+                        espesores y anchos.</p>
                     <ul class="product-features">
                         <li><i class="fas fa-check"></i> Chapas negras y galvanizadas</li>
                         <li><i class="fas fa-check"></i> Chapas lagrimadas</li>
@@ -590,7 +610,8 @@
                         <i class="fas fa-cube"></i>
                     </div>
                     <h3 class="product-title">Caños y Tubos</h3>
-                    <p class="product-description">Caños estructurales, tubos redondos, cuadrados y rectangulares. Stock permanente.</p>
+                    <p class="product-description">Caños estructurales, tubos redondos, cuadrados y rectangulares. Stock
+                        permanente.</p>
                     <ul class="product-features">
                         <li><i class="fas fa-check"></i> Caños estructurales</li>
                         <li><i class="fas fa-check"></i> Tubos de precisión</li>
@@ -605,7 +626,8 @@
                         <i class="fas fa-bolt"></i>
                     </div>
                     <h3 class="product-title">Bulonería y Fijaciones</h3>
-                    <p class="product-description">Bulones, tuercas, arandelas, tornillos. Gran variedad de medidas y calidades.</p>
+                    <p class="product-description">Bulones, tuercas, arandelas, tornillos. Gran variedad de medidas y
+                        calidades.</p>
                     <ul class="product-features">
                         <li><i class="fas fa-check"></i> Bulonería industrial</li>
                         <li><i class="fas fa-check"></i> Tornillos autoperforantes</li>
@@ -620,7 +642,8 @@
                         <i class="fas fa-paint-roller"></i>
                     </div>
                     <h3 class="product-title">Pintura y Tratamientos</h3>
-                    <p class="product-description">Pinturas antióxido, esmaltes, galvanizado en frío. Protección duradera.</p>
+                    <p class="product-description">Pinturas antióxido, esmaltes, galvanizado en frío. Protección
+                        duradera.</p>
                     <ul class="product-features">
                         <li><i class="fas fa-check"></i> Pinturas antióxido</li>
                         <li><i class="fas fa-check"></i> Esmaltes sintéticos</li>
@@ -649,7 +672,8 @@
                         <i class="fas fa-ruler-combined"></i>
                     </div>
                     <h3>Asesoramiento Técnico</h3>
-                    <p>Te ayudamos a elegir los materiales adecuados para tu proyecto. Cálculo de estructuras y presupuesto sin cargo.</p>
+                    <p>Te ayudamos a elegir los materiales adecuados para tu proyecto. Cálculo de estructuras y
+                        presupuesto sin cargo.</p>
                 </div>
 
                 <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
@@ -688,9 +712,11 @@
             <div class="fabrication-wrapper">
                 <div class="fabrication-content" data-aos="fade-right">
                     <span class="section-subtitle">Fabricación Especializada</span>
-                    <h2 class="section-title"><span style="color: white;">Fabricación a Medida de</span> <span class="text-gradient">Tejidos y Postes</span></h2>
+                    <h2 class="section-title"><span style="color: white;">Fabricación a Medida de</span> <span
+                            class="text-gradient">Tejidos y Postes</span></h2>
                     <p class="fabrication-description">
-                        Fabricamos tejidos y postes según tus necesidades específicas. Utilizamos materiales de primera calidad
+                        Fabricamos tejidos y postes según tus necesidades específicas. Utilizamos materiales de primera
+                        calidad
                         y contamos con maquinaria de última generación para garantizar la mejor terminación.
                     </p>
 
@@ -849,14 +875,16 @@
                                         <i class="fas fa-arrows-alt-h"></i>
                                         Largo (metros)
                                     </label>
-                                    <input type="number" id="terrainLength" class="form-input" placeholder="Ej: 50" min="1" step="0.1">
+                                    <input type="number" id="terrainLength" class="form-input" placeholder="Ej: 50"
+                                        min="1" step="0.1">
                                 </div>
                                 <div class="form-group">
                                     <label for="terrainWidth" class="form-label">
                                         <i class="fas fa-arrows-alt-v"></i>
                                         Ancho (metros)
                                     </label>
-                                    <input type="number" id="terrainWidth" class="form-input" placeholder="Ej: 30" min="1" step="0.1">
+                                    <input type="number" id="terrainWidth" class="form-input" placeholder="Ej: 30"
+                                        min="1" step="0.1">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -864,8 +892,10 @@
                                     <i class="fas fa-border-all"></i>
                                     O ingresa el perímetro total
                                 </label>
-                                <input type="number" id="totalPerimeter" class="form-input" placeholder="Ej: 160" min="1" step="0.1">
-                                <small class="form-hint">Si conoces el perímetro total, ingrésalo aquí directamente</small>
+                                <input type="number" id="totalPerimeter" class="form-input" placeholder="Ej: 160"
+                                    min="1" step="0.1">
+                                <small class="form-hint">Si conoces el perímetro total, ingrésalo aquí
+                                    directamente</small>
                             </div>
                         </div>
 
@@ -875,7 +905,8 @@
                                 <div class="segment-item">
                                     <label class="form-label">Segmento 1 (metros)</label>
                                     <div class="segment-input-group">
-                                        <input type="number" class="form-input segment-length" placeholder="Longitud" min="1" step="0.1">
+                                        <input type="number" class="form-input segment-length" placeholder="Longitud"
+                                            min="1" step="0.1">
                                         <button type="button" class="btn-icon btn-remove-segment" disabled>
                                             <i class="fas fa-times"></i>
                                         </button>
@@ -1212,13 +1243,8 @@
                             <i class="fas fa-search"></i>
                             ID de Cotización
                         </label>
-                        <input 
-                            type="text" 
-                            id="quotationIdInput" 
-                            class="form-input" 
-                            placeholder="Ej: COT-1234567890-123"
-                            aria-label="ID de cotización"
-                        >
+                        <input type="text" id="quotationIdInput" class="form-input" placeholder="Ej: COT-1234567890-123"
+                            aria-label="ID de cotización">
                     </div>
                     <button class="btn-primary" id="searchQuotationBtn" onclick="searchQuotation()">
                         <i class="fas fa-search"></i>
@@ -1314,13 +1340,8 @@
                                 Número de Orden
                             </label>
                             <div class="input-with-button">
-                                <input 
-                                    type="text" 
-                                    id="orderIdInput" 
-                                    class="form-input" 
-                                    placeholder="Ej: ORD-20240115-0001"
-                                    aria-label="Número de orden"
-                                >
+                                <input type="text" id="orderIdInput" class="form-input"
+                                    placeholder="Ej: ORD-20240115-0001" aria-label="Número de orden">
                                 <button class="btn-track" onclick="trackOrder()" aria-label="Consultar pedido">
                                     <i class="fas fa-search"></i>
                                     Consultar
@@ -1345,9 +1366,8 @@
                     <h3>Pedido no encontrado</h3>
                     <p>No se encontró ningún pedido con ese número de orden.</p>
                     <p class="not-found-hint">Verifica que el número sea correcto o contactanos por WhatsApp.</p>
-                    <a href="https://wa.me/5491171416157?text=Hola!%20Necesito%20ayuda%20con%20mi%20pedido" 
-                       target="_blank" 
-                       class="btn-secondary">
+                    <a href="https://wa.me/5491171416157?text=Hola!%20Necesito%20ayuda%20con%20mi%20pedido"
+                        target="_blank" class="btn-secondary">
                         <i class="fab fa-whatsapp"></i>
                         Contactar por WhatsApp
                     </a>
@@ -1377,7 +1397,8 @@
                             <div class="method-content">
                                 <h4>WhatsApp</h4>
                                 <p>+54 9 11 7141-6157</p>
-                                <a href="https://wa.me/5491171416157?text=Hola!%20Me%20interesa%20consultar" target="_blank" class="method-link">
+                                <a href="https://wa.me/5491171416157?text=Hola!%20Me%20interesa%20consultar"
+                                    target="_blank" class="method-link">
                                     Enviar mensaje <i class="fas fa-arrow-right"></i>
                                 </a>
                             </div>
@@ -1421,10 +1442,12 @@
                         </div>
 
                         <div class="social-links">
-                            <a href="https://www.facebook.com/profile.php?id=61584020816125" target="_blank" class="social-link facebook" aria-label="Facebook">
+                            <a href="https://www.facebook.com/profile.php?id=61584020816125" target="_blank"
+                                class="social-link facebook" aria-label="Facebook">
                                 <i class="fab fa-facebook-f"></i>
                             </a>
-                            <a href="https://www.instagram.com/materialesencontruccion/" target="_blank" class="social-link instagram" aria-label="Instagram">
+                            <a href="https://www.instagram.com/materialesencontruccion/" target="_blank"
+                                class="social-link instagram" aria-label="Instagram">
                                 <i class="fab fa-instagram"></i>
                             </a>
                         </div>
@@ -1516,8 +1539,10 @@
                         stock permanente y atención personalizada.
                     </p>
                     <div class="footer-badges">
-                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40'><rect fill='%23333' width='100' height='40' rx='5'/><text x='50' y='25' text-anchor='middle' fill='%23fff' font-size='12' font-family='Arial'>CALIDAD</text></svg>" alt="Calidad">
-                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40'><rect fill='%23333' width='100' height='40' rx='5'/><text x='50' y='25' text-anchor='middle' fill='%23fff' font-size='12' font-family='Arial'>GARANTÍA</text></svg>" alt="Garantía">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40'><rect fill='%23333' width='100' height='40' rx='5'/><text x='50' y='25' text-anchor='middle' fill='%23fff' font-size='12' font-family='Arial'>CALIDAD</text></svg>"
+                            alt="Calidad">
+                        <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 40'><rect fill='%23333' width='100' height='40' rx='5'/><text x='50' y='25' text-anchor='middle' fill='%23fff' font-size='12' font-family='Arial'>GARANTÍA</text></svg>"
+                            alt="Garantía">
                     </div>
                 </div>
 
@@ -1642,7 +1667,8 @@
 
                 <div class="quotation-note">
                     <i class="fas fa-info-circle"></i>
-                    <p>Esta cotización es válida por <strong>30 días</strong>. Los precios están sujetos a cambios sin previo aviso.</p>
+                    <p>Esta cotización es válida por <strong>30 días</strong>. Los precios están sujetos a cambios sin
+                        previo aviso.</p>
                 </div>
             </div>
 
@@ -1705,10 +1731,10 @@
     <script src="js/catalog.js"></script>
     <script src="js/quotation.js"></script>
     <script src="js/orders.js"></script>
-    
+
     <!-- Lazy Loader - Carga módulos bajo demanda -->
     <script src="js/lazy-loader.js"></script>
-    
+
     <!-- Script principal -->
     <script src="script.js"></script>
 
@@ -1727,13 +1753,13 @@
 
     <!-- Script de inicialización del catálogo -->
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
+        document.addEventListener('DOMContentLoaded', async function () {
             try {
                 await catalogManager.loadProducts();
                 console.log('Productos cargados:', catalogManager.products.length);
-                
+
                 initProductCardListeners();
-                
+
                 catalogManager.updateCartUI();
             } catch (error) {
                 console.error('Error al inicializar catálogo:', error);
@@ -1742,14 +1768,14 @@
 
         function initProductCardListeners() {
             const productCards = document.querySelectorAll('.product-card');
-            
+
             productCards.forEach(card => {
                 const productTitle = card.querySelector('.product-title');
                 if (!productTitle) return;
-                
+
                 const title = productTitle.textContent.trim();
                 let productId = null;
-                
+
                 if (title.includes('Tejidos') || title.includes('Alambrados')) {
                     productId = 'tejido_romboidal_1_5';
                 } else if (title.includes('Hierros') || title.includes('Perfiles')) {
@@ -1763,29 +1789,29 @@
                 } else if (title.includes('Pintura')) {
                     productId = 'alambre_puas_calibre_14';
                 }
-                
+
                 if (productId) {
                     card.style.cursor = 'pointer';
                     card.dataset.productId = productId;
-                    
-                    card.addEventListener('click', function(e) {
+
+                    card.addEventListener('click', function (e) {
                         if (e.target.tagName === 'A' || e.target.closest('a')) {
                             return;
                         }
-                        
+
                         e.preventDefault();
                         const id = this.dataset.productId;
                         if (id) {
                             openProductModal(id);
                         }
                     });
-                    
+
                     const productLink = card.querySelector('.product-link');
                     if (productLink) {
                         productLink.textContent = 'Ver Detalles ';
                         productLink.innerHTML += '<i class="fas fa-arrow-right"></i>';
                         productLink.href = '#';
-                        productLink.addEventListener('click', function(e) {
+                        productLink.addEventListener('click', function (e) {
                             e.preventDefault();
                             e.stopPropagation();
                             const id = card.dataset.productId;
@@ -1799,72 +1825,76 @@
         }
     </script>
 </body>
+
 </html>
 
-    <!-- Progress Stepper Script -->
-    <script src="js/progress-stepper.js"></script>
+<!-- Progress Stepper Script -->
+<script src="js/progress-stepper.js"></script>
 
-    <!-- Accessibility Module -->
-    <script src="js/accessibility.js"></script>
+<!-- Accessibility Module -->
+<script src="js/accessibility.js"></script>
 
-    <!-- Modal de Producto Detallado -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closeProductModal()" aria-label="Cerrar">&times;</button>
-            <div class="product-detail">
-                <div class="product-image">
-                    <img id="modalProductImage" src="" alt="" style="display: none;">
-                    <div id="modalProductImagePlaceholder" class="product-image-placeholder">
-                        <i class="fas fa-box-open"></i>
-                        <span>Imagen no disponible</span>
-                    </div>
-                    <span id="modalProductBadge" class="product-badge-modal" style="display: none;"></span>
+<!-- Modal de Producto Detallado -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeProductModal()" aria-label="Cerrar">&times;</button>
+        <div class="product-detail">
+            <div class="product-image">
+                <img id="modalProductImage" src="" alt="" style="display: none;">
+                <div id="modalProductImagePlaceholder" class="product-image-placeholder">
+                    <i class="fas fa-box-open"></i>
+                    <span>Imagen no disponible</span>
                 </div>
-                <div class="product-info">
-                    <span id="modalProductCategory" class="product-category-tag"></span>
-                    <h3 id="modalProductName" class="product-name"></h3>
-                    <div id="modalProductPrice" class="product-price"></div>
-                    <div id="modalProductPriceUnit" class="product-price-unit"></div>
-                    <div id="modalProductAvailability" class="product-availability">
-                        <i class="fas fa-circle"></i>
-                        <span></span>
-                    </div>
-                    <p id="modalProductDescription" class="product-description-text"></p>
-                    
-                    <div id="modalProductSpecs" class="product-specs">
-                        <h4><i class="fas fa-cog"></i> Especificaciones Técnicas</h4>
-                        <div id="modalSpecsGrid" class="specs-grid"></div>
-                    </div>
-                    
-                    <div id="modalProductResistance" class="product-resistance" style="display: none;">
-                        <h4><i class="fas fa-shield-alt"></i> Resistencia</h4>
-                        <div id="modalResistanceBars" class="resistance-bars"></div>
-                    </div>
-                    
-                    <div id="modalProductApplications" class="product-applications" style="display: none;">
-                        <h4><i class="fas fa-tasks"></i> Aplicaciones Recomendadas</h4>
-                        <div id="modalApplicationsList" class="applications-list"></div>
-                    </div>
-                    
-                    <div class="product-actions">
-                        <div class="quantity-selector">
-                            <label for="modalProductQuantity">Cantidad:</label>
-                            <div class="quantity-controls">
-                                <button class="quantity-btn" onclick="decreaseModalQuantity()" aria-label="Disminuir cantidad">
-                                    <i class="fas fa-minus"></i>
-                                </button>
-                                <input type="number" id="modalProductQuantity" value="1" min="1" max="9999" class="quantity-input">
-                                <button class="quantity-btn" onclick="increaseModalQuantity()" aria-label="Aumentar cantidad">
-                                    <i class="fas fa-plus"></i>
-                                </button>
-                            </div>
+                <span id="modalProductBadge" class="product-badge-modal" style="display: none;"></span>
+            </div>
+            <div class="product-info">
+                <span id="modalProductCategory" class="product-category-tag"></span>
+                <h3 id="modalProductName" class="product-name"></h3>
+                <div id="modalProductPrice" class="product-price"></div>
+                <div id="modalProductPriceUnit" class="product-price-unit"></div>
+                <div id="modalProductAvailability" class="product-availability">
+                    <i class="fas fa-circle"></i>
+                    <span></span>
+                </div>
+                <p id="modalProductDescription" class="product-description-text"></p>
+
+                <div id="modalProductSpecs" class="product-specs">
+                    <h4><i class="fas fa-cog"></i> Especificaciones Técnicas</h4>
+                    <div id="modalSpecsGrid" class="specs-grid"></div>
+                </div>
+
+                <div id="modalProductResistance" class="product-resistance" style="display: none;">
+                    <h4><i class="fas fa-shield-alt"></i> Resistencia</h4>
+                    <div id="modalResistanceBars" class="resistance-bars"></div>
+                </div>
+
+                <div id="modalProductApplications" class="product-applications" style="display: none;">
+                    <h4><i class="fas fa-tasks"></i> Aplicaciones Recomendadas</h4>
+                    <div id="modalApplicationsList" class="applications-list"></div>
+                </div>
+
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <label for="modalProductQuantity">Cantidad:</label>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" onclick="decreaseModalQuantity()"
+                                aria-label="Disminuir cantidad">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" id="modalProductQuantity" value="1" min="1" max="9999"
+                                class="quantity-input">
+                            <button class="quantity-btn" onclick="increaseModalQuantity()"
+                                aria-label="Aumentar cantidad">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
-                        <button class="add-to-quote" onclick="addProductToQuoteFromModal()">
-                            <i class="fas fa-shopping-cart"></i>
-                            Agregar a Cotización
-                        </button>
                     </div>
+                    <button class="add-to-quote" onclick="addProductToQuoteFromModal()">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar a Cotización
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+</div>
