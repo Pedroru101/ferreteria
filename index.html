@@ -5,1252 +5,288 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description"
-        content="Ferretería especializada en metales, hierros y estructuras en Mar del Plata. Calculadora de materiales, cotizaciones online, comparador de soluciones. Fabricación a medida de tejidos, postes y colocación profesional.">
-    <meta name="keywords"
-        content="ferretería, metales, hierros, Mar del Plata, tejidos, postes, fabricación a medida, estructuras metálicas, herrería, chapas, caños, bulonería, calculadora de materiales, cotizaciones online, alambrados, cercas, postes de hormigón, postes de quebracho, tejido romboidal">
-    <meta name="author" content="Ferretería Metales Mar del Plata">
-    <meta name="robots" content="index, follow">
-    <meta name="language" content="Spanish">
-    <meta name="revisit-after" content="7 days">
-    <meta name="theme-color" content="#ff6b35">
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.metalesmdp.com.ar/">
-    <meta property="og:title" content="Metales & Hierros Mar del Plata - Ferretería Especializada | Calculadora Online">
-    <meta property="og:description"
-        content="Calculadora de materiales, cotizaciones online y comparador de soluciones. Fabricación a medida de tejidos, postes y estructuras metálicas. +20 años de experiencia.">
-    <meta property="og:image" content="https://www.metalesmdp.com.ar/og-image.jpg">
-    <meta property="og:locale" content="es_AR">
-    <meta property="og:site_name" content="Metales & Hierros Mar del Plata">
-    <meta property="og:type" content="business.business">
-    <meta property="business:contact_data:street_address" content="Av. Luro 1234">
-    <meta property="business:contact_data:locality" content="Mar del Plata">
-    <meta property="business:contact_data:postal_code" content="7600">
-    <meta property="business:contact_data:country_name" content="Argentina">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://www.metalesmdp.com.ar/">
-    <meta name="twitter:title" content="Metales & Hierros Mar del Plata - Calculadora Online">
-    <meta name="twitter:description"
-        content="Calcula materiales, genera cotizaciones y compara soluciones de alambrados. Fabricación a medida con +20 años de experiencia.">
-    <meta name="twitter:image" content="https://www.metalesmdp.com.ar/twitter-image.jpg">
-    <meta name="twitter:creator" content="@metalesmdp">
-
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://www.metalesmdp.com.ar/">
-
-    <!-- Additional SEO Meta Tags -->
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Metales MDP">
-    <meta name="msapplication-TileColor" content="#2d7a3e">
-    <meta name="msapplication-config" content="browserconfig.xml">
-
-    <!-- Preload critical resources -->
-    <link rel="preload"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
-        as="style">
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-
-    <!-- DNS Prefetch for external resources -->
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
-    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-    <link rel="dns-prefetch" href="https://connect.facebook.net">
-
-    <title>Metales & Hierros Mar del Plata | Ferretería Especializada | Calculadora de Materiales</title>
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700;800;900&display=swap"
-        rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- AOS Animation -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-
-    <!-- Custom CSS -->
+        content="ROMBOS del Mar - Fabricación, venta y colocación integral de alambrados, tejidos, postes y tranqueras">
+    <title>ROMBOS del Mar - Soluciones en Alambrados</title>
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/calculator.css">
-    <link rel="stylesheet" href="css/quotation.css">
-    <link rel="stylesheet" href="css/catalog.css">
-    <link rel="stylesheet" href="css/orders.css">
-    <link rel="stylesheet" href="css/comparator.css">
-    <link rel="stylesheet" href="css/progress-manager.css">
-    <link rel="stylesheet" href="css/progress-stepper.css">
-    <link rel="stylesheet" href="css/loaders.css">
-    <link rel="stylesheet" href="css/accessibility.css">
-
-    <!-- Google Analytics (se activa cuando se configura en config.js) -->
-    <script>
-        // Cargar Google Analytics si está configurado
-        if (typeof CONFIG !== 'undefined' && CONFIG.analytics && CONFIG.analytics.googleAnalyticsId) {
-            const gaScript = document.createElement('script');
-            gaScript.async = true;
-            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${CONFIG.analytics.googleAnalyticsId}`;
-            document.head.appendChild(gaScript);
-
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', CONFIG.analytics.googleAnalyticsId);
-        }
-
-        // Cargar Google Tag Manager si está configurado
-        if (typeof CONFIG !== 'undefined' && CONFIG.analytics && CONFIG.analytics.googleTagManagerId) {
-            (function (w, d, s, l, i) {
-                w[l] = w[l] || []; w[l].push({
-                    'gtm.start':
-                        new Date().getTime(), event: 'gtm.js'
-                }); var f = d.getElementsByTagName(s)[0],
-                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
-                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
-            })(window, document, 'script', 'dataLayer', CONFIG.analytics.googleTagManagerId);
-        }
-
-        // Cargar Facebook Pixel si está configurado
-        if (typeof CONFIG !== 'undefined' && CONFIG.analytics && CONFIG.analytics.facebookPixelId) {
-            !function (f, b, e, v, n, t, s) {
-                if (f.fbq) return; n = f.fbq = function () {
-                    n.callMethod ?
-                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                };
-                if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = '2.0';
-                n.queue = []; t = b.createElement(e); t.async = !0;
-                t.src = v; s = b.getElementsByTagName(e)[0];
-                s.parentNode.insertBefore(t, s)
-            }(window, document, 'script',
-                'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', CONFIG.analytics.facebookPixelId);
-            fbq('track', 'PageView');
-        }
-    </script>
-
-    <!-- Structured Data (JSON-LD) para SEO -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "HardwareStore",
-        "name": "Metales & Hierros Mar del Plata",
-        "image": "https://www.metalesmdp.com.ar/logo.png",
-        "logo": "https://www.metalesmdp.com.ar/logo.png",
-        "@id": "https://www.metalesmdp.com.ar",
-        "url": "https://www.metalesmdp.com.ar",
-        "telephone": "+54-9-11-7141-6157",
-        "email": "materialesencontruccion@gmail.com",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Av. Luro 1234",
-            "addressLocality": "Mar del Plata",
-            "addressRegion": "Buenos Aires",
-            "postalCode": "7600",
-            "addressCountry": "AR"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": -38.0055,
-            "longitude": -57.5426
-        },
-        "openingHoursSpecification": [
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                    "Monday",
-                    "Tuesday",
-                    "Wednesday",
-                    "Thursday",
-                    "Friday"
-                ],
-                "opens": "08:00",
-                "closes": "18:00"
-            },
-            {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": "Saturday",
-                "opens": "08:00",
-                "closes": "13:00"
-            }
-        ],
-        "sameAs": [
-            "https://www.facebook.com/profile.php?id=61584020816125",
-            "https://www.instagram.com/materialesencontruccion/"
-        ],
-        "priceRange": "$$",
-        "description": "Distribuidora líder en Mar del Plata. Hierros, chapas, caños, tubos y más. Asesoramiento técnico, corte a medida y entrega a domicilio.",
-        "areaServed": {
-            "@type": "City",
-            "name": "Mar del Plata",
-            "containedIn": {
-                "@type": "State",
-                "name": "Buenos Aires",
-                "containedIn": {
-                    "@type": "Country",
-                    "name": "Argentina"
-                }
-            }
-        },
-        "paymentAccepted": "Cash, Credit Card, Debit Card, Bank Transfer",
-        "currenciesAccepted": "ARS",
-        "foundingDate": "2010",
-        "slogan": "Metales & Hierros de Primera Calidad"
-    }
-    </script>
-
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "LocalBusiness",
-        "name": "Metales & Hierros Mar del Plata",
-        "description": "Fabricación a medida de tejidos, postes y estructuras metálicas. Venta masiva y colocación profesional.",
-        "url": "https://www.metalesmdp.com.ar",
-        "telephone": "+54-9-11-7141-6157",
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Av. Luro 1234",
-            "addressLocality": "Mar del Plata",
-            "postalCode": "7600",
-            "addressCountry": "AR"
-        },
-        "aggregateRating": {
-            "@type": "AggregateRating",
-            "ratingValue": "4.8",
-            "reviewCount": "127"
-        },
-        "hasOfferCatalog": {
-            "@type": "OfferCatalog",
-            "name": "Productos de Metales",
-            "itemListElement": [
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Product",
-                        "name": "Hierros y Perfiles"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Product",
-                        "name": "Tejidos y Alambrados"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Product",
-                        "name": "Chapas y Planchuelas"
-                    }
-                },
-                {
-                    "@type": "Offer",
-                    "itemOffered": {
-                        "@type": "Product",
-                        "name": "Caños y Tubos"
-                    }
-                }
-            ]
-        }
-    }
-    </script>
-
-    <!-- Structured Data para Calculadora de Materiales -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Calculadora de Materiales para Alambrados",
-        "description": "Herramienta interactiva para calcular materiales necesarios para proyectos de cercado. Calcula postes, alambre, tejido romboidal y accesorios según dimensiones del terreno.",
-        "url": "https://www.metalesmdp.com.ar/#calculadora",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "ARS",
-            "description": "Herramienta gratuita de cálculo"
-        },
-        "operatingSystem": "Web",
-        "browserRequirements": "Requires JavaScript enabled"
-    }
-    </script>
-
-    <!-- Structured Data para Comparador de Soluciones -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Comparador de Soluciones de Alambrados",
-        "description": "Compara diferentes tipos de postes (hormigón, quebracho, eucalipto, olimpo) según tus prioridades de precio, durabilidad y estética. Obtén recomendaciones personalizadas.",
-        "url": "https://www.metalesmdp.com.ar/#comparador",
-        "applicationCategory": "UtilityApplication",
-        "offers": {
-            "@type": "Offer",
-            "price": "0",
-            "priceCurrency": "ARS",
-            "description": "Herramienta gratuita de comparación"
-        },
-        "operatingSystem": "Web",
-        "browserRequirements": "Requires JavaScript enabled"
-    }
-    </script>
-
-    <!-- Structured Data para Sistema de Cotizaciones -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Sistema de Cotizaciones Online",
-        "description": "Genera cotizaciones instantáneas con precios actualizados. Descarga en PDF, envía por WhatsApp y guarda para consultar después.",
-        "provider": {
-            "@type": "LocalBusiness",
-            "name": "Metales & Hierros Mar del Plata",
-            "url": "https://www.metalesmdp.com.ar"
-        },
-        "areaServed": {
-            "@type": "City",
-            "name": "Mar del Plata"
-        },
-        "availableChannel": {
-            "@type": "ServiceChannel",
-            "serviceUrl": "https://www.metalesmdp.com.ar/#calculadora",
-            "servicePhone": "+54-9-11-7141-6157"
-        }
-    }
-    </script>
-
-    <!-- Structured Data para Sistema de Pedidos -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Sistema de Gestión de Pedidos",
-        "description": "Realiza seguimiento de tus pedidos en tiempo real. Consulta el estado, historial de cambios y detalles de tu orden.",
-        "provider": {
-            "@type": "LocalBusiness",
-            "name": "Metales & Hierros Mar del Plata",
-            "url": "https://www.metalesmdp.com.ar"
-        },
-        "areaServed": {
-            "@type": "City",
-            "name": "Mar del Plata"
-        },
-        "availableChannel": {
-            "@type": "ServiceChannel",
-            "serviceUrl": "https://www.metalesmdp.com.ar/#consulta-pedido",
-            "servicePhone": "+54-9-11-7141-6157"
-        }
-    }
-    </script>
-
-    <!-- Structured Data para Servicio de Instalación -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Service",
-        "name": "Servicio de Instalación de Alambrados",
-        "description": "Servicio profesional de instalación de cercas, tejidos y estructuras metálicas. Equipo especializado con garantía de trabajo.",
-        "provider": {
-            "@type": "LocalBusiness",
-            "name": "Metales & Hierros Mar del Plata",
-            "url": "https://www.metalesmdp.com.ar",
-            "telephone": "+54-9-11-7141-6157"
-        },
-        "areaServed": {
-            "@type": "City",
-            "name": "Mar del Plata"
-        },
-        "priceRange": "$$$",
-        "availableChannel": {
-            "@type": "ServiceChannel",
-            "serviceUrl": "https://www.metalesmdp.com.ar/#contacto",
-            "servicePhone": "+54-9-11-7141-6157"
-        }
-    }
-    </script>
-
-    <!-- Structured Data para Breadcrumb Navigation -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Inicio",
-                "item": "https://www.metalesmdp.com.ar/#inicio"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": "Productos",
-                "item": "https://www.metalesmdp.com.ar/#productos"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": "Servicios",
-                "item": "https://www.metalesmdp.com.ar/#servicios"
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": "Calculadora",
-                "item": "https://www.metalesmdp.com.ar/#calculadora"
-            },
-            {
-                "@type": "ListItem",
-                "position": 5,
-                "name": "Comparador",
-                "item": "https://www.metalesmdp.com.ar/#comparador"
-            },
-            {
-                "@type": "ListItem",
-                "position": 6,
-                "name": "Contacto",
-                "item": "https://www.metalesmdp.com.ar/#contacto"
-            }
-        ]
-    }
-    </script>
 </head>
 
 <body>
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loader">
-            <div class="metal-bar"></div>
-            <div class="metal-bar"></div>
-            <div class="metal-bar"></div>
+    <!-- HEADER -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo-container">
+                <img src="logo-rombos-del-mar.jpg" alt="ROMBOS del Mar" class="logo">
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                <li><a href="#productos" class="nav-link">Productos</a></li>
+                <li><a href="#postes" class="nav-link">Postes</a></li>
+                <li><a href="#accesorios" class="nav-link">Accesorios</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>SOLUCIONES EN ALAMBRADOS</h1>
+            <p class="hero-subtitle">Fabricación, Venta y Colocación Integral</p>
         </div>
-    </div>
+    </section>
 
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/5491171416157?text=Hola!%20Me%20interesa%20consultar%20sobre%20sus%20productos"
-        class="whatsapp-float" target="_blank" aria-label="Contactar por WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-        <span class="whatsapp-text">¡Consultanos!</span>
-    </a>
+    <!-- SECCIÓN 2: NUESTROS SERVICIOS -->
+    <section id="servicios" class="section">
+        <h2 class="section-title">Nuestros Servicios</h2>
+        <div class="grid-3">
+            <div class="card fade-in">
+                <h3 class="card-title">🏭 Fabricación</h3>
+                <p class="card-text">
+                    Producimos nuestros propios postes de hormigón y tejidos, garantizando la máxima calidad en cada
+                    material.
+                </p>
+            </div>
+            <div class="card fade-in">
+                <h3 class="card-title">🛒 Venta Directa</h3>
+                <p class="card-text">
+                    Venta de alambres por kilo (bobinas), rollos de tejido y postes de madera o cemento directo al
+                    cliente.
+                </p>
+            </div>
+            <div class="card fade-in">
+                <h3 class="card-title">🔧 Colocación</h3>
+                <p class="card-text">
+                    Servicio completo de instalación de cercos perimetrales, alambrados rurales y colocación de
+                    tranqueras.
+                </p>
+            </div>
+        </div>
+    </section>
 
-    <!-- Dark Mode Toggle Button -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
-        <i class="fas fa-moon"></i>
-    </button>
+    <!-- SECCIÓN 3: TEJIDO ROMBOIDAL -->
+    <section id="productos" class="section">
+        <h2 class="section-title">Tejido Romboidal</h2>
+        <div class="grid-2">
+            <div class="card">
+                <img src="tejido-romboidal.jpg" alt="Tejido Romboidal" class="card-image">
+            </div>
+            <div class="card">
+                <h3 class="card-title">Calidad y Resistencia</h3>
+                <p class="card-text">
+                    Nuestro tejido romboidal es ideal para cerramientos residenciales, industriales y de campo.
+                    Fabricado con materiales de primera línea para resistir la intemperie.
+                </p>
+                <h4 style="color: var(--color-secondary); margin-top: 1.5rem;">Detalles Técnicos:</h4>
+                <ul class="styled-list">
+                    <li><strong>Alambre Galvanizado:</strong> Calibre 14 de alta durabilidad</li>
+                    <li><strong>Rombo:</strong> Medida estándar de 63 milímetros</li>
+                    <li><strong>Presentación:</strong> Rollos compactos de 10 metros de largo</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-    <!-- Navigation -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <div class="nav-wrapper">
-                <div class="logo">
-                    <div class="logo-icon">◇</div>
-                    <span class="logo-text">
-                        <span class="logo-top">Rombos</span>
-                        <span class="logo-bottom">del Mar</span>
-                    </span>
-                </div>
+    <!-- SECCIÓN 4: MEDIDAS DISPONIBLES -->
+    <section class="section">
+        <h2 class="section-title">Medidas Disponibles</h2>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Altura del Tejido</th>
+                        <th>Largo del Rollo</th>
+                        <th>Uso Recomendado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1,00 metro</td>
+                        <td>10 metros</td>
+                        <td>Jardines bajos, delimitaciones sencillas</td>
+                    </tr>
+                    <tr>
+                        <td>1,20 metros</td>
+                        <td>10 metros</td>
+                        <td>Cercos frontales residenciales</td>
+                    </tr>
+                    <tr>
+                        <td>1,50 metros</td>
+                        <td>10 metros</td>
+                        <td>Perímetros estándar, piletas</td>
+                    </tr>
+                    <tr>
+                        <td>1,80 metros</td>
+                        <td>10 metros</td>
+                        <td>Seguridad perimetral, industrias</td>
+                    </tr>
+                    <tr>
+                        <td>2,00 metros</td>
+                        <td>10 metros</td>
+                        <td>Máxima seguridad, campos deportivos</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-                <div class="nav-menu" id="navMenu">
-                    <a href="#inicio" class="nav-link active">Inicio</a>
-                    <a href="#productos" class="nav-link">Productos</a>
-                    <a href="#servicios" class="nav-link">Servicios</a>
-                    <a href="#fabricacion" class="nav-link">Fabricación</a>
-                    <a href="#calculadora" class="nav-link">Calculadora</a>
-                    <a href="#comparador" class="nav-link">Comparador</a>
-                    <a href="#consulta-cotizacion" class="nav-link nav-link-compact">Mis Cotizaciones</a>
-                    <a href="#consulta-pedido" class="nav-link nav-link-compact">Mis Pedidos</a>
-                    <a href="#galeria" class="nav-link">Galería</a>
-                    <a href="#contacto" class="nav-link">Contacto</a>
-                    <a href="#contacto" class="btn-primary-nav">Cotizar Ahora</a>
-                </div>
+    <!-- SECCIÓN 5: VENTA DE ALAMBRE -->
+    <section class="section">
+        <h2 class="section-title">Venta de Alambre</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3 class="card-title">Alambre por Kilo</h3>
+                <p class="card-text">
+                    Ofrecemos bobinas de alambre galvanizado de alta resistencia, ideales para:
+                </p>
+                <ul class="styled-list">
+                    <li>Reparaciones de cercos existentes</li>
+                    <li>Instalaciones rurales y ataduras</li>
+                    <li>Trabajos de construcción y artesanía</li>
+                </ul>
+                <p class="card-text mt-2">
+                    <strong>Disponibilidad:</strong> Venta fraccionada por peso según la necesidad del proyecto.
+                </p>
+            </div>
+            <div class="card">
+                <img src="venta-alambre.jpg" alt="Bobinas de Alambre" class="card-image">
+            </div>
+        </div>
+    </section>
 
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <div class="section-header" data-aos="fade-up">
-                        <span class="section-subtitle">Planifica tu Proyecto</span>
-                        <h2 class="section-title">Calculadora de <span class="text-gradient">Materiales</span></h2>
-                        <p class="section-description">Calcula los materiales necesarios para tu proyecto de alambrado
-                        </p>
-                    </div>
+    <!-- SECCIÓN 6: POSTES DE HORMIGÓN -->
+    <section id="postes" class="section">
+        <h2 class="section-title">Postes de Hormigón</h2>
+        <div class="grid-2">
+            <div class="card">
+                <img src="postes-hormigon.jpg" alt="Postes de Hormigón" class="card-image">
+            </div>
+            <div class="card">
+                <h3 class="card-title">Fabricación Propia</h3>
+                <p class="card-text">
+                    Nuestros postes de hormigón son la columna vertebral de un alambrado duradero.
+                    Fabricados bajo estrictos estándares de calidad.
+                </p>
+                <h4 style="color: var(--color-secondary); margin-top: 1.5rem;">Características:</h4>
+                <ul class="styled-list">
+                    <li><strong>Estructura reforzada:</strong> Incluyen hierros internos para máxima tracción</li>
+                    <li><strong>Durabilidad:</strong> Inmunes a la putrefacción y el fuego</li>
+                    <li><strong>Versatilidad:</strong> Disponibles en versiones rectos y esquineros</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-                    <div class="calculator-wrapper">
-                        <!-- Calculator Form -->
-                        <div class="calculator-form" data-aos="fade-right">
-                            <div class="form-card">
-                                <h3 class="form-title">
-                                    <i class="fas fa-ruler-combined"></i>
-                                    Dimensiones del Terreno
-                                </h3>
+    <!-- SECCIÓN 7: POSTES DE MADERA -->
+    <section class="section">
+        <h2 class="section-title">Postes de Madera</h2>
+        <div class="grid-2">
+            <div class="card">
+                <img src="postes-quebracho.jpg" alt="Postes de Quebracho" class="card-image">
+                <h3 class="card-title">Quebracho</h3>
+                <p class="card-text">
+                    La madera más resistente para el campo. Ideal para esquineros y postes maestros por su
+                    extrema dureza y durabilidad natural.
+                </p>
+                <span class="badge">Máxima Resistencia</span>
+            </div>
+            <div class="card">
+                <img src="postes-eucalipto.jpg" alt="Postes de Eucalipto" class="card-image">
+                <h3 class="card-title">Eucalipto</h3>
+                <p class="card-text">
+                    Una opción versátil y económica, tratada para resistir la intemperie.
+                    Perfecta para postes intermedios y varillas.
+                </p>
+                <span class="badge">Económico y Versátil</span>
+            </div>
+        </div>
+    </section>
 
-                                <!-- Fence Type Selector -->
-                                <div class="form-group">
-                                    <label class="form-label">Tipo de Cerca</label>
-                                    <div class="fence-type-selector">
-                                        <label class="radio-card">
-                                            <input type="radio" name="fenceType" value="simple" checked>
-                                            <div class="radio-content">
-                                                <i class="fas fa-square"></i>
-                                                <span>Perímetro Simple</span>
-                                                <small>Ingresa largo y ancho</small>
-                                            </div>
-                                        </label>
-                                        <label class="radio-card">
-                                            <input type="radio" name="fenceType" value="multiple">
-                                            <div class="radio-content">
-                                                <i class="fas fa-vector-square"></i>
-                                                <span>Múltiples Segmentos</span>
-                                                <small>Terreno irregular</small>
-                                            </div>
-                                        </label>
-                                    </div>
-                                </div>
+    <!-- SECCIÓN 8: POSTES OLIMPO -->
+    <section class="section">
+        <h2 class="section-title">Postes Olimpo - Seguridad</h2>
+        <div class="grid-2">
+            <div class="card">
+                <h3 class="card-title">Protección Superior</h3>
+                <p class="card-text">
+                    El poste Olimpo es la solución definitiva para la seguridad perimetral.
+                    Su diseño acodado en la parte superior permite la instalación de defensas adicionales.
+                </p>
+                <h4 style="color: var(--color-secondary); margin-top: 1.5rem;">Especificaciones:</h4>
+                <ul class="styled-list">
+                    <li><strong>Diseño Acodado:</strong> Brazo superior inclinado hacia el exterior o interior</li>
+                    <li><strong>Hilos de Púa:</strong> Preparado para instalar 3 hilos de alambre de púa</li>
+                    <li><strong>Aplicación:</strong> Ideal para fábricas, predios industriales y seguridad residencial
+                    </li>
+                </ul>
+            </div>
+            <div class="card">
+                <img src="postes-olimpo.png" alt="Poste Olimpo" class="card-image">
+            </div>
+        </div>
+    </section>
 
-                                <!-- Simple Perimeter Inputs -->
-                                <div id="simplePerimeter" class="perimeter-inputs">
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="terrainLength" class="form-label">
-                                                <i class="fas fa-arrows-alt-h"></i>
-                                                Largo (metros)
-                                            </label>
-                                            <input type="number" id="terrainLength" class="form-input"
-                                                placeholder="Ej: 50" min="1" step="0.1">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="terrainWidth" class="form-label">
-                                                <i class="fas fa-arrows-alt-v"></i>
-                                                Ancho (metros)
-                                            </label>
-                                            <input type="number" id="terrainWidth" class="form-input"
-                                                placeholder="Ej: 30" min="1" step="0.1">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="totalPerimeter" class="form-label">
-                                            <i class="fas fa-border-all"></i>
-                                            O ingresa el perímetro total
-                                        </label>
-                                        <input type="number" id="totalPerimeter" class="form-input"
-                                            placeholder="Ej: 160" min="1" step="0.1">
-                                        <small class="form-hint">Si conoces el perímetro total, ingrésalo aquí
-                                            directamente</small>
-                                    </div>
-                                </div>
+    <!-- SECCIÓN 9: ACCESORIOS DE INSTALACIÓN -->
+    <section id="accesorios" class="section">
+        <h2 class="section-title">Accesorios de Instalación</h2>
+        <div class="grid-2">
+            <div class="card">
+                <img src="torniquetes.jpg" alt="Torniquetes Galvanizados" class="card-image">
+                <h3 class="card-title">Torniquetes Galvanizados</h3>
+                <p class="card-text">
+                    Componente esencial para lograr la tensión perfecta en los hilos de alambre.
+                    Su tratamiento galvanizado evita la corrosión y asegura durabilidad a la intemperie.
+                </p>
+            </div>
+            <div class="card">
+                <img src="ganchos-j.jpg" alt="Ganchos J" class="card-image">
+                <h3 class="card-title">Ganchos J</h3>
+                <p class="card-text">
+                    La solución ideal para la sujeción rápida y firme del tejido a los postes.
+                    Facilitan el montaje y garantizan una fijación segura y prolija.
+                </p>
+            </div>
+        </div>
+    </section>
 
-                                <!-- Multiple Segments Inputs -->
-                                <div id="multipleSegments" class="perimeter-inputs" style="display: none;">
-                                    <div id="segmentsList">
-                                        <div class="segment-item">
-                                            <label class="form-label">Segmento 1 (metros)</label>
-                                            <div class="segment-input-group">
-                                                <input type="number" class="form-input segment-length"
-                                                    placeholder="Longitud" min="1" step="0.1">
-                                                <button type="button" class="btn-icon btn-remove-segment" disabled>
-                                                    <i class="fas fa-times"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <button type="button" id="addSegmentBtn" class="btn-secondary btn-block">
-                                        <i class="fas fa-plus"></i>
-                                        Agregar Segmento
-                                    </button>
-                                </div>
+    <!-- SECCIÓN 10: TRANQUERAS Y COLOCACIÓN -->
+    <section id="contacto" class="section">
+        <h2 class="section-title">Tranqueras y Colocación</h2>
+        <div class="grid-2">
+            <div class="card">
+                <img src="tranqueras.jpg" alt="Tranqueras y Colocación" class="card-image">
+            </div>
+            <div class="card">
+                <h3 class="card-title">Terminación Profesional</h3>
+                <p class="card-text">
+                    No solo vendemos los materiales, nos encargamos de que su campo o terreno quede perfectamente
+                    cerrado.
+                </p>
+                <h4 style="color: var(--color-secondary); margin-top: 1.5rem;">Servicios:</h4>
+                <ul class="styled-list">
+                    <li><strong>Tranqueras:</strong> Fabricación y montaje de tranqueras de madera robustas y
+                        funcionales</li>
+                    <li><strong>Instalación Llave en Mano:</strong> Equipo especializado en colocación de postes,
+                        tensado de alambres y montaje de accesorios</li>
+                    <li><strong>Estética:</strong> Cuidamos la alineación y la tensión para un resultado visual
+                        impecable</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-                                <!-- Post Type Selector -->
-                                <div class="form-group">
-                                    <label for="postType" class="form-label">
-                                        <i class="fas fa-columns"></i>
-                                        Tipo de Poste
-                                    </label>
-                                    <select id="postType" class="form-select">
-                                        <option value="">Selecciona un tipo de poste</option>
-                                        <option value="hormigon">Hormigón - Mayor durabilidad</option>
-                                        <option value="quebracho">Quebracho - Alta resistencia natural</option>
-                                        <option value="eucalipto">Eucalipto - Económico</option>
-                                        <option value="olimpo">Olimpo (Hormigón + 3 hilos de púa)</option>
-                                    </select>
-                                </div>
-
-                                <!-- Material Type Tabs -->
-                                <div class="form-group">
-                                    <label class="form-label">
-                                        <i class="fas fa-th"></i>
-                                        Material de Cerramiento
-                                    </label>
-                                    <div class="material-tabs">
-                                        <button type="button" class="tab-btn active" data-tab="wire">
-                                            <i class="fas fa-grip-lines"></i>
-                                            Alambre
-                                        </button>
-                                        <button type="button" class="tab-btn" data-tab="mesh">
-                                            <i class="fas fa-th-large"></i>
-                                            Tejido Romboidal
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Wire Configuration -->
-                                <div id="wireConfig" class="material-config">
-                                    <div class="form-group">
-                                        <label for="wireStrands" class="form-label">Cantidad de Hilos</label>
-                                        <input type="number" id="wireStrands" class="form-input" value="5" min="1"
-                                            max="10">
-                                        <small class="form-hint">Típicamente 5-7 hilos para cercas rurales</small>
-                                    </div>
-                                </div>
-
-                                <!-- Mesh Configuration -->
-                                <div id="meshConfig" class="material-config" style="display: none;">
-                                    <div class="form-group">
-                                        <label for="meshHeight" class="form-label">Altura del Tejido</label>
-                                        <select id="meshHeight" class="form-select">
-                                            <option value="1.00">1.00 m</option>
-                                            <option value="1.20">1.20 m</option>
-                                            <option value="1.50" selected>1.50 m</option>
-                                            <option value="1.80">1.80 m</option>
-                                            <option value="2.00">2.00 m</option>
-                                        </select>
-                                        <small class="form-hint">Rollos estándar de 10 metros de largo</small>
-                                    </div>
-                                </div>
-
-                                <!-- Calculate Button -->
-                                <button type="button" id="calculateBtn" class="btn-primary btn-block btn-large">
-                                    <i class="fas fa-calculator"></i>
-                                    Calcular Materiales
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Calculator Results -->
-                        <div class="calculator-results" data-aos="fade-left">
-                            <div class="results-card">
-                                <div class="results-header">
-                                    <h3 class="results-title">
-                                        <i class="fas fa-clipboard-list"></i>
-                                        Materiales Necesarios
-                                    </h3>
-                                    <span class="results-badge">Estimación</span>
-                                </div>
-
-                                <div id="resultsContent" class="results-content">
-                                    <div class="empty-state">
-                                        <i class="fas fa-calculator"></i>
-                                        <p>Completa el formulario y presiona "Calcular Materiales" para ver los
-                                            resultados</p>
-                                    </div>
-                                </div>
-
-                                <!-- Results will be populated here by JavaScript -->
-                                <div id="resultsData" class="results-data" style="display: none;">
-                                    <!-- Perimeter Info -->
-                                    <div class="result-section">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-border-all"></i>
-                                            Información del Perímetro
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Perímetro Total:</span>
-                                            <span class="result-value" id="resultPerimeter">-</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Posts -->
-                                    <div class="result-section">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-columns"></i>
-                                            Postes
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Postes Esquineros:</span>
-                                            <span class="result-value" id="resultCornerPosts">4</span>
-                                        </div>
-                                        <div class="result-item">
-                                            <span class="result-label">Postes Intermedios:</span>
-                                            <span class="result-value" id="resultIntermediatePosts">-</span>
-                                        </div>
-                                        <div class="result-item highlight">
-                                            <span class="result-label">Total de Postes:</span>
-                                            <span class="result-value" id="resultTotalPosts">-</span>
-                                        </div>
-                                        <small class="result-note" id="postSpacingNote">Separación: 2.5m entre
-                                            postes</small>
-                                    </div>
-
-                                    <!-- Wire/Mesh -->
-                                    <div class="result-section" id="wireResults">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-grip-lines"></i>
-                                            Alambre
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Hilos de Alambre:</span>
-                                            <span class="result-value" id="resultWireStrands">-</span>
-                                        </div>
-                                        <div class="result-item highlight">
-                                            <span class="result-label">Total de Alambre:</span>
-                                            <span class="result-value" id="resultTotalWire">-</span>
-                                        </div>
-                                    </div>
-
-                                    <div class="result-section" id="meshResults" style="display: none;">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-th-large"></i>
-                                            Tejido Romboidal
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Altura del Tejido:</span>
-                                            <span class="result-value" id="resultMeshHeight">-</span>
-                                        </div>
-                                        <div class="result-item highlight">
-                                            <span class="result-label">Rollos Necesarios:</span>
-                                            <span class="result-value" id="resultMeshRolls">-</span>
-                                        </div>
-                                        <small class="result-note">Rollos de 10 metros de largo</small>
-                                    </div>
-
-                                    <!-- Accessories -->
-                                    <div class="result-section">
-                                        <h4 class="result-section-title">
-                                            <i class="fas fa-tools"></i>
-                                            Accesorios Estimados
-                                        </h4>
-                                        <div class="result-item">
-                                            <span class="result-label">Grampas:</span>
-                                            <span class="result-value" id="resultStaples">-</span>
-                                        </div>
-                                        <div class="result-item">
-                                            <span class="result-label">Tensores:</span>
-                                            <span class="result-value" id="resultTensioners">-</span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Special Notes -->
-                                    <div id="specialNotes" class="result-notes" style="display: none;">
-                                        <div class="note-box">
-                                            <i class="fas fa-info-circle"></i>
-                                            <span id="specialNotesText"></span>
-                                        </div>
-                                    </div>
-
-                                    <!-- Action Buttons -->
-                                    <div class="results-actions">
-                                        <button type="button" id="generateQuoteBtn" class="btn-primary btn-block">
-                                            <i class="fas fa-file-invoice-dollar"></i>
-                                            Generar Cotización
-                                        </button>
-                                        <button type="button" id="resetCalculatorBtn" class="btn-secondary btn-block">
-                                            <i class="fas fa-redo"></i>
-                                            Nueva Consulta
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Info Card -->
-                            <div class="info-card" data-aos="fade-up" data-aos-delay="200">
-                                <div class="info-icon">
-                                    <i class="fas fa-lightbulb"></i>
-                                </div>
-                                <h4>¿Necesitas Ayuda?</h4>
-                                <p>Nuestro equipo puede asesorarte sobre el mejor tipo de material para tu proyecto.</p>
-                                <a href="#contacto" class="info-link">
-                                    Contactar Asesor <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </section>
-
-                <!-- Comparator Section -->
-                <section id="comparador" class="comparator-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Compara y Decide</span>
-                            <h2 class="section-title">Comparador de <span class="text-gradient">Soluciones</span></h2>
-                            <p class="section-description">Encuentra la mejor opción según tus necesidades y presupuesto
-                            </p>
-                        </div>
-
-                        <div class="comparator-controls" data-aos="fade-up">
-                            <div class="context-selector">
-                                <h3>¿Cuál es tu necesidad principal?</h3>
-                                <div class="context-buttons">
-                                    <button class="context-btn" data-context="high-demand">
-                                        <i class="fas fa-industry"></i>
-                                        <span>Alta Exigencia</span>
-                                        <small>Uso intensivo, máxima durabilidad</small>
-                                    </button>
-                                    <button class="context-btn" data-context="budget">
-                                        <i class="fas fa-piggy-bank"></i>
-                                        <span>Presupuesto Económico</span>
-                                        <small>Mejor relación precio-calidad</small>
-                                    </button>
-                                    <button class="context-btn" data-context="balanced">
-                                        <i class="fas fa-balance-scale"></i>
-                                        <span>Equilibrado</span>
-                                        <small>Balance entre precio y durabilidad</small>
-                                    </button>
-                                    <button class="context-btn" data-context="security">
-                                        <i class="fas fa-shield-alt"></i>
-                                        <span>Seguridad</span>
-                                        <small>Máxima protección perimetral</small>
-                                    </button>
-                                </div>
-                                <div class="context-recommendation"></div>
-                            </div>
-
-                            <div class="product-selection">
-                                <h3>Selecciona productos para comparar (máximo 3)</h3>
-                                <div class="selection-grid">
-                                    <div class="product-checkbox">
-                                        <input type="checkbox" id="check-hormigon" value="hormigon">
-                                        <label for="check-hormigon">
-                                            <i class="fas fa-cube"></i> Postes de Hormigón
-                                        </label>
-                                    </div>
-                                    <div class="product-checkbox">
-                                        <input type="checkbox" id="check-quebracho" value="quebracho">
-                                        <label for="check-quebracho">
-                                            <i class="fas fa-tree"></i> Postes de Quebracho
-                                        </label>
-                                    </div>
-                                    <div class="product-checkbox">
-                                        <input type="checkbox" id="check-eucalipto" value="eucalipto">
-                                        <label for="check-eucalipto">
-                                            <i class="fas fa-leaf"></i> Postes de Eucalipto
-                                        </label>
-                                    </div>
-                                    <div class="product-checkbox">
-                                        <input type="checkbox" id="check-olimpo" value="olimpo">
-                                        <label for="check-olimpo">
-                                            <i class="fas fa-shield-alt"></i> Postes Olimpo
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="selection-error"></div>
-                            </div>
-
-                            <div class="priority-sliders">
-                                <h3>Ajusta tus prioridades</h3>
-                                <div class="slider-group">
-                                    <div class="slider-label">
-                                        <span><i class="fas fa-dollar-sign"></i> Precio</span>
-                                        <span class="slider-value">5</span>
-                                    </div>
-                                    <input type="range" class="slider-input" data-priority="price" min="0" max="10"
-                                        value="5">
-                                </div>
-                                <div class="slider-group">
-                                    <div class="slider-label">
-                                        <span><i class="fas fa-clock"></i> Durabilidad</span>
-                                        <span class="slider-value">5</span>
-                                    </div>
-                                    <input type="range" class="slider-input" data-priority="durability" min="0" max="10"
-                                        value="5">
-                                </div>
-                                <div class="slider-group">
-                                    <div class="slider-label">
-                                        <span><i class="fas fa-palette"></i> Estética</span>
-                                        <span class="slider-value">5</span>
-                                    </div>
-                                    <input type="range" class="slider-input" data-priority="aesthetics" min="0" max="10"
-                                        value="5">
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="comparison-table-container" data-aos="fade-up" data-aos-delay="200">
-                            <div class="empty-state">
-                                <i class="fas fa-clipboard-list"></i>
-                                <h3>Selecciona productos para comparar</h3>
-                                <p>Elige hasta 3 productos para ver una comparación detallada</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Quotation Lookup Section -->
-                <section id="consulta-cotizacion" class="quotation-lookup-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Consulta tu Cotización</span>
-                            <h2 class="section-title">Buscar <span class="text-gradient">Cotización Guardada</span></h2>
-                            <p class="section-description">Ingresa el ID de tu cotización para ver los detalles</p>
-                        </div>
-
-                        <div class="quotation-lookup-wrapper" data-aos="fade-up" data-aos-delay="100">
-                            <div class="lookup-form-card">
-                                <div class="form-group">
-                                    <label for="quotationIdInput">
-                                        <i class="fas fa-search"></i>
-                                        ID de Cotización
-                                    </label>
-                                    <input type="text" id="quotationIdInput" class="form-input"
-                                        placeholder="Ej: COT-1234567890-123" aria-label="ID de cotización">
-                                </div>
-                                <button class="btn-primary" id="searchQuotationBtn" onclick="searchQuotation()">
-                                    <i class="fas fa-search"></i>
-                                    Buscar Cotización
-                                </button>
-                            </div>
-
-                            <div id="quotationDisplayContainer" class="quotation-display-container">
-                                <!-- La cotización se mostrará aquí -->
-                            </div>
-
-                            <div id="quotationNotFound" class="quotation-not-found" style="display: none;">
-                                <i class="fas fa-exclamation-circle"></i>
-                                <h3>Cotización no encontrada</h3>
-                                <p>No se encontró ninguna cotización con ese ID. Verifica que el ID sea correcto.</p>
-                            </div>
-
-                            <div class="recent-quotations" id="recentQuotations">
-                                <h3><i class="fas fa-history"></i> Cotizaciones Recientes</h3>
-                                <div id="recentQuotationsList" class="recent-list">
-                                    <!-- Lista de cotizaciones recientes -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Gallery Section -->
-                <section id="galeria" class="gallery-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Nuestros Trabajos</span>
-                            <h2 class="section-title">Galería de <span class="text-gradient">Proyectos</span></h2>
-                            <p class="section-description">Algunos de nuestros trabajos realizados</p>
-                        </div>
-
-                        <div class="gallery-grid">
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-border-all"></i>
-                                    <span>Tejido Romboidal</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-building"></i>
-                                    <span>Estructura Metálica</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-warehouse"></i>
-                                    <span>Galpón Industrial</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-home"></i>
-                                    <span>Portón Corredizo</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-fence"></i>
-                                    <span>Cerco Perimetral</span>
-                                </div>
-                            </div>
-                            <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
-                                <div class="gallery-placeholder">
-                                    <i class="fas fa-toolbox"></i>
-                                    <span>Trabajos a Medida</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Order Tracking Section -->
-                <section id="consulta-pedido" class="order-tracking-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Seguimiento</span>
-                            <h2 class="section-title">Consultar Estado de <span class="text-gradient">Pedido</span></h2>
-                            <p class="section-description">Ingresa tu número de orden para ver el estado actual de tu
-                                pedido</p>
-                        </div>
-
-                        <div class="tracking-wrapper" data-aos="fade-up" data-aos-delay="100">
-                            <div class="tracking-form-container">
-                                <div class="tracking-form">
-                                    <div class="form-group">
-                                        <label for="orderIdInput" class="form-label">
-                                            <i class="fas fa-hashtag"></i>
-                                            Número de Orden
-                                        </label>
-                                        <div class="input-with-button">
-                                            <input type="text" id="orderIdInput" class="form-input"
-                                                placeholder="Ej: ORD-20240115-0001" aria-label="Número de orden">
-                                            <button class="btn-track" onclick="trackOrder()"
-                                                aria-label="Consultar pedido">
-                                                <i class="fas fa-search"></i>
-                                                Consultar
-                                            </button>
-                                        </div>
-                                        <div class="form-hint">
-                                            <i class="fas fa-info-circle"></i>
-                                            El número de orden fue enviado por WhatsApp al confirmar tu pedido
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div id="orderStatusDisplay" class="order-status-display" style="display: none;">
-                                <!-- Contenido dinámico del estado del pedido -->
-                            </div>
-
-                            <div id="orderNotFound" class="order-not-found" style="display: none;">
-                                <div class="not-found-icon">
-                                    <i class="fas fa-search"></i>
-                                </div>
-                                <h3>Pedido no encontrado</h3>
-                                <p>No se encontró ningún pedido con ese número de orden.</p>
-                                <p class="not-found-hint">Verifica que el número sea correcto o contactanos por
-                                    WhatsApp.</p>
-                                <a href="https://wa.me/5491171416157?text=Hola!%20Necesito%20ayuda%20con%20mi%20pedido"
-                                    target="_blank" class="btn-secondary">
-                                    <i class="fab fa-whatsapp"></i>
-                                    Contactar por WhatsApp
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Contact Section -->
-                <section id="contacto" class="contact-section">
-                    <div class="container">
-                        <div class="section-header" data-aos="fade-up">
-                            <span class="section-subtitle">Contacto</span>
-                            <h2 class="section-title">¿Listo para tu <span class="text-gradient">Proyecto?</span></h2>
-                            <p class="section-description">Comunicate con nosotros por el medio que prefieras</p>
-                        </div>
-
-                        <div class="contact-wrapper">
-                            <div class="contact-info" data-aos="fade-right">
-                                <div class="info-card">
-                                    <h3>Información de Contacto</h3>
-
-                                    <div class="contact-method">
-                                        <div class="method-icon whatsapp-bg">
-                                            <i class="fab fa-whatsapp"></i>
-                                        </div>
-                                        <div class="method-content">
-                                            <h4>WhatsApp</h4>
-                                            <p>+54 9 11 7141-6157</p>
-                                            <a href="https://wa.me/5491171416157?text=Hola!%20Me%20interesa%20consultar"
-                                                target="_blank" class="method-link">
-                                                Enviar mensaje <i class="fas fa-arrow-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="contact-method">
-                                        <div class="method-icon phone-bg">
-                                            <i class="fas fa-phone-alt"></i>
-                                        </div>
-                                        <div class="method-content">
-                                            <h4>Teléfono</h4>
-                                            <p>+54 9 11 7141-6157</p>
-                                            <a href="tel:+5491171416157" class="method-link">
-                                                Llamar ahora <i class="fas fa-arrow-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="contact-method">
-                                        <div class="method-icon email-bg">
-                                            <i class="fas fa-envelope"></i>
-                                        </div>
-                                        <div class="method-content">
-                                            <h4>Email</h4>
-                                            <p>materialesencontruccion@gmail.com</p>
-                                            <a href="mailto:materialesencontruccion@gmail.com" class="method-link">
-                                                Enviar email <i class="fas fa-arrow-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="contact-method">
-                                        <div class="method-icon location-bg">
-                                            <i class="fas fa-map-marker-alt"></i>
-                                        </div>
-                                        <div class="method-content">
-                                            <h4>Ubicación</h4>
-                                            <p>Mar del Plata, Buenos Aires</p>
-                                            <p class="location-detail">Argentina</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="social-links">
-                                        <a href="https://www.facebook.com/profile.php?id=61584020816125" target="_blank"
-                                            class="social-link facebook" aria-label="Facebook">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                        <a href="https://www.instagram.com/materialesencontruccion/" target="_blank"
-                                            class="social-link instagram" aria-label="Instagram">
-                                            <i class="fab fa-instagram"></i>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <div class="business-hours">
-                                    <h4><i class="fas fa-clock"></i> Horarios de Atención</h4>
-                                    <div class="hours-list">
-                                        <div class="hour-item">
-                                            <span>Lunes a Viernes:</span>
-                                            <span>8:00 - 18:00</span>
-                                        </div>
-                                        <div class="hour-item">
-                                            <span>Sábados:</span>
-                                            <span>8:00 - 13:00</span>
-                                        </div>
-                                        <div class="hour-item">
-                                            <span>Domingos:</span>
-                                            <span>Cerrado</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="contact-form-wrapper" data-aos="fade-left">
-                                <form id="contactForm" class="contact-form">
-                                    <h3>Solicitar Cotización</h3>
-
-                                    <div class="form-row">
-                                        <div class="form-group">
-                                            <label for="nombre">Nombre Completo *</label>
-                                            <input type="text" id="nombre" name="nombre" required>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="telefono">Teléfono *</label>
-                                            <input type="tel" id="telefono" name="telefono" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="email">Email *</label>
-                                        <input type="email" id="email" name="email" required>
-                                        card.addEventListener('click', function (e) {
-                                        if (e.target.tagName === 'A' || e.target.closest('a')) {
-                                        return;
-                                        }
-
-                                        e.preventDefault();
-                                        const id = this.dataset.productId;
-                                        if (id) {
-                                        openProductModal(id);
-                                        }
-                                        });
-
-                                        const productLink = card.querySelector('.product-link');
-                                        if (productLink) {
-                                        productLink.textContent = 'Ver Detalles ';
-                                        productLink.innerHTML += '<i class="fas fa-arrow-right"></i>';
-                                        productLink.href = '#';
-                                        productLink.addEventListener('click', function (e) {
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                        const id = card.dataset.productId;
-                                        if (id) {
-                                        openProductModal(id);
-                                        }
-                                        });
-                                        }
-                                        }
-                                        });
-                                        }
-                                        </script>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3 style="color: white; margin-bottom: 1rem;">ROMBOS del Mar</h3>
+            <p>Soluciones Integrales en Alambrados</p>
+            <p style="margin-top: 1rem; opacity: 0.8;">
+                Fabricación • Venta • Colocación
+            </p>
+            <p style="margin-top: 2rem; font-size: 0.9rem;">
+                © 2025 ROMBOS del Mar. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
 </body>
 
 </html>
-
-<!-- Progress Stepper Script -->
-<script src="js/progress-stepper.js"></script>
-
-<!-- Accessibility Module -->
-<script src="js/accessibility.js"></script>
-
-<!-- Modal de Producto Detallado -->
-<div id="productModal" class="modal">
-    <div class="modal-content">
-        <button class="modal-close" onclick="closeProductModal()" aria-label="Cerrar">&times;</button>
-        <div class="product-detail">
-            <div class="product-image">
-                <img id="modalProductImage" src="" alt="" style="display: none;">
-                <div id="modalProductImagePlaceholder" class="product-image-placeholder">
-                    <i class="fas fa-box-open"></i>
-                    <span>Imagen no disponible</span>
-                </div>
-                <span id="modalProductBadge" class="product-badge-modal" style="display: none;"></span>
-            </div>
-            <div class="product-info">
-                <span id="modalProductCategory" class="product-category-tag"></span>
-                <h3 id="modalProductName" class="product-name"></h3>
-                <div id="modalProductPrice" class="product-price"></div>
-                <div id="modalProductPriceUnit" class="product-price-unit"></div>
-                <div id="modalProductAvailability" class="product-availability">
-                    <i class="fas fa-circle"></i>
-                    <span></span>
-                </div>
-                <p id="modalProductDescription" class="product-description-text"></p>
-
-                <div id="modalProductSpecs" class="product-specs">
-                    <h4><i class="fas fa-cog"></i> Especificaciones Técnicas</h4>
-                    <div id="modalSpecsGrid" class="specs-grid"></div>
-                </div>
-
-                <div id="modalProductResistance" class="product-resistance" style="display: none;">
-                    <h4><i class="fas fa-shield-alt"></i> Resistencia</h4>
-                    <div id="modalResistanceBars" class="resistance-bars"></div>
-                </div>
-
-                <div id="modalProductApplications" class="product-applications" style="display: none;">
-                    <h4><i class="fas fa-tasks"></i> Aplicaciones Recomendadas</h4>
-                    <div id="modalApplicationsList" class="applications-list"></div>
-                </div>
-
-                <div class="product-actions">
-                    <div class="quantity-selector">
-                        <label for="modalProductQuantity">Cantidad:</label>
-                        <div class="quantity-controls">
-                            <button class="quantity-btn" onclick="decreaseModalQuantity()"
-                                aria-label="Disminuir cantidad">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <input type="number" id="modalProductQuantity" value="1" min="1" max="9999"
-                                class="quantity-input">
-                            <button class="quantity-btn" onclick="increaseModalQuantity()"
-                                aria-label="Aumentar cantidad">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <button class="add-to-quote" onclick="addProductToQuoteFromModal()">
-                        <i class="fas fa-shopping-cart"></i>
-                        Agregar a Cotización
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
