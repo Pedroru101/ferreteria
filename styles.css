@@ -218,7 +218,7 @@ p {
   font-size: clamp(1.2rem, 2.5vw, 1.8rem);
   font-weight: 300;
   margin-bottom: var(--spacing-md);
-  opacity: 0.95;
+  color: var(--color-white);
 }
 
 /* ============================================
