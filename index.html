@@ -25,15 +25,10 @@
     <link rel="stylesheet" href="mobile-responsive.css">
     <link rel="stylesheet" href="dark-mode.css">
     <link rel="stylesheet" href="medidas-styles-mejorado.css">
+    <link rel="stylesheet" href="chatbot-styles.css">
 </head>
 
 <body>
-    <!-- Dark Mode Toggle -->
-    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
-        <span class="theme-toggle-icon">🌙</span>
-        <span class="theme-toggle-text">Modo Oscuro</span>
-    </button>
-
     <header class="header">
         <nav class="nav-container">
             <div class="logo-container">
@@ -43,12 +38,23 @@
                 <li><a href="#servicios" class="nav-link">Servicios</a></li>
                 <li><a href="#productos" class="nav-link">Productos</a></li>
                 <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                <li>
+                    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()">
+                        <span class="theme-toggle-icon">🌙</span>
+                        <span class="theme-toggle-text">Modo Oscuro</span>
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
 
     <!-- HERO SECTION -->
     <section class="hero">
+        <div class="hero-carousel">
+            <img src="IMAGEN2.jpg" alt="Soluciones en Alambrados" class="hero-carousel-image active">
+            <img src="IMAGEN3.jpg" alt="Soluciones en Alambrados" class="hero-carousel-image">
+            <img src="IMAGEN4.jpg" alt="Soluciones en Alambrados" class="hero-carousel-image">
+        </div>
         <div class="hero-content">
             <h1>SOLUCIONES EN ALAMBRADOS</h1>
             <p class="hero-subtitle">Fabricación, Venta y Colocación Integral</p>
@@ -470,6 +476,8 @@
         </div>
     </footer>
     <script src="dark-mode.js"></script>
+    <script src="hero-carousel.js"></script>
+    <script src="chatbot.js"></script>
 </body>
 
 </html>
