@@ -133,7 +133,7 @@ p {
 }
 
 .logo {
-  height: 150px;
+  height: 75px;
   width: auto;
 }
 
@@ -141,6 +141,7 @@ p {
   display: flex;
   gap: 2rem;
   list-style: none;
+  align-items: center;
 }
 
 .nav-link {
@@ -942,7 +943,7 @@ tbody tr:hover {
     }
 
     .logo {
-        height: 80px;
+        height: 60px;
     }
 
     .nav-container {
