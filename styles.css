@@ -906,4 +906,208 @@ tbody tr:hover {
     .medidas-grid {
         grid-template-columns: 1fr;
     }
+}/* ============================================
+   MEJORAS RESPONSIVE PARA MÓVILES
+   ============================================ */
+
+/* Ajustes generales para móviles */
+@media (max-width: 768px) {
+
+    /* Header más compacto */
+    .header {
+        padding: 0.5rem 0;
+    }
+
+    .logo {
+        height: 80px;
+    }
+
+    .nav-container {
+        padding: 0 1rem;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+
+    /* Hero responsive */
+    .hero {
+        min-height: 60vh;
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    /* Secciones con menos padding */
+    .section {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    /* Títulos más pequeños */
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+    }
+
+    /* Cards responsive */
+    .card-title {
+        font-size: 1.3rem;
+        margin: var(--spacing-sm);
+    }
+
+    .card-text {
+        font-size: 0.95rem;
+        padding: 0 var(--spacing-sm);
+    }
+
+    /* Listas dentro de cards */
+    .card .styled-list {
+        padding: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
+    }
+
+    .card .badge {
+        margin: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
+    }
+
+    /* Badges más pequeños */
+    .badge {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* Ajustes específicos para pantallas muy pequeñas (iPhone SE, etc) */
+@media (max-width: 480px) {
+
+    /* Logo aún más pequeño */
+    .logo {
+        height: 60px;
+    }
+
+    /* Navegación en columna */
+    .nav-menu {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Hero compacto */
+    .hero {
+        min-height: 50vh;
+        padding: var(--spacing-sm);
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.9rem;
+    }
+
+    /* Secciones muy compactas */
+    .section {
+        padding: var(--spacing-sm);
+    }
+
+    /* Títulos pequeños */
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    /* Cards con menos padding */
+    .card {
+        margin-bottom: var(--spacing-sm);
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    .card-text {
+        font-size: 0.9rem;
+    }
+
+    /* Imágenes de cards más pequeñas */
+    .card-image,
+    .card-image-accessory {
+        height: 250px;
+    }
+
+    /* Contacto más compacto */
+    .contact-card {
+        padding: var(--spacing-sm);
+    }
+
+    .contact-icon {
+        font-size: 2rem;
+    }
+
+    .contact-title {
+        font-size: 1.2rem;
+    }
+
+    .contact-link {
+        font-size: 0.95rem;
+    }
+}
+
+/* Ajustes para tablets en orientación portrait */
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .grid-2,
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+}
+
+/* Asegurar que las imágenes no se desborden */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mejorar el touch en móviles */
+@media (hover: none) and (pointer: coarse) {
+
+    /* Aumentar área de toque para links */
+    .nav-link {
+        padding: 0.75rem 0.5rem;
+    }
+
+    /* Botones y enlaces más grandes */
+    a,
+    button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Desactivar hover effects en móviles */
+    .card:hover {
+        transform: none;
+    }
+
+    .card:active {
+        transform: scale(0.98);
+    }
 }
