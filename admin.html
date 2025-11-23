@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Panel de Administración - Metales & Hierros Mar del Plata</title>
 
-    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+    <link rel="icon" type="image/png"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -19,6 +23,7 @@
 
     <script src="config.js"></script>
 </head>
+
 <body>
 
     <div id="loginScreen" class="login-screen">
@@ -31,14 +36,8 @@
             <form id="loginForm" class="login-form">
                 <div class="form-group">
                     <label for="adminPassword">Contraseña</label>
-                    <input 
-                        type="password" 
-                        id="adminPassword" 
-                        class="form-control" 
-                        placeholder="Ingresa tu contraseña"
-                        required
-                        autocomplete="current-password"
-                    >
+                    <input type="password" id="adminPassword" class="form-control" placeholder="Ingresa tu contraseña"
+                        required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-primary btn-block">
                     <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
@@ -140,7 +139,8 @@
                             </select>
                             <input type="date" id="orderDateFromFilter" class="form-control" placeholder="Desde">
                             <input type="date" id="orderDateToFilter" class="form-control" placeholder="Hasta">
-                            <input type="text" id="orderClientFilter" class="form-control" placeholder="Buscar cliente...">
+                            <input type="text" id="orderClientFilter" class="form-control"
+                                placeholder="Buscar cliente...">
                             <button class="btn-secondary" id="clearOrderFilters">
                                 <i class="fas fa-times"></i> Limpiar
                             </button>
@@ -167,8 +167,10 @@
                             </select>
                             <input type="date" id="quotationDateFromFilter" class="form-control" placeholder="Desde">
                             <input type="date" id="quotationDateToFilter" class="form-control" placeholder="Hasta">
-                            <input type="number" id="quotationMinAmountFilter" class="form-control" placeholder="Monto mínimo">
-                            <input type="number" id="quotationMaxAmountFilter" class="form-control" placeholder="Monto máximo">
+                            <input type="number" id="quotationMinAmountFilter" class="form-control"
+                                placeholder="Monto mínimo">
+                            <input type="number" id="quotationMaxAmountFilter" class="form-control"
+                                placeholder="Monto máximo">
                             <button class="btn-secondary" id="clearQuotationFilters">
                                 <i class="fas fa-times"></i> Limpiar
                             </button>
@@ -270,9 +272,11 @@
         </div>
     </div>
 
+    <script src="js/utils.js"></script>
     <script src="js/products-data.js"></script>
     <script src="js/data-cleanup.js"></script>
     <script src="js/admin.js"></script>
 
 </body>
+
 </html>

@@ -67,36 +67,36 @@ const CONFIG = {
             calculator_open: 'Abrir calculadora',
             calculator_calculate: 'Realizar cálculo',
             calculator_export: 'Exportar cálculo',
-            
+
             // Eventos de cotización
             quotation_create: 'Crear cotización',
             quotation_view: 'Ver cotización',
             quotation_download_pdf: 'Descargar PDF de cotización',
             quotation_send_whatsapp: 'Enviar cotización por WhatsApp',
             quotation_save: 'Guardar cotización',
-            
+
             // Eventos de catálogo
             catalog_view_product: 'Ver detalle de producto',
             catalog_add_to_cart: 'Agregar producto a carrito',
             catalog_remove_from_cart: 'Remover producto de carrito',
-            
+
             // Eventos de pedidos
             order_create: 'Crear pedido',
             order_confirm: 'Confirmar pedido',
             order_track: 'Consultar estado de pedido',
             order_update_status: 'Actualizar estado de pedido',
-            
+
             // Eventos de comparador
             comparator_open: 'Abrir comparador',
             comparator_select_products: 'Seleccionar productos para comparar',
             comparator_use_solution: 'Usar solución del comparador',
-            
+
             // Eventos de administración
             admin_login: 'Login en panel admin',
             admin_logout: 'Logout del panel admin',
             admin_update_price: 'Actualizar precio',
             admin_export_data: 'Exportar datos',
-            
+
             // Eventos generales
             page_view: 'Ver página',
             form_submit: 'Enviar formulario',
@@ -238,7 +238,7 @@ const CONFIG = {
 
     // Configuración de administración
     admin: {
-        defaultPassword: 'admin123',
+        defaultPassword: '', // SECURITY: Password removed. Set via secure environment or prompt.
         sessionTimeout: 3600000,
         enablePasswordChange: true,
         dashboardRefreshInterval: 300000,

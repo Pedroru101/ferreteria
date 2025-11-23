@@ -161,7 +161,7 @@ class ChatBot {
             this.addBotMessage(cleanResponse, hasButton);
         } catch (error) {
             this.removeTyping();
-            this.addBotMessage('Lo siento, hubo un error. Por favor intenta de nuevo.');
+            this.addBotMessage('Lo siento, hubo un error. Por favor intenta de nuevo.', true);
             console.error('Error:', error);
         } finally {
             this.isLoading = false;
@@ -186,16 +186,27 @@ INSTRUCCIONES CRÍTICAS:
 5. Si el cliente quiere hablar con un especialista o necesita presupuesto, ofrece el WhatsApp: "+54 9 11 7141-6157"
 6. Responde de manera amable, profesional y natural, como lo haría una persona
 7. Sé conciso pero informativo
-8. Cuando menciones el número de WhatsApp, inclúyelo en el texto para que aparezca el botón
+8. Cuando menciones el número de WhatsApp, inclúyelo en el texto para que aparezca el botón`;
 
-ID de sesión del cliente: ${this.userId}`;
+        const contents = [];
+        
+        for (let msg of this.messages) {
+            contents.push({
+                role: msg.isUser ? 'user' : 'model',
+                parts: [{ text: msg.text }]
+            });
+        }
+        
+        contents.push({
+            role: 'user',
+            parts: [{ text: userMessage }]
+        });
 
         const requestBody = {
-            contents: [{
-                parts: [{
-                    text: `${systemPrompt}\n\nPregunta del cliente: ${userMessage}`
-                }]
-            }]
+            contents: contents,
+            systemInstruction: {
+                parts: [{ text: systemPrompt }]
+            }
         };
 
         const response = await fetch(

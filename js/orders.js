@@ -27,7 +27,7 @@ class Order {
         const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-        
+
         const prefix = CONFIG.orders?.prefix || 'ORD';
         return `${prefix}-${year}${month}${day}-${random}`;
     }
@@ -54,7 +54,7 @@ class Order {
     }
 
     updateStatus(newStatus, note = '') {
-        const validStatuses = CONFIG.orders?.statusOptions?.map(s => s.value) || 
+        const validStatuses = CONFIG.orders?.statusOptions?.map(s => s.value) ||
             ['pending', 'confirmed', 'in_progress', 'completed', 'cancelled'];
 
         if (!validStatuses.includes(newStatus)) {
@@ -73,39 +73,39 @@ class Order {
 
     toWhatsAppMessage() {
         const businessName = CONFIG.business?.name || 'Metales & Hierros';
-        
+
         let message = `*Nuevo Pedido - ${businessName}*\n\n`;
         message += `*Número de Orden:* ${this.id}\n`;
         message += `*Fecha:* ${this.formatDate(this.date)}\n\n`;
-        
+
         message += `*Cliente:*\n`;
         message += `Nombre: ${this.customer.name}\n`;
         message += `Teléfono: ${this.customer.phone}\n`;
-        
+
         if (this.customer.email) {
             message += `Email: ${this.customer.email}\n`;
         }
-        
+
         if (this.customer.address) {
             message += `Dirección: ${this.customer.address}\n`;
         }
-        
+
         message += `\n*Productos:*\n`;
         this.items.forEach((item, index) => {
             const price = this.formatCurrency(item.subtotal);
             message += `${index + 1}. ${item.name} x${item.quantity} - ${price}\n`;
         });
-        
+
         if (this.installation) {
             message += `\n*Instalación:*\n`;
             const installPrice = this.formatCurrency(this.installation.subtotal);
             message += `${this.installation.linearMeters}m x ${this.formatCurrency(this.installation.pricePerMeter)} = ${installPrice}\n`;
-            
+
             if (this.customer.installationDate) {
                 message += `Fecha preferida: ${this.formatDate(new Date(this.customer.installationDate))}\n`;
             }
         }
-        
+
         if (this.customer.paymentMethod) {
             const paymentMethods = {
                 'cash': 'Efectivo',
@@ -115,9 +115,9 @@ class Order {
             const paymentLabel = paymentMethods[this.customer.paymentMethod] || this.customer.paymentMethod;
             message += `\n*Método de Pago Preferido:* ${paymentLabel}`;
         }
-        
+
         message += `\n\n*Total: ${this.formatCurrency(this.total)}*`;
-        
+
         return encodeURIComponent(message);
     }
 
@@ -137,7 +137,7 @@ class Order {
             minimumFractionDigits: CONFIG.pricing?.currencyFormat?.minimumFractionDigits || 0,
             maximumFractionDigits: CONFIG.pricing?.currencyFormat?.maximumFractionDigits || 2
         };
-        
+
         const formatted = new Intl.NumberFormat(locale, options).format(amount);
         return `${symbol}${formatted}`;
     }
@@ -183,7 +183,7 @@ class Order {
     getStatusInfo() {
         const statusOptions = CONFIG.orders?.statusOptions || [];
         const statusInfo = statusOptions.find(s => s.value === this.status);
-        
+
         return statusInfo || {
             value: this.status,
             label: this.status,
@@ -223,7 +223,7 @@ class OrderManager {
         try {
             const data = localStorage.getItem(this.storageKey);
             if (!data) return [];
-            
+
             const ordersData = JSON.parse(data);
             return ordersData.map(orderData => Order.fromJSON(orderData));
         } catch (error) {
@@ -239,11 +239,11 @@ class OrderManager {
             return true;
         } catch (error) {
             console.error('Error al guardar pedidos:', error);
-            
+
             if (error.name === 'QuotaExceededError') {
                 throw new Error('Espacio de almacenamiento insuficiente. Elimina pedidos antiguos.');
             }
-            
+
             throw error;
         }
     }
@@ -266,14 +266,14 @@ class OrderManager {
 
     updateOrderStatus(orderId, newStatus, note = '') {
         const order = this.getOrderById(orderId);
-        
+
         if (!order) {
             throw new Error(`Pedido no encontrado: ${orderId}`);
         }
 
         order.updateStatus(newStatus, note);
         this.saveOrders();
-        
+
         return order;
     }
 
@@ -284,7 +284,7 @@ class OrderManager {
     getOrdersByDateRange(startDate, endDate) {
         const start = new Date(startDate);
         const end = new Date(endDate);
-        
+
         return this.orders.filter(order => {
             const orderDate = new Date(order.date);
             return orderDate >= start && orderDate <= end;
@@ -292,29 +292,29 @@ class OrderManager {
     }
 
     getOrdersByCustomer(customerPhone) {
-        return this.orders.filter(order => 
+        return this.orders.filter(order =>
             order.customer.phone === customerPhone
         );
     }
 
     deleteOrder(orderId) {
         const index = this.orders.findIndex(order => order.id === orderId);
-        
+
         if (index === -1) {
             throw new Error(`Pedido no encontrado: ${orderId}`);
         }
 
         this.orders.splice(index, 1);
         this.saveOrders();
-        
+
         return true;
     }
 
     getStatistics() {
         const now = new Date();
         const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-        
-        const ordersThisMonth = this.orders.filter(order => 
+
+        const ordersThisMonth = this.orders.filter(order =>
             new Date(order.date) >= thisMonth
         );
 
@@ -363,7 +363,7 @@ class OrderManager {
         const csv = this.exportToCSV();
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
-        
+
         if (link.download !== undefined) {
             const url = URL.createObjectURL(blob);
             link.setAttribute('href', url);
@@ -380,16 +380,16 @@ class OrderManager {
         cutoffDate.setDate(cutoffDate.getDate() - daysOld);
 
         const initialCount = this.orders.length;
-        
+
         this.orders = this.orders.filter(order => {
             const orderDate = new Date(order.date);
-            return orderDate >= cutoffDate || 
-                   order.status === 'pending' || 
-                   order.status === 'in_progress';
+            return orderDate >= cutoffDate ||
+                order.status === 'pending' ||
+                order.status === 'in_progress';
         });
 
         const removed = initialCount - this.orders.length;
-        
+
         if (removed > 0) {
             this.saveOrders();
         }
@@ -649,7 +649,7 @@ class OrderFormUI {
                 const subtotal = item.quantity * item.unitPrice;
                 html += `
                     <div class="order-summary-item">
-                        <span class="order-summary-item-name">${item.name}</span>
+                        <span class="order-summary-item-name">${SecurityUtils.escapeHTML(item.name)}</span>
                         <span class="order-summary-item-quantity">x${item.quantity}</span>
                         <span class="order-summary-item-price">${priceManager.formatCurrency(subtotal)}</span>
                     </div>
@@ -716,7 +716,7 @@ class OrderFormUI {
         }
 
         const errorElement = document.getElementById(`${name}Error`);
-        
+
         if (!isValid) {
             field.classList.add('error');
             if (errorElement) {
@@ -785,7 +785,7 @@ class OrderFormUI {
     sendOrderViaWhatsApp(order) {
         try {
             const whatsappNumber = CONFIG.contact?.whatsapp?.number || '';
-            
+
             if (!whatsappNumber) {
                 throw new Error('Número de WhatsApp no configurado');
             }
@@ -794,7 +794,7 @@ class OrderFormUI {
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
 
             window.open(whatsappUrl, '_blank');
-            
+
             return true;
         } catch (error) {
             console.error('Error al enviar por WhatsApp:', error);
@@ -815,12 +815,12 @@ class OrderFormUI {
         }
 
         const submitBtn = this.form.querySelector('.btn-submit-order');
-        
+
         try {
             if (typeof loaderManager !== 'undefined') {
                 await loaderManager.withButtonSpinner(submitBtn, async () => {
                     const customerData = this.getFormData();
-                    
+
                     const order = this.orderManager.createOrder(this.quotationData, customerData);
 
                     if (typeof flowStepper !== 'undefined' && flowStepper) {
@@ -841,7 +841,7 @@ class OrderFormUI {
                 submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
 
                 const customerData = this.getFormData();
-                
+
                 const order = this.orderManager.createOrder(this.quotationData, customerData);
 
                 if (typeof flowStepper !== 'undefined' && flowStepper) {
@@ -862,13 +862,13 @@ class OrderFormUI {
 
         } catch (error) {
             console.error('Error al crear pedido:', error);
-            
+
             if (typeof showNotification === 'function') {
                 showNotification(error.message || 'Error al crear el pedido', 'error');
             } else {
                 alert(error.message || 'Error al crear el pedido');
             }
-            
+
             if (typeof loaderManager !== 'undefined') {
                 loaderManager.removeButtonSpinner(submitBtn);
             }
@@ -1104,11 +1104,11 @@ class OrderConfirmationUI {
 
     goToTracking() {
         this.close();
-        
+
         const trackingSection = document.getElementById('consulta-pedido');
         if (trackingSection) {
             trackingSection.scrollIntoView({ behavior: 'smooth' });
-            
+
             setTimeout(() => {
                 const orderIdInput = document.getElementById('orderIdInput');
                 if (orderIdInput && this.orderData) {
@@ -1121,9 +1121,9 @@ class OrderConfirmationUI {
 
     goToHome() {
         this.close();
-        
+
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        
+
         if (typeof showNotification === 'function') {
             showNotification('Gracias por tu pedido', 'success');
         }
@@ -1341,7 +1341,7 @@ class OrderTrackingUI {
             `;
 
             const sortedHistory = [...order.statusHistory].reverse();
-            
+
             sortedHistory.forEach((historyItem, index) => {
                 const historyStatusInfo = this.getStatusInfo(historyItem.status);
                 const isActive = index === 0;
@@ -1374,7 +1374,7 @@ class OrderTrackingUI {
     getStatusInfo(status) {
         const statusOptions = CONFIG.orders?.statusOptions || [];
         const statusInfo = statusOptions.find(s => s.value === status);
-        
+
         return statusInfo || {
             value: status,
             label: status,

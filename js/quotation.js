@@ -105,7 +105,7 @@ class PriceManager {
         try {
             if (CONFIG.products.enableGoogleSheets && typeof productsLoader !== 'undefined') {
                 const sheetsProducts = await productsLoader.loadProductos();
-                
+
                 if (sheetsProducts && sheetsProducts.length > 0) {
                     this.products = this._normalizeGoogleSheetsProducts(sheetsProducts);
                     this.pricesLoaded = true;
@@ -143,7 +143,7 @@ class PriceManager {
 
     _normalizeLocalProducts(productsData) {
         const allProducts = [];
-        
+
         for (const category in productsData) {
             if (Array.isArray(productsData[category])) {
                 productsData[category].forEach(product => {
@@ -162,7 +162,7 @@ class PriceManager {
                 });
             }
         }
-        
+
         return allProducts;
     }
 
@@ -177,8 +177,8 @@ class PriceManager {
             return this._getFallbackPrice(productName, category);
         }
 
-        const product = this.products.find(p => 
-            p.id === productId || 
+        const product = this.products.find(p =>
+            p.id === productId ||
             p.name.toLowerCase() === productName.toLowerCase() ||
             p.name.toLowerCase().includes(productName.toLowerCase())
         );
@@ -523,7 +523,7 @@ class QuotationPDFGenerator {
 
     addFooter(doc, yPosition) {
         const validityDays = this.config.quotation?.validityDays || 30;
-        const termsText = this.config.quotation?.termsText || 
+        const termsText = this.config.quotation?.termsText ||
             `Cotización válida por ${validityDays} días. Precios sujetos a cambios sin previo aviso.`;
 
         const finalTerms = termsText.replace('{days}', validityDays);
@@ -586,7 +586,7 @@ class QuotationStorage {
     save(quotationData) {
         try {
             const quotations = this.getAll();
-            
+
             const quotationToSave = {
                 id: quotationData.quotationId || this.generateId(),
                 date: new Date().toISOString(),
@@ -613,7 +613,7 @@ class QuotationStorage {
             };
 
             quotations.push(quotationToSave);
-            
+
             localStorage.setItem(this.storageKey, JSON.stringify(quotations));
             return quotationToSave;
         } catch (error) {
@@ -676,14 +676,14 @@ class QuotationStorage {
         try {
             const quotations = this.getAll();
             const quotation = quotations.find(q => q.id === quotationId);
-            
+
             if (quotation) {
                 quotation.status = newStatus;
                 quotation.lastUpdated = new Date().toISOString();
                 localStorage.setItem(this.storageKey, JSON.stringify(quotations));
                 return true;
             }
-            
+
             return false;
         } catch (error) {
             console.error('Error al actualizar estado de cotización:', error);
@@ -699,23 +699,23 @@ class QuotationStorage {
 
     calculateSubtotal(quotationData) {
         let subtotal = 0;
-        
+
         if (quotationData.items) {
             quotationData.items.forEach(item => {
                 subtotal += item.quantity * item.unitPrice;
             });
         }
-        
+
         return subtotal;
     }
 
     calculateTotal(quotationData) {
         let total = this.calculateSubtotal(quotationData);
-        
+
         if (quotationData.installation && quotationData.installation.subtotal) {
             total += quotationData.installation.subtotal;
         }
-        
+
         return total;
     }
 
@@ -723,7 +723,7 @@ class QuotationStorage {
         const quotations = this.getAll();
         const valid = this.getValid();
         const expired = this.getExpired();
-        
+
         return {
             total: quotations.length,
             valid: valid.length,
@@ -734,7 +734,7 @@ class QuotationStorage {
 
     displayQuotation(quotationId, containerId) {
         const quotation = this.getById(quotationId);
-        
+
         if (!quotation) {
             console.error(`Cotización ${quotationId} no encontrada`);
             return false;
@@ -765,7 +765,7 @@ class QuotationStorage {
                     <div class="quotation-id-section">
                         <i class="fas fa-file-invoice"></i>
                         <div>
-                            <h3 class="quotation-id">${quotation.id}</h3>
+                            <h3 class="quotation-id">${SecurityUtils.escapeHTML(quotation.id)}</h3>
                             <p class="quotation-date">Fecha: ${new Date(quotation.date).toLocaleDateString('es-AR')}</p>
                         </div>
                     </div>
@@ -804,11 +804,11 @@ class QuotationStorage {
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Tipo de Poste:</span>
-                            <span class="detail-value">${postTypeNames[quotation.projectData.postType] || quotation.projectData.postType}</span>
+                            <span class="detail-value">${SecurityUtils.escapeHTML(postTypeNames[quotation.projectData.postType] || quotation.projectData.postType)}</span>
                         </div>
                         <div class="detail-item">
                             <span class="detail-label">Material:</span>
-                            <span class="detail-value">${materialTypeNames[quotation.projectData.materialType] || quotation.projectData.materialType}</span>
+                            <span class="detail-value">${SecurityUtils.escapeHTML(materialTypeNames[quotation.projectData.materialType] || quotation.projectData.materialType)}</span>
                         </div>
                     </div>
                 </div>
@@ -829,8 +829,8 @@ class QuotationStorage {
                         <i class="fas fa-box"></i>
                     </div>
                     <div class="item-details">
-                        <h5 class="item-name">${item.name}</h5>
-                        ${item.description ? `<p class="item-description">${item.description}</p>` : ''}
+                        <h5 class="item-name">${SecurityUtils.escapeHTML(item.name)}</h5>
+                        ${item.description ? `<p class="item-description">${SecurityUtils.escapeHTML(item.description)}</p>` : ''}
                     </div>
                     <div class="item-quantity">
                         <span class="quantity-value">${item.quantity}</span>
@@ -901,7 +901,7 @@ class QuotationStorage {
 
     async downloadQuotationPDF(quotationId) {
         const quotation = this.getById(quotationId);
-        
+
         if (!quotation) {
             if (typeof showNotification === 'function') {
                 showNotification('Cotización no encontrada', 'error');
@@ -912,7 +912,7 @@ class QuotationStorage {
         try {
             const pdfGenerator = new QuotationPDFGenerator(quotation, CONFIG);
             await pdfGenerator.download(`cotizacion-${quotation.id}.pdf`);
-            
+
             if (typeof showNotification === 'function') {
                 showNotification('PDF descargado correctamente', 'success');
             }
@@ -926,7 +926,7 @@ class QuotationStorage {
 
     sendQuotationWhatsApp(quotationId) {
         const quotation = this.getById(quotationId);
-        
+
         if (!quotation) {
             if (typeof showNotification === 'function') {
                 showNotification('Cotización no encontrada', 'error');
@@ -1070,10 +1070,10 @@ class QuotationModal {
 
         this.renderProjectInfo(data);
         await this.renderItems(data.items);
-        
+
         this.elements.modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
-        
+
         setTimeout(() => {
             this.elements.modal.classList.add('active');
         }, 10);
@@ -1081,7 +1081,7 @@ class QuotationModal {
 
     close() {
         this.elements.modal.classList.remove('active');
-        
+
         setTimeout(() => {
             this.elements.modal.style.display = 'none';
             document.body.style.overflow = '';
@@ -1095,7 +1095,7 @@ class QuotationModal {
 
     renderProjectInfo(data) {
         const { projectData } = data;
-        
+
         const postTypeNames = {
             'hormigon': 'Hormigón',
             'quebracho': 'Quebracho',
@@ -1153,7 +1153,7 @@ class QuotationModal {
                 item.name,
                 item.category
             );
-            
+
             const unitPrice = item.unitPrice || priceInfo.price;
             const unit = item.unit || priceInfo.unit;
             const itemSubtotal = item.quantity * unitPrice;
@@ -1280,11 +1280,11 @@ class QuotationModal {
 
         try {
             const quotationId = this.storage.generateId();
-            
+
             const quotationDataToSave = this.prepareQuotationData(quotationId);
-            
+
             const savedQuotation = this.storage.save(quotationDataToSave);
-            
+
             const message = this.formatWhatsAppMessage(savedQuotation.id);
             const whatsappNumber = CONFIG.contact?.whatsapp?.number || '5491171416157';
             const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
@@ -1310,7 +1310,7 @@ class QuotationModal {
 
         if (this.currentData.projectData) {
             const { projectData } = this.currentData;
-            
+
             const postTypeNames = {
                 'hormigon': 'Hormigón',
                 'quebracho': 'Quebracho',
@@ -1330,7 +1330,7 @@ class QuotationModal {
         }
 
         message += `*Materiales Solicitados:*\n`;
-        
+
         if (this.currentData.items && this.currentData.items.length > 0) {
             let subtotal = 0;
 
@@ -1340,7 +1340,7 @@ class QuotationModal {
                     item.name,
                     item.category
                 );
-                
+
                 const unitPrice = item.unitPrice || priceInfo.price;
                 const unit = item.unit || priceInfo.unit;
                 const itemSubtotal = item.quantity * unitPrice;
@@ -1355,12 +1355,12 @@ class QuotationModal {
             if (this.installationIncluded && this.installationCost > 0) {
                 const perimeter = this.currentData.projectData?.perimeter || 0;
                 const pricePerMeter = CONFIG.pricing?.installationPricePerMeter || 500;
-                
+
                 message += `*Servicio de Instalación:*\n`;
                 message += `• Metros lineales: ${perimeter.toFixed(2)} m\n`;
                 message += `• Precio por metro: ${this.priceManager.formatCurrency(pricePerMeter)}\n`;
                 message += `• Subtotal instalación: ${this.priceManager.formatCurrency(this.installationCost)}\n\n`;
-                
+
                 subtotal += this.installationCost;
             }
 
@@ -1381,7 +1381,7 @@ class QuotationModal {
                 item.name,
                 item.category
             );
-            
+
             return {
                 id: item.id,
                 name: item.name,
@@ -1419,9 +1419,9 @@ class QuotationModal {
             }
 
             const quotationId = this.storage.generateId();
-            
+
             const quotationDataToSave = this.prepareQuotationData(quotationId);
-            
+
             const savedQuotation = this.storage.save(quotationDataToSave);
 
             const pdfGenerator = new QuotationPDFGenerator(quotationDataToSave, CONFIG);
@@ -1442,67 +1442,67 @@ class QuotationModal {
         if (typeof showNotification === 'function') {
             showNotification('El módulo completo de cotizaciones estará disponible próximamente', 'info');
         }
-        
+
         this.close();
     }
 }
 
-window.openQuotationModal = async function(data) {
+window.openQuotationModal = async function (data) {
     if (!window.quotationModal) {
         window.quotationModal = new QuotationModal();
     }
     await window.quotationModal.open(data);
 };
 
-window.getQuotationStorage = function() {
+window.getQuotationStorage = function () {
     return new QuotationStorage();
 };
 
-window.getQuotationById = function(quotationId) {
+window.getQuotationById = function (quotationId) {
     const storage = new QuotationStorage();
     return storage.getById(quotationId);
 };
 
-window.getAllQuotations = function() {
+window.getAllQuotations = function () {
     const storage = new QuotationStorage();
     return storage.getAll();
 };
 
-window.getValidQuotations = function() {
+window.getValidQuotations = function () {
     const storage = new QuotationStorage();
     return storage.getValid();
 };
 
-window.getExpiredQuotations = function() {
+window.getExpiredQuotations = function () {
     const storage = new QuotationStorage();
     return storage.getExpired();
 };
 
-window.deleteQuotation = function(quotationId) {
+window.deleteQuotation = function (quotationId) {
     const storage = new QuotationStorage();
     return storage.deleteById(quotationId);
 };
 
-window.cleanExpiredQuotations = function() {
+window.cleanExpiredQuotations = function () {
     const storage = new QuotationStorage();
     const result = storage.deleteExpired();
     return result;
 };
 
-window.getQuotationStorageInfo = function() {
+window.getQuotationStorageInfo = function () {
     const storage = new QuotationStorage();
     return storage.getStorageInfo();
 };
 
 document.addEventListener('DOMContentLoaded', async () => {
     window.quotationModal = new QuotationModal();
-    
+
     const pendingQuotation = StorageManager.get('pending_quotation');
     if (pendingQuotation && window.location.hash === '#quotation') {
         await window.quotationModal.open(pendingQuotation);
         StorageManager.remove('pending_quotation');
     }
-    
+
     const storage = new QuotationStorage();
 });
 
@@ -1515,14 +1515,14 @@ function searchQuotation() {
     const input = document.getElementById('quotationIdInput');
     const container = document.getElementById('quotationDisplayContainer');
     const notFound = document.getElementById('quotationNotFound');
-    
+
     if (!input || !container || !notFound) {
         console.error('Elementos de búsqueda no encontrados');
         return;
     }
 
     const quotationId = input.value.trim();
-    
+
     if (!quotationId) {
         if (typeof showNotification === 'function') {
             showNotification('Por favor ingresa un ID de cotización', 'warning');
@@ -1534,7 +1534,7 @@ function searchQuotation() {
     notFound.style.display = 'none';
 
     const success = quotationStorage.displayQuotation(quotationId, 'quotationDisplayContainer');
-    
+
     if (!success) {
         notFound.style.display = 'block';
         if (typeof showNotification === 'function') {
@@ -1544,7 +1544,7 @@ function searchQuotation() {
         if (typeof showNotification === 'function') {
             showNotification('Cotización cargada correctamente', 'success');
         }
-        
+
         container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 }
@@ -1552,13 +1552,13 @@ function searchQuotation() {
 // Función para cargar cotizaciones recientes
 function loadRecentQuotations() {
     const container = document.getElementById('recentQuotationsList');
-    
+
     if (!container) {
         return;
     }
 
     const quotations = quotationStorage.getAll();
-    
+
     if (quotations.length === 0) {
         container.innerHTML = `
             <div class="empty-recent-quotations">
@@ -1569,21 +1569,21 @@ function loadRecentQuotations() {
         return;
     }
 
-    const sortedQuotations = quotations.sort((a, b) => 
+    const sortedQuotations = quotations.sort((a, b) =>
         new Date(b.date) - new Date(a.date)
     ).slice(0, 5);
 
     const priceManager = new PriceManager();
-    
+
     container.innerHTML = sortedQuotations.map(quotation => {
         const isExpired = new Date(quotation.validUntil) < new Date();
         const statusClass = isExpired ? 'expired' : 'valid';
         const statusText = isExpired ? 'Expirada' : 'Válida';
-        
+
         return `
-            <div class="recent-quotation-item" onclick="loadQuotationById('${quotation.id}')">
+            <div class="recent-quotation-item" onclick="loadQuotationById('${SecurityUtils.escapeHTML(quotation.id)}')">
                 <div class="recent-quotation-info">
-                    <div class="recent-quotation-id">${quotation.id}</div>
+                    <div class="recent-quotation-id">${SecurityUtils.escapeHTML(quotation.id)}</div>
                     <div class="recent-quotation-date">${new Date(quotation.date).toLocaleDateString('es-AR')}</div>
                 </div>
                 <div class="recent-quotation-total">${priceManager.formatCurrency(quotation.total)}</div>
@@ -1598,18 +1598,18 @@ function loadQuotationById(quotationId) {
     const input = document.getElementById('quotationIdInput');
     const container = document.getElementById('quotationDisplayContainer');
     const notFound = document.getElementById('quotationNotFound');
-    
+
     if (!input || !container || !notFound) {
         return;
     }
 
     input.value = quotationId;
-    
+
     container.innerHTML = '';
     notFound.style.display = 'none';
 
     const success = quotationStorage.displayQuotation(quotationId, 'quotationDisplayContainer');
-    
+
     if (success) {
         container.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -1619,7 +1619,7 @@ function loadQuotationById(quotationId) {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         loadRecentQuotations();
-        
+
         const input = document.getElementById('quotationIdInput');
         if (input) {
             input.addEventListener('keypress', (e) => {
@@ -1631,7 +1631,7 @@ if (document.readyState === 'loading') {
     });
 } else {
     loadRecentQuotations();
-    
+
     const input = document.getElementById('quotationIdInput');
     if (input) {
         input.addEventListener('keypress', (e) => {
