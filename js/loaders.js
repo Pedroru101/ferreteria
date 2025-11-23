@@ -79,8 +79,8 @@ class LoaderManager {
      * @param {string} type - Tipo de loader: 'spinner', 'dots', 'wave'
      */
     showInline(container, text = 'Cargando...', type = 'spinner') {
-        const el = typeof container === 'string' 
-            ? document.querySelector(container) 
+        const el = typeof container === 'string'
+            ? document.querySelector(container)
             : container;
 
         if (!el) {
@@ -108,7 +108,7 @@ class LoaderManager {
      * Obtiene el HTML del loader según el tipo
      */
     getLoaderHTML(type, text) {
-        const textHTML = `<div class="loader-inline-text">${text}</div>`;
+        const textHTML = `<div class="loader-inline-text">${SecurityUtils.escapeHTML(text)}</div>`;
 
         switch (type) {
             case 'dots':
@@ -168,8 +168,8 @@ class LoaderManager {
      * @param {string} text - Texto mientras carga (opcional)
      */
     addButtonSpinner(button, text = null) {
-        const btn = typeof button === 'string' 
-            ? document.querySelector(button) 
+        const btn = typeof button === 'string'
+            ? document.querySelector(button)
             : button;
 
         if (!btn) {
@@ -188,7 +188,7 @@ class LoaderManager {
         const spinnerHTML = '<i class="fas fa-spinner fa-spin"></i>';
         const newText = text || btn.textContent;
 
-        btn.innerHTML = `${spinnerHTML} ${newText}`;
+        btn.innerHTML = `${spinnerHTML} ${SecurityUtils.escapeHTML(newText)}`;
     }
 
     /**
@@ -196,8 +196,8 @@ class LoaderManager {
      * @param {HTMLElement|string} button - Botón o selector
      */
     removeButtonSpinner(button) {
-        const btn = typeof button === 'string' 
-            ? document.querySelector(button) 
+        const btn = typeof button === 'string'
+            ? document.querySelector(button)
             : button;
 
         if (!btn) {
@@ -221,8 +221,8 @@ class LoaderManager {
      * @param {object} options - Opciones de configuración
      */
     createSkeleton(container, options = {}) {
-        const el = typeof container === 'string' 
-            ? document.querySelector(container) 
+        const el = typeof container === 'string'
+            ? document.querySelector(container)
             : container;
 
         if (!el) {

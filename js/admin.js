@@ -18,7 +18,7 @@ class AdminAuth {
     login(password) {
         const hash = this.hashPassword(password);
         const storedHash = localStorage.getItem(this.passwordKey);
-        
+
         if (hash === storedHash) {
             sessionStorage.setItem(this.sessionKey, 'true');
             sessionStorage.setItem('admin_login_time', Date.now().toString());
@@ -29,17 +29,17 @@ class AdminAuth {
 
     isAuthenticated() {
         const isAuthenticated = sessionStorage.getItem(this.sessionKey) === 'true';
-        
+
         if (isAuthenticated) {
             const loginTime = parseInt(sessionStorage.getItem('admin_login_time'));
             const elapsed = Date.now() - loginTime;
-            
+
             if (elapsed > CONFIG.admin.sessionTimeout) {
                 this.logout();
                 return false;
             }
         }
-        
+
         return isAuthenticated;
     }
 
@@ -70,7 +70,7 @@ class AdminDashboard {
     showLoginScreen() {
         document.getElementById('loginScreen').style.display = 'flex';
         document.getElementById('adminDashboard').style.display = 'none';
-        
+
         const loginForm = document.getElementById('loginForm');
         if (loginForm) {
             loginForm.addEventListener('submit', (e) => this.handleLogin(e));
@@ -85,7 +85,7 @@ class AdminDashboard {
     handleLogin(e) {
         e.preventDefault();
         const password = document.getElementById('adminPassword').value;
-        
+
         if (this.auth.login(password)) {
             this.showDashboard();
             this.setupEventListeners();
@@ -239,7 +239,7 @@ class AdminDashboard {
         });
 
         const monthlyRevenue = monthlyOrders.reduce((sum, order) => sum + (order.total || 0), 0);
-        const monthlyConversion = monthlyQuotations.length > 0 
+        const monthlyConversion = monthlyQuotations.length > 0
             ? Math.round((monthlyOrders.length / monthlyQuotations.length) * 100)
             : 0;
 
@@ -291,7 +291,7 @@ class AdminDashboard {
         tabButtons.forEach(btn => {
             btn.classList.remove('active');
         });
-        
+
         const activeButton = document.querySelector(`[data-tab="${tabName}"]`);
         if (activeButton) {
             activeButton.classList.add('active');
@@ -301,7 +301,7 @@ class AdminDashboard {
         tabContents.forEach(content => {
             content.classList.remove('active');
         });
-        
+
         const activeContent = document.getElementById(`${tabName}Tab`);
         if (activeContent) {
             activeContent.classList.add('active');
@@ -321,7 +321,7 @@ class AdminDashboard {
     loadDashboardData() {
         this.updateStatistics();
         this.loadOrders();
-        
+
         if (CONFIG.admin.dashboardRefreshInterval) {
             if (this.refreshInterval) {
                 clearInterval(this.refreshInterval);
@@ -338,13 +338,13 @@ class AdminDashboard {
 
         const totalOrders = orders.length;
         const totalQuotations = quotations.length;
-        
+
         const totalRevenue = orders.reduce((sum, order) => {
             return sum + (order.total || 0);
         }, 0);
-        
-        const conversionRate = totalQuotations > 0 
-            ? Math.round((totalOrders / totalQuotations) * 100) 
+
+        const conversionRate = totalQuotations > 0
+            ? Math.round((totalOrders / totalQuotations) * 100)
             : 0;
 
         const totalOrdersElement = document.getElementById('totalOrders');
@@ -451,18 +451,18 @@ class AdminDashboard {
 
             html += `
                 <tr>
-                    <td><strong>${order.id}</strong></td>
+                    <td><strong>${SecurityUtils.escapeHTML(order.id)}</strong></td>
                     <td>${date}</td>
-                    <td>${order.customer?.name || 'N/A'}</td>
+                    <td>${SecurityUtils.escapeHTML(order.customer?.name || 'N/A')}</td>
                     <td>${phone}</td>
                     <td>${this.formatCurrency(order.total)}</td>
                     <td><span class="status-badge status-${order.status}">${statusLabel}</span></td>
                     <td>
                         <div class="action-buttons">
-                            <button class="btn-sm btn-primary" onclick="adminDashboard.openOrderDetail('${order.id}')" title="Ver detalles">
+                            <button class="btn-sm btn-primary" onclick="adminDashboard.openOrderDetail('${SecurityUtils.escapeHTML(order.id)}')" title="Ver detalles">
                                 <i class="fas fa-eye"></i> Ver
                             </button>
-                            <button class="btn-sm btn-secondary" onclick="adminDashboard.openUpdateStatusModal('${order.id}')" title="Actualizar estado">
+                            <button class="btn-sm btn-secondary" onclick="adminDashboard.openUpdateStatusModal('${SecurityUtils.escapeHTML(order.id)}')" title="Actualizar estado">
                                 <i class="fas fa-edit"></i> Actualizar
                             </button>
                         </div>
@@ -558,14 +558,14 @@ class AdminDashboard {
 
             html += `
                 <tr>
-                    <td><strong>${quotation.id}</strong></td>
+                    <td><strong>${SecurityUtils.escapeHTML(quotation.id)}</strong></td>
                     <td>${date}</td>
                     <td>${this.formatCurrency(quotation.total)}</td>
                     <td><span class="status-badge status-${displayStatus}">${displayStatusLabel}</span></td>
                     <td>${validUntil}${isExpired ? ' (Expirada)' : ''}</td>
                     <td>
                         <div class="action-buttons">
-                            <button class="btn-sm btn-primary" onclick="adminDashboard.openQuotationDetail('${quotation.id}')">
+                            <button class="btn-sm btn-primary" onclick="adminDashboard.openQuotationDetail('${SecurityUtils.escapeHTML(quotation.id)}')">
                                 <i class="fas fa-eye"></i> Ver
                             </button>
                         </div>
@@ -601,10 +601,10 @@ class AdminDashboard {
 
     loadProducts() {
         const container = document.getElementById('productsTableContainer');
-        
+
         if (CONFIG.products.enableGoogleSheets) {
             const lastUpdate = localStorage.getItem('ferreteria_sheets_last_update');
-            const lastUpdateText = lastUpdate 
+            const lastUpdateText = lastUpdate
                 ? `Última actualización: ${new Date(lastUpdate).toLocaleString('es-AR')}`
                 : 'Nunca actualizado';
 
@@ -630,7 +630,7 @@ class AdminDashboard {
         }
 
         const categories = this.getProductCategories();
-        const categoryFilterOptions = categories.map(cat => 
+        const categoryFilterOptions = categories.map(cat =>
             `<option value="${cat}">${cat}</option>`
         ).join('');
 
@@ -661,9 +661,9 @@ class AdminDashboard {
 
         products.forEach(product => {
             html += `
-                <tr class="product-row" data-name="${product.name.toLowerCase()}" data-category="${(product.category || '').toLowerCase()}">
-                    <td><strong>${product.name}</strong></td>
-                    <td><span style="background: var(--bg-secondary); padding: 4px 8px; border-radius: 4px; font-size: 12px;">${product.category || 'Sin categoría'}</span></td>
+                <tr class="product-row" data-name="${SecurityUtils.escapeHTML(product.name.toLowerCase())}" data-category="${SecurityUtils.escapeHTML((product.category || '').toLowerCase())}">
+                    <td><strong>${SecurityUtils.escapeHTML(product.name)}</strong></td>
+                    <td><span style="background: var(--bg-secondary); padding: 4px 8px; border-radius: 4px; font-size: 12px;">${SecurityUtils.escapeHTML(product.category || 'Sin categoría')}</span></td>
                     <td>${this.formatCurrency(product.price)}</td>
                     <td>
                         <span style="padding: 4px 8px; border-radius: 4px; font-size: 12px; ${product.stock > 10 ? 'background: rgba(76, 175, 80, 0.15); color: #4caf50;' : product.stock > 0 ? 'background: rgba(245, 124, 0, 0.15); color: #f57c00;' : 'background: rgba(211, 47, 47, 0.15); color: #d32f2f;'}">
@@ -672,10 +672,10 @@ class AdminDashboard {
                     </td>
                     <td>
                         <div class="action-buttons">
-                            <button class="btn-sm btn-primary" onclick="adminDashboard.openEditProductModal('${product.id}')" title="Editar producto">
+                            <button class="btn-sm btn-primary" onclick="adminDashboard.openEditProductModal('${SecurityUtils.escapeHTML(product.id)}')" title="Editar producto">
                                 <i class="fas fa-edit"></i> Editar
                             </button>
-                            <button class="btn-sm btn-danger" onclick="adminDashboard.deleteProduct('${product.id}')" title="Eliminar producto">
+                            <button class="btn-sm btn-danger" onclick="adminDashboard.deleteProduct('${SecurityUtils.escapeHTML(product.id)}')" title="Eliminar producto">
                                 <i class="fas fa-trash"></i> Eliminar
                             </button>
                         </div>
@@ -831,9 +831,9 @@ class AdminDashboard {
             Object.assign(CONFIG.quotation, config.quotation);
 
             localStorage.setItem('ferreteria_config', JSON.stringify(config));
-            
+
             this.showNotification('Configuración guardada correctamente. La página se recargará en 2 segundos...', 'success');
-            
+
             setTimeout(() => {
                 window.location.reload();
             }, 2000);
@@ -961,7 +961,7 @@ class AdminDashboard {
                 return;
             }
 
-            const statusOptions = CONFIG.orders.statusOptions.map(s => 
+            const statusOptions = CONFIG.orders.statusOptions.map(s =>
                 `<option value="${s.value}" ${s.value === order.status ? 'selected' : ''}>${s.label}</option>`
             ).join('');
 
@@ -1066,7 +1066,7 @@ class AdminDashboard {
             }
 
             order.status = newStatus;
-            
+
             if (!order.statusHistory) {
                 order.statusHistory = [];
             }
@@ -1096,7 +1096,7 @@ class AdminDashboard {
     sendStatusUpdateViaWhatsApp(order, oldStatus, newStatus, note) {
         try {
             const whatsappNumber = CONFIG.contact?.whatsapp?.number || '';
-            
+
             if (!whatsappNumber) {
                 this.showNotification('Número de WhatsApp no configurado', 'warning');
                 return;
@@ -1109,15 +1109,15 @@ class AdminDashboard {
             message += `Hola ${order.customer.name},\n\n`;
             message += `Tu pedido *${order.id}* ha sido actualizado.\n\n`;
             message += `*Nuevo Estado:* ${statusLabel}\n`;
-            
+
             if (note) {
                 message += `*Nota:* ${note}\n`;
             }
-            
+
             message += `\n*Detalles del Pedido:*\n`;
             message += `Total: ${this.formatCurrency(order.total)}\n`;
             message += `Fecha: ${new Date(order.date).toLocaleDateString('es-AR')}\n`;
-            
+
             if (order.customer.address && (newStatus === 'in_progress' || newStatus === 'completed')) {
                 message += `Dirección: ${order.customer.address}\n`;
             }
@@ -1237,7 +1237,7 @@ class AdminDashboard {
 
     openAddProductModal() {
         const categories = this.getProductCategories();
-        const categoryOptions = categories.map(cat => 
+        const categoryOptions = categories.map(cat =>
             `<option value="${cat}">${cat}</option>`
         ).join('');
 
@@ -1291,7 +1291,7 @@ class AdminDashboard {
 
         const categorySelect = document.getElementById('productCategory');
         const categoryNewInput = document.getElementById('productCategoryNew');
-        
+
         categorySelect.addEventListener('change', (e) => {
             if (e.target.value === '__new__') {
                 categoryNewInput.style.display = 'block';
@@ -1367,7 +1367,7 @@ class AdminDashboard {
         }
 
         const categories = this.getProductCategories();
-        const categoryOptions = categories.map(cat => 
+        const categoryOptions = categories.map(cat =>
             `<option value="${cat}" ${cat === product.category ? 'selected' : ''}>${cat}</option>`
         ).join('');
 
@@ -1491,7 +1491,7 @@ class AdminDashboard {
     getProductCategories() {
         const products = this.getProducts();
         const categories = new Set();
-        
+
         products.forEach(product => {
             if (product.category) {
                 categories.add(product.category);
@@ -1504,7 +1504,7 @@ class AdminDashboard {
     exportProducts() {
         try {
             const products = this.getProducts();
-            
+
             if (products.length === 0) {
                 this.showNotification('No hay productos para exportar', 'warning');
                 return;
@@ -1537,7 +1537,7 @@ class AdminDashboard {
     importProducts(event) {
         try {
             const file = event.target.files[0];
-            
+
             if (!file) {
                 return;
             }
@@ -1548,11 +1548,11 @@ class AdminDashboard {
             }
 
             const reader = new FileReader();
-            
+
             reader.onload = (e) => {
                 try {
                     const importedData = JSON.parse(e.target.result);
-                    
+
                     if (!importedData.products || !Array.isArray(importedData.products)) {
                         this.showNotification('Formato de archivo inválido', 'error');
                         return;
@@ -1564,7 +1564,7 @@ class AdminDashboard {
 
                     importedData.products.forEach(importedProduct => {
                         const existingIndex = currentProducts.findIndex(p => p.id === importedProduct.id);
-                        
+
                         if (existingIndex >= 0) {
                             currentProducts[existingIndex] = {
                                 ...currentProducts[existingIndex],
@@ -1583,12 +1583,12 @@ class AdminDashboard {
                     });
 
                     localStorage.setItem('ferreteria_products', JSON.stringify(currentProducts));
-                    
+
                     let message = `Importación completada: ${addedCount} productos agregados`;
                     if (updatedCount > 0) {
                         message += `, ${updatedCount} actualizados`;
                     }
-                    
+
                     this.showNotification(message, 'success');
                     this.loadProducts();
                 } catch (parseError) {
@@ -1629,7 +1629,7 @@ class AdminDashboard {
 
                 try {
                     const data = await productsLoader.reloadAll();
-                    
+
                     const timestamp = new Date().toISOString();
                     localStorage.setItem('ferreteria_sheets_last_update', timestamp);
 
@@ -1666,7 +1666,7 @@ class AdminDashboard {
                     }
 
                     this.showNotification('Productos recargados correctamente desde Google Sheets', 'success');
-                    
+
                     if (reloadBtn) {
                         reloadBtn.disabled = false;
                         reloadBtn.innerHTML = '<i class="fas fa-sync"></i> Recargar desde Google Sheets';
@@ -1675,7 +1675,7 @@ class AdminDashboard {
                 .catch((error) => {
                     console.error('Error al recargar Google Sheets:', error);
                     this.showNotification('Error al recargar productos: ' + (error.message || 'Error desconocido'), 'error');
-                    
+
                     if (reloadBtn) {
                         reloadBtn.disabled = false;
                         reloadBtn.innerHTML = '<i class="fas fa-sync"></i> Recargar desde Google Sheets';
@@ -1698,7 +1698,7 @@ class AdminDashboard {
         if (categoryFilter) {
             const categories = this.getProductCategories();
             const currentValue = categoryFilter.value;
-            
+
             categoryFilter.innerHTML = '<option value="">Todas las categorías</option>';
             categories.forEach(cat => {
                 const option = document.createElement('option');
@@ -1706,10 +1706,10 @@ class AdminDashboard {
                 option.textContent = cat;
                 categoryFilter.appendChild(option);
             });
-            
+
             categoryFilter.value = currentValue;
         }
-        
+
         this.loadPrices();
     }
 
@@ -1875,17 +1875,17 @@ class AdminDashboard {
         product.updatedAt = new Date().toISOString();
 
         localStorage.setItem('ferreteria_products', JSON.stringify(products));
-        
+
         const changePercent = oldPrice > 0 ? (((newPrice - oldPrice) / oldPrice) * 100).toFixed(2) : 0;
         this.showNotification(`Precio actualizado: ${this.formatCurrency(oldPrice)} → ${this.formatCurrency(newPrice)} (${changePercent}%)`, 'success');
-        
+
         modalElement.remove();
         this.loadPrices();
     }
 
     openBulkPriceAdjustModal() {
         const categories = this.getProductCategories();
-        const categoryOptions = categories.map(cat => 
+        const categoryOptions = categories.map(cat =>
             `<option value="${cat}">${cat}</option>`
         ).join('');
 
@@ -2199,14 +2199,14 @@ class AdminDashboard {
     showNotification(message, type = 'info') {
         const notification = document.createElement('div');
         notification.className = `notification ${type}`;
-        
+
         const iconMap = {
             success: 'check-circle',
             error: 'exclamation-circle',
             warning: 'exclamation-triangle',
             info: 'info-circle'
         };
-        
+
         const icon = iconMap[type] || 'info-circle';
         notification.innerHTML = `
             <i class="fas fa-${icon}"></i>
